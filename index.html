@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -171,7 +171,7 @@
             
             <p class="motivation" id="motivation">Imagine what you could do with that money! Quit smoking today for a healthier, richer life.</p>
             <button class="btn btn-share mt-2" onclick="shareOnX()" id="shareButton"><i class="fab fa-x-twitter"></i> Share on X</button>
-            <p class="disclaimer" id="disclaimer">Disclaimer: Simulation based on historical data. BTC investments are risky. Consult a professional.</p>
+            <p class="disclaimer" id="disclaimer">Disclaimer: Simulation based on historical data (WHO, Statista, CoinGecko). BTC investments are risky; past performance does not guarantee future results. Consult a professional.</p>
         </div>
     </div>
     
@@ -281,18 +281,25 @@
                 const cigsPerDay = parseInt(document.getElementById('cigsPerDay').value) || 20;
                 const startYear = parseInt(document.getElementById('startYear').value) || 2009;
                 const currentYear = 2025;
-                const currentWeek = 42;
+                const currentWeek = 42; // 15 oct 2025 ~ semaine 42
                 
                 let totalSpent = 0;
                 let totalBtc = 0;
                 let yearlyData = { years: [], spent: [], btcValue: [] };
                 
                 for (let year = Math.max(startYear, 2009); year <= currentYear; year++) {
+                    if (!countryPrices[country][year]) {
+                        console.warn(`Prix cigarettes manquant pour ${country} en ${year}, utilisation du prix de ${currentYear}`);
+                    }
                     const cigPrice = (countryPrices[country][year] || countryPrices[country][currentYear]) * brandAdjust[brand];
                     const weeks = (year === currentYear) ? currentWeek : 52;
                     const packsPerWeek = (cigsPerDay / 20) * 7;
                     const costWeek = packsPerWeek * cigPrice;
-                    const btcWeek = btcWeeklyPrices[year][0]; // Moyenne annuelle pour prototype
+                    
+                    if (!btcWeeklyPrices[year]) {
+                        console.warn(`Prix BTC manquant pour ${year}, utilisation du prix actuel`);
+                    }
+                    const btcWeek = btcWeeklyPrices[year] ? btcWeeklyPrices[year][0] : currentBtcPrice;
                     
                     for (let week = 1; week <= weeks; week++) {
                         totalSpent += costWeek;
