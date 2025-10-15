@@ -100,6 +100,12 @@
             text-align: center;
             margin: 20px;
         }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
         @media (max-width: 576px) {
             .header h1 {
                 font-size: 1.8rem;
@@ -150,7 +156,7 @@
             <div class="mb-3">
                 <label for="startYear" class="form-label" id="yearLabel">Start year</label>
                 <input type="number" class="form-control" id="startYear" min="2009" max="2025" value="2009" aria-describedby="yearHelp">
-                <small id="yearHelp" class="form-text text-muted">Enter the year you started</small>
+                <small id="yearHelp" class="form-text text-muted">Enter the year you started (2009-2025)</small>
             </div>
             
             <button type="button" class="btn btn-primary btn-calculate" onclick="calculate()" id="calcButton"><i class="fas fa-calculator"></i> Calculate</button>
@@ -159,6 +165,8 @@
         <div class="loader" id="loader">
             <i class="fas fa-spinner fa-spin"></i> Calculating...
         </div>
+        
+        <div class="error" id="error">An error occurred. Please check your inputs and try again.</div>
         
         <div id="result" style="display: none;" role="region" aria-live="polite">
             <h3 id="resultsTitle">Results</h3>
@@ -200,25 +208,25 @@
             JP: {2009: 3.0, 2010: 3.2, 2011: 3.4, 2012: 3.5, 2013: 3.6, 2014: 3.7, 2015: 3.8, 2016: 3.9, 2017: 4.0, 2018: 4.0, 2019: 4.1, 2020: 4.2, 2021: 4.3, 2022: 4.3, 2023: 4.4, 2024: 4.5, 2025: 4.0}
         };
 
-        // Prix BTC hebdomadaires moyens (USD, approximés pour prototype)
-        const btcWeeklyPrices = {
-            2009: Array(52).fill(0.0001),
-            2010: Array(52).fill(0.05),
-            2011: Array(52).fill(5),
-            2012: Array(52).fill(8),
-            2013: Array(52).fill(200),
-            2014: Array(52).fill(500),
-            2015: Array(52).fill(300),
-            2016: Array(52).fill(600),
-            2017: Array(52).fill(4000),
-            2018: Array(52).fill(7000),
-            2019: Array(52).fill(7000),
-            2020: Array(52).fill(11000),
-            2021: Array(52).fill(47000),
-            2022: Array(52).fill(28000),
-            2023: Array(52).fill(26000),
-            2024: Array(52).fill(50000),
-            2025: Array(42).fill(92000) // Jusqu'à 15 oct 2025
+        // Prix BTC annuels moyens (USD, approximés pour prototype, plus simple pour éviter erreurs d'index)
+        const btcPrices = {
+            2009: 0.0001,
+            2010: 0.05,
+            2011: 5,
+            2012: 8,
+            2013: 200,
+            2014: 500,
+            2015: 300,
+            2016: 600,
+            2017: 4000,
+            2018: 7000,
+            2019: 7000,
+            2020: 11000,
+            2021: 47000,
+            2022: 28000,
+            2023: 26000,
+            2024: 50000,
+            2025: 92000
         };
 
         const currentBtcPrice = 92000; // À actualiser via API CoinGecko
@@ -275,11 +283,19 @@
         function calculate() {
             document.getElementById('loader').style.display = 'block';
             document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
 
             setTimeout(() => {
                 const brand = document.getElementById('brand').value;
                 const cigsPerDay = parseInt(document.getElementById('cigsPerDay').value) || 20;
-                const startYear = parseInt(document.getElementById('startYear').value) || 2009;
+                let startYear = parseInt(document.getElementById('startYear').value) || 2009;
+                
+                // Validation stricte
+                if (isNaN(startYear) || startYear < 2009 || startYear > 2025) {
+                    console.error(`Année de début invalide: ${startYear}. Utilisation de 2009.`);
+                    startYear = 2009;
+                }
+
                 const currentYear = 2025;
                 const currentWeek = 42; // 15 oct 2025 ~ semaine 42
                 
@@ -288,22 +304,25 @@
                 let yearlyData = { years: [], spent: [], btcValue: [] };
                 
                 for (let year = Math.max(startYear, 2009); year <= currentYear; year++) {
+                    // Vérification des prix cigarettes
                     if (!countryPrices[country][year]) {
                         console.warn(`Prix cigarettes manquant pour ${country} en ${year}, utilisation du prix de ${currentYear}`);
                     }
                     const cigPrice = (countryPrices[country][year] || countryPrices[country][currentYear]) * brandAdjust[brand];
+                    
+                    // Vérification des prix BTC
+                    if (!btcPrices[year]) {
+                        console.warn(`Prix BTC manquant pour ${year}, utilisation du prix actuel: ${currentBtcPrice}`);
+                    }
+                    const btcPrice = btcPrices[year] || currentBtcPrice;
+                    
                     const weeks = (year === currentYear) ? currentWeek : 52;
                     const packsPerWeek = (cigsPerDay / 20) * 7;
                     const costWeek = packsPerWeek * cigPrice;
                     
-                    if (!btcWeeklyPrices[year]) {
-                        console.warn(`Prix BTC manquant pour ${year}, utilisation du prix actuel`);
-                    }
-                    const btcWeek = btcWeeklyPrices[year] ? btcWeeklyPrices[year][0] : currentBtcPrice;
-                    
                     for (let week = 1; week <= weeks; week++) {
                         totalSpent += costWeek;
-                        totalBtc += costWeek / btcWeek;
+                        totalBtc += costWeek / btcPrice;
                     }
                     
                     yearlyData.years.push(year);
@@ -313,6 +332,14 @@
                 
                 const currentValue = totalBtc * currentBtcPrice;
                 const gain = currentValue - totalSpent;
+                
+                // Vérification des résultats
+                if (isNaN(totalSpent) || isNaN(totalBtc) || isNaN(currentValue) || isNaN(gain)) {
+                    console.error('Erreur dans les calculs:', { totalSpent, totalBtc, currentValue, gain });
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('error').style.display = 'block';
+                    return;
+                }
                 
                 document.getElementById('totalSpent').innerHTML = formatNumber(totalSpent);
                 document.getElementById('totalBtc').textContent = totalBtc.toFixed(4);
