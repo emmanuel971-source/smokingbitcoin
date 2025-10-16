@@ -200,7 +200,7 @@
             gap: 10px;
             margin-top: 10px;
         }
-        #amount {
+        #currentValue {
             font-size: 2.5rem !important; /* Max size for opportunity cost */
         }
         #emoji {
@@ -233,7 +233,7 @@
             .methodology h3 {
                 font-size: 1.5rem;
             }
-            #amount {
+            #currentValue {
                 font-size: 2rem !important;
             }
             #emoji {
@@ -305,7 +305,7 @@
             <h3 id="resultsTitle">Quel manque à gagner !</h3>
             <div class="text-center mb-4">
                 <div id="emoji" class="text-5xl mb-2">😱</div>
-                <div id="amount" class="text-4xl font-bold" id="currentValue"></div>
+                <div id="currentValue" class="text-4xl font-bold"></div>
             </div>
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
@@ -462,93 +462,93 @@
         };
 
         // Traductions
-const translations = {
-    fr: {
-        hook: "Bitcoin ou Cigarettes ?",
-        title: "Et si vous aviez investi dans le Bitcoin plutôt que dans les cigarettes...",
-        countryLabel: "Dans quel pays vivez-vous ?",
-        cigsLabel: "En moyenne, combien de cigarettes fumez-vous par jour ?",
-        yearsLabel: "Depuis combien d'années ?",
-        calcButton: "Calculer",
-        resultsTitle: "Quel manque à gagner !",
-        spentText: "Argent dépensé en cigarettes :",
-        btcText: "Nombre de bitcoin accumulé :",
-        currentBtcText: "Prix actuel du Bitcoin :",
-        currentValue: "Valeur en Bitcoin aujourd'hui :",
-        motivation: "Imaginez ce que vous pourriez faire avec cet argent !",
-        motivationBig: "Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.",
-        shareButton: "Partager sur X",
-        disclaimer: "⚠️ Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement, mais il n'est jamais trop tard pour investir dans votre santé.",
-        methodologyButton: "Méthodologie",
-        years: "ans",
-        year: "an"
-    },
-    en: {
-        hook: "Bitcoin or Cigarettes?",
-        title: "What if you had invested in Bitcoin instead of cigarettes...",
-        countryLabel: "In which country do you live?",
-        cigsLabel: "On average, how many cigarettes do you smoke per day?",
-        yearsLabel: "For how many years?",
-        calcButton: "Calculate",
-        resultsTitle: "What a missed opportunity!",
-        spentText: "Money spent on cigarettes:",
-        btcText: "Number of bitcoin accumulated:",
-        currentBtcText: "Current Bitcoin price:",
-        currentValue: "Bitcoin value today:",
-        motivation: "Imagine what you could do with that money!",
-        motivationBig: "Stop smoking today for a healthier and richer life.",
-        shareButton: "Share on X",
-        disclaimer: "⚠️ Past performance does not presume future performance. This site is not investment advice, but it's never too late to invest in your health.",
-        methodologyButton: "Methodology",
-        years: "years",
-        year: "year"
-    },
-    es: {
-        hook: "¿Bitcoin o cigarrillos?",
-        title: "¿Y si hubieras invertido en Bitcoin en lugar de cigarrillos...?",
-        countryLabel: "¿En qué país vives?",
-        cigsLabel: "En promedio, ¿cuántos cigarrillos fumas por día?",
-        yearsLabel: "¿Durante cuántos años?",
-        calcButton: "Calcular",
-        resultsTitle: "¡Qué oportunidad perdida!",
-        spentText: "Dinero gastado en cigarrillos:",
-        btcText: "Número de bitcoin acumulado:",
-        currentBtcText: "Precio actual de Bitcoin:",
-        currentValue: "Valor en Bitcoin hoy:",
-        motivation: "¡Imagina lo que podrías hacer con ese dinero!",
-        motivationBig: "Deja de fumar hoy para una vida más saludable y rica.",
-        shareButton: "Compartir en X",
-        disclaimer: "⚠️ El rendimiento pasado no presume el futuro. Este sitio no es un consejo de inversión, pero nunca es tarde para invertir en tu salud.",
-        methodologyButton: "Metodología",
-        years: "años",
-        year: "año"
-    }
-};
+        const translations = {
+            fr: {
+                hook: "Bitcoin ou Cigarettes ?",
+                title: "Et si vous aviez investi dans le Bitcoin plutôt que dans les cigarettes...",
+                countryLabel: "Dans quel pays vivez-vous ?",
+                cigsLabel: "En moyenne, combien de cigarettes fumez-vous par jour ?",
+                yearsLabel: "Depuis combien d'années ?",
+                calcButton: "Calculer",
+                resultsTitle: "Quel manque à gagner !",
+                spentText: "Argent dépensé en cigarettes :",
+                btcText: "Nombre de bitcoin accumulé :",
+                currentBtcText: "Prix actuel du Bitcoin :",
+                currentValue: "Valeur en Bitcoin aujourd'hui :",
+                motivation: "Imaginez ce que vous pourriez faire avec cet argent !",
+                motivationBig: "Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.",
+                shareButton: "Partager sur X",
+                disclaimer: "⚠️ Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement, mais il n'est jamais trop tard pour investir dans votre santé.",
+                methodologyButton: "Méthodologie",
+                years: "ans",
+                year: "an"
+            },
+            en: {
+                hook: "Bitcoin or Cigarettes?",
+                title: "What if you had invested in Bitcoin instead of cigarettes...",
+                countryLabel: "In which country do you live?",
+                cigsLabel: "On average, how many cigarettes do you smoke per day?",
+                yearsLabel: "For how many years?",
+                calcButton: "Calculate",
+                resultsTitle: "What a missed opportunity!",
+                spentText: "Money spent on cigarettes:",
+                btcText: "Number of bitcoin accumulated:",
+                currentBtcText: "Current Bitcoin price:",
+                currentValue: "Bitcoin value today:",
+                motivation: "Imagine what you could do with that money!",
+                motivationBig: "Stop smoking today for a healthier and richer life.",
+                shareButton: "Share on X",
+                disclaimer: "⚠️ Past performance does not presume future performance. This site is not investment advice, but it's never too late to invest in your health.",
+                methodologyButton: "Methodology",
+                years: "years",
+                year: "year"
+            },
+            es: {
+                hook: "¿Bitcoin o cigarrillos?",
+                title: "¿Y si hubieras invertido en Bitcoin en lugar de cigarrillos...?",
+                countryLabel: "¿En qué país vives?",
+                cigsLabel: "En promedio, ¿cuántos cigarrillos fumas por día?",
+                yearsLabel: "¿Durante cuántos años?",
+                calcButton: "Calcular",
+                resultsTitle: "¡Qué oportunidad perdida!",
+                spentText: "Dinero gastado en cigarrillos:",
+                btcText: "Número de bitcoin acumulado:",
+                currentBtcText: "Precio actual de Bitcoin:",
+                currentValue: "Valor en Bitcoin hoy:",
+                motivation: "¡Imagina lo que podrías hacer con ese dinero!",
+                motivationBig: "Deja de fumar hoy para una vida más saludable y rica.",
+                shareButton: "Compartir en X",
+                disclaimer: "⚠️ El rendimiento pasado no presume el futuro. Este sitio no es un consejo de inversión, pero nunca es tarde para invertir en tu salud.",
+                methodologyButton: "Metodología",
+                years: "años",
+                year: "año"
+            }
+        };
 
         let lang = 'fr';
         let chart = null;
 
-function applyTranslation(l) {
-    lang = l;
-    const t = translations[l];
-    document.getElementById('hook').textContent = t.hook;
-    document.getElementById('title').textContent = t.title;
-    document.getElementById('countryLabel').textContent = t.countryLabel;
-    document.getElementById('cigsLabel').textContent = t.cigsLabel;
-    document.getElementById('yearsLabel').textContent = t.yearsLabel;
-    document.getElementById('calcButton').innerHTML = '<i class="fas fa-calculator"></i> ' + t.calcButton;
-    document.getElementById('resultsTitle').textContent = t.resultsTitle;
-    document.getElementById('spentText').textContent = t.spentText;
-    document.getElementById('btcText').textContent = t.btcText;
-    document.getElementById('currentBtcText').textContent = t.currentBtcText;
-    document.getElementById('currentValue').innerHTML = t.currentValue; // Updated to match HTML element
-    document.getElementById('motivation').innerHTML = t.motivation + '<br><span class="motivation-big">' + t.motivationBig + '</span>';
-    document.getElementById('shareButton').innerHTML = '<i class="fab fa-x-twitter"></i> ' + t.shareButton;
-    document.getElementById('disclaimer').textContent = t.disclaimer;
-    document.getElementById('methodologyButton').innerHTML = '<i class="fas fa-info-circle"></i> ' + t.methodologyButton;
-    updateCigsDisplay();
-    updateYearsDisplay();
-}
+        function applyTranslation(l) {
+            lang = l;
+            const t = translations[l];
+            document.getElementById('hook').textContent = t.hook;
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('countryLabel').textContent = t.countryLabel;
+            document.getElementById('cigsLabel').textContent = t.cigsLabel;
+            document.getElementById('yearsLabel').textContent = t.yearsLabel;
+            document.getElementById('calcButton').innerHTML = '<i class="fas fa-calculator"></i> ' + t.calcButton;
+            document.getElementById('resultsTitle').textContent = t.resultsTitle;
+            document.getElementById('spentText').textContent = t.spentText;
+            document.getElementById('btcText').textContent = t.btcText;
+            document.getElementById('currentBtcText').textContent = t.currentBtcText;
+            document.getElementById('currentValue').innerHTML = t.currentValue;
+            document.getElementById('motivation').innerHTML = t.motivation + '<br><span class="motivation-big">' + t.motivationBig + '</span>';
+            document.getElementById('shareButton').innerHTML = '<i class="fab fa-x-twitter"></i> ' + t.shareButton;
+            document.getElementById('disclaimer').textContent = t.disclaimer;
+            document.getElementById('methodologyButton').innerHTML = '<i class="fas fa-info-circle"></i> ' + t.methodologyButton;
+            updateCigsDisplay();
+            updateYearsDisplay();
+        }
 
         function updateCigsDisplay() {
             const cigs = parseInt(document.getElementById('cigsPerDay').value) || 10;
@@ -578,123 +578,121 @@ function applyTranslation(l) {
             return new Intl.NumberFormat(locale, { style: 'currency', currency: symbol, minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
         }
 
-       function calculate() {
-    document.getElementById('loader').style.display = 'block';
-    document.getElementById('result').style.display = 'none';
-    document.getElementById('error').style.display = 'none';
+        function calculate() {
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
 
-    setTimeout(() => {
-        const country = document.getElementById('country').value;
-        const cigarettesPerDay = parseInt(document.getElementById('cigsPerDay').value) || 10;
-        const yearsSmoking = parseInt(document.getElementById('yearsSmoking').value) || 5;
+            setTimeout(() => {
+                const country = document.getElementById('country').value;
+                const cigarettesPerDay = parseInt(document.getElementById('cigsPerDay').value) || 10;
+                const yearsSmoking = parseInt(document.getElementById('yearsSmoking').value) || 5;
 
-        if (cigarettesPerDay < 1 || cigarettesPerDay > 60 || yearsSmoking < 1 || yearsSmoking > 15) {
-            document.getElementById('error').style.display = 'block';
-            document.getElementById('loader').style.display = 'none';
-            return;
+                if (cigarettesPerDay < 1 || cigarettesPerDay > 60 || yearsSmoking < 1 || yearsSmoking > 15) {
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('loader').style.display = 'none';
+                    return;
+                }
+
+                const isEU = ['France', 'Germany', 'Spain', 'Italy'].includes(country);
+                const currency = isEU ? 'EUR' : 'USD';
+                const usdToEur = 0.858; // 1 USD = 0.858 EUR on October 16, 2025
+
+                let averagePrice = null;
+                if (country === 'Other') {
+                    averagePrice = parseFloat(document.getElementById('averagePrice').value) || 5;
+                }
+
+                const currentYear = 2025;
+                const currentMonth = 10; // October 2025
+                const startYear = Math.max(2010, currentYear - yearsSmoking);
+
+                let totalSpent = 0;
+                let totalBTC = 0;
+                let monthCount = 0;
+                let totalCigarettes = 0;
+                const yearlyData = { years: [], spent: [], btcValue: [] };
+
+                for (let year = startYear; year <= currentYear; year++) {
+                    const startMonth = (year === startYear) ? 7 : 1; // Start from July 2010
+                    const endMonth = (year === currentYear) ? currentMonth : 12;
+
+                    let yearlySpent = 0;
+                    let yearlyBTC = 0;
+
+                    for (let month = startMonth; month <= endMonth; month++) {
+                        let cigarettePrice = averagePrice || cigarettePriceData[country][year];
+                        if (!cigarettePrice) continue;
+
+                        const btcPrice = btcMonthlyPrices[year]?.[month];
+                        if (!btcPrice) continue;
+
+                        const packsPerMonth = (cigarettesPerDay * 30) / 20;
+                        const monthlySpent = packsPerMonth * cigarettePrice;
+                        const btcBought = monthlySpent / btcPrice;
+
+                        totalSpent += monthlySpent;
+                        totalBTC += btcBought;
+                        totalCigarettes += cigarettesPerDay * 30;
+                        yearlySpent += monthlySpent;
+                        yearlyBTC += btcBought;
+                        monthCount++;
+                    }
+
+                    if (yearlySpent > 0) {
+                        yearlyData.years.push(year);
+                        yearlyData.spent.push(totalSpent);
+                        yearlyData.btcValue.push(totalBTC * btcMonthlyPrices[2025][10]);
+                    }
+                }
+
+                if (monthCount === 0 || isNaN(totalSpent) || isNaN(totalBTC)) {
+                    console.error('Erreur de calcul: aucune donnée valide', { totalSpent, totalBTC, monthCount });
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('loader').style.display = 'none';
+                    return;
+                }
+
+                const currentBtcPrice = 108289.6; // Fetched from investing.com for October 16, 2025
+                let currentValue = totalBTC * currentBtcPrice;
+                let profit = currentValue - totalSpent;
+                let profitPercent = ((currentValue - totalSpent) / totalSpent) * 100;
+
+                // Convert to EUR if EU country
+                let displayBtcPrice = currentBtcPrice;
+                if (currency === 'EUR') {
+                    totalSpent *= usdToEur;
+                    currentValue *= usdToEur;
+                    profit *= usdToEur;
+                    displayBtcPrice *= usdToEur;
+                }
+
+                const avgBtcPrice = totalSpent / totalBTC;
+
+                document.getElementById('totalCigarettes').textContent = totalCigarettes.toLocaleString();
+                document.getElementById('totalSpent').innerHTML = formatCurrency(totalSpent, currency);
+                document.getElementById('totalBtc').innerHTML = totalBTC.toFixed(6) + ' BTC <small>(' + formatCurrency(avgBtcPrice, currency) + ')</small>';
+                document.getElementById('currentBtcPrice').innerHTML = formatCurrency(displayBtcPrice, currency);
+                document.getElementById('currentValue').innerHTML = formatCurrency(currentValue, currency);
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('result').style.display = 'block';
+
+                if (chart) chart.destroy();
+                const ctx = document.getElementById('evolutionChart').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: yearlyData.years,
+                        datasets: [
+                            { label: translations[lang].spentText, data: yearlyData.spent, borderColor: '#dc3545', fill: false },
+                            { label: translations[lang].currentValue, data: yearlyData.btcValue, borderColor: '#198754', fill: false }
+                        ]
+                    },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                });
+            }, 500); // Simule chargement
         }
-
-        const isEU = ['France', 'Germany', 'Spain', 'Italy'].includes(country);
-        const currency = isEU ? 'EUR' : 'USD';
-        const usdToEur = 0.858; // 1 USD = 0.858 EUR on October 16, 2025
-
-        let averagePrice = null;
-        if (country === 'Other') {
-            averagePrice = parseFloat(document.getElementById('averagePrice').value) || 5;
-        }
-
-        const currentYear = 2025;
-        const currentMonth = 10; // October 2025
-        const startYear = Math.max(2010, currentYear - yearsSmoking);
-
-        let totalSpent = 0;
-        let totalBTC = 0;
-        let monthCount = 0;
-        let totalCigarettes = 0;
-        const yearlyData = { years: [], spent: [], btcValue: [] };
-
-        for (let year = startYear; year <= currentYear; year++) {
-            const startMonth = (year === startYear) ? 7 : 1; // Start from July 2010
-            const endMonth = (year === currentYear) ? currentMonth : 12;
-
-            let yearlySpent = 0;
-            let yearlyBTC = 0;
-
-            for (let month = startMonth; month <= endMonth; month++) {
-                let cigarettePrice = averagePrice || cigarettePriceData[country][year];
-                if (!cigarettePrice) continue;
-
-                const btcPrice = btcMonthlyPrices[year]?.[month];
-                if (!btcPrice) continue;
-
-                const packsPerMonth = (cigarettesPerDay * 30) / 20;
-                const monthlySpent = packsPerMonth * cigarettePrice;
-                const btcBought = monthlySpent / btcPrice;
-
-                totalSpent += monthlySpent;
-                totalBTC += btcBought;
-                totalCigarettes += cigarettesPerDay * 30;
-                yearlySpent += monthlySpent;
-                yearlyBTC += btcBought;
-                monthCount++;
-            }
-
-            if (yearlySpent > 0) {
-                yearlyData.years.push(year);
-                yearlyData.spent.push(totalSpent);
-                yearlyData.btcValue.push(totalBTC * btcMonthlyPrices[2025][10]);
-            }
-        }
-
-        if (monthCount === 0 || isNaN(totalSpent) || isNaN(totalBTC)) {
-            console.error('Erreur de calcul: aucune donnée valide', { totalSpent, totalBTC, monthCount });
-            document.getElementById('error').style.display = 'block';
-            document.getElementById('loader').style.display = 'none';
-            return;
-        }
-
-        const currentBtcPrice = 108289.6; // Fetched from investing.com for October 16, 2025
-        let currentValue = totalBTC * currentBtcPrice;
-        let profit = currentValue - totalSpent;
-        let profitPercent = ((currentValue - totalSpent) / totalSpent) * 100;
-
-        // Convert to EUR if EU country
-        let displayBtcPrice = currentBtcPrice;
-        if (currency === 'EUR') {
-            totalSpent *= usdToEur;
-            currentValue *= usdToEur;
-            profit *= usdToEur;
-            displayBtcPrice *= usdToEur; // Use a new variable instead of reassigning
-        }
-
-        const avgBtcPrice = totalSpent / totalBTC;
-
-        document.getElementById('totalCigarettes').textContent = totalCigarettes.toLocaleString();
-        document.getElementById('totalSpent').innerHTML = formatCurrency(totalSpent, currency);
-        document.getElementById('totalBtc').innerHTML = totalBTC.toFixed(6) + ' BTC <small>(' + formatCurrency(avgBtcPrice, currency) + ')</small>';
-        document.getElementById('currentBtcPrice').innerHTML = formatCurrency(displayBtcPrice, currency);
-        document.getElementById('currentValue').innerHTML = formatCurrency(currentValue, currency);
-        // Remove profit line since it's not in the HTML
-        // document.getElementById('profit').innerHTML = formatCurrency(profit, currency) + ' <span class="text-small">(' + profitPercent.toFixed(0) + '%)</span>';
-
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('result').style.display = 'block';
-
-        if (chart) chart.destroy();
-        const ctx = document.getElementById('evolutionChart').getContext('2d');
-        chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: yearlyData.years,
-                datasets: [
-                    { label: translations[lang].spentText, data: yearlyData.spent, borderColor: '#dc3545', fill: false },
-                    { label: translations[lang].currentValue, data: yearlyData.btcValue, borderColor: '#198754', fill: false } // Updated label
-                ]
-            },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
-        });
-    }, 500); // Simule chargement
-}
 
         function shareOnX() {
             const currentValue = document.getElementById('currentValue').innerHTML;
@@ -732,4 +730,3 @@ function applyTranslation(l) {
     </script>
 </body>
 </html>
-
