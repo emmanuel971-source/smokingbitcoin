@@ -90,12 +90,6 @@
             color: #ffc107;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
-        .profit-display {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffc107;
-            margin-top: 10px;
-        }
         .motivation {
             margin-top: 15px;
             font-size: 1.1rem;
@@ -183,16 +177,13 @@
             .methodology h3 {
                 font-size: 1.5rem;
             }
-            .profit-display {
-                font-size: 1.2rem;
-            }
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h2 id="hook">Bitcoin ou Cigarettes ?</h2>
-        <h1><i class="fas fa-lungs icon"></i><span id="title">Et si vous aviez investi dans le Bitcoin plutôt que dans les cigarettes...</span><i class="fab fa-bitcoin icon"></i></h1>
+        <h1><i class="fas fa-lungs icon"></i><span id="title">Bitcoin vs Cigarettes</span><i class="fab fa-bitcoin icon"></i></h1>
     </div>
     
     <div class="container">
@@ -221,14 +212,14 @@
             <div class="mb-3">
                 <label for="cigsPerDay" class="form-label" id="cigsLabel">En moyenne, combien de cigarettes fumez-vous par jour ?</label>
                 <input type="number" class="form-control" id="cigsPerDay" min="1" max="60" value="10" aria-describedby="cigsHelp">
-                <small id="cigsHelp" class="form-text text-muted">Entrez votre consommation quotidienne de cigarettes</small>
+                <small id="cigsHelp" class="form-text text-muted">Saisissez votre consommation quotidienne</small>
             </div>
             
             <div class="mb-3">
-                <label for="yearsSmoking" class="form-label" id="yearsLabel">Depuis combien d'années fumez-vous ?</label>
+                <label for="yearsSmoking" class="form-label" id="yearsLabel">Depuis combien d'années ?</label>
                 <input type="range" class="form-range" id="yearsSmoking" min="1" max="15" value="5" aria-describedby="yearsHelp">
                 <div class="text-center text-lg font-bold text-success" id="yearsDisplay">5 ans</div>
-                <small id="yearsHelp" class="form-text text-muted">Sélectionnez depuis combien d'années vous fumez (1-15 ans)</small>
+                <small id="yearsHelp" class="form-text text-muted">Sélectionnez la durée de votre tabagisme (1-15 ans)</small>
             </div>
             
             <button type="button" class="btn btn-primary btn-calculate" onclick="calculate()" id="calcButton"><i class="fas fa-calculator"></i> Calculer</button>
@@ -238,16 +229,15 @@
             <i class="fas fa-spinner fa-spin"></i> Calcul en cours...
         </div>
         
-        <div class="error" id="error">Une erreur est survenue. Veuillez vérifier vos entrées et réessayer.</div>
+        <div class="error" id="error">Une erreur est survenue. Vérifiez vos saisies et réessayez.</div>
         
         <div id="result" style="display: none;" role="region" aria-live="polite">
-            <h3 id="resultsTitle">Quel manque à gagner !!!</h3>
+            <h3 id="resultsTitle">Quel manque à gagner !</h3>
             <div class="text-center mb-4">
                 <div class="text-5xl mb-2">😱</div>
                 <div class="text-4xl font-bold" id="currentValue"></div>
-                <div class="profit-display" id="profitDisplay"></div>
             </div>
-            <div class="row g-3">
+            <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <div class="bg-white bg-opacity-10 p-3 rounded">
                         <p class="text-white opacity-75 small" id="spentText">Argent dépensé en cigarettes :</p>
@@ -273,6 +263,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row g-3 mb-3">
+                <div class="col-12">
+                    <div class="bg-white bg-opacity-10 p-3 rounded">
+                        <p class="text-white opacity-75 small">Profit net :</p>
+                        <p class="result-value text-success" id="profit"></p>
+                    </div>
+                </div>
+            </div>
             <canvas id="evolutionChart" class="mt-4"></canvas>
             <p class="motivation" id="motivation">Imaginez ce que vous pourriez faire avec cet argent ! Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.</p>
             <button class="btn btn-share mt-2" onclick="shareOnX()" id="shareButton"><i class="fab fa-x-twitter"></i> Partager sur X</button>
@@ -288,7 +286,7 @@
             <div class="methodology-section blue">
                 <h4 class="font-bold mb-2">🔍 Sources des données</h4>
                 <ul class="list-disc pl-5">
-                    <li><strong>Bitcoin :</strong> Prix historiques basés sur les données de CoinGecko, Investing.com et archives publiques (juillet 2010 - octobre 2025).</li>
+                    <li><strong>Bitcoin :</strong> Prix historiques basés sur CoinGecko, Investing.com et archives publiques (juillet 2010 - octobre 2025).</li>
                     <li><strong>USA :</strong> U.S. Bureau of Labor Statistics - Consumer Price Index for Cigarettes.</li>
                     <li><strong>Canada :</strong> Statistics Canada - Average Retail Price for Cigarettes.</li>
                     <li><strong>France :</strong> OFDT (Observatoire Français des Drogues et Toxicomanies).</li>
@@ -310,12 +308,12 @@
             <div class="methodology-section purple">
                 <h4 class="font-bold mb-2">📈 Données Bitcoin remarquables</h4>
                 <ul class="list-disc pl-5">
-                    <li>Juillet 2010 : Premier prix documenté à ~0,05 USD.</li>
-                    <li>2011 : Premier franchissement du seuil de 1 USD (février).</li>
-                    <li>2013 : Première grande bull run, atteignant ~750 USD.</li>
-                    <li>2017 : Bull run historique jusqu'à ~19 000 USD.</li>
-                    <li>2021 : Nouveau record à ~69 000 USD.</li>
-                    <li>2024-2025 : ETF Bitcoin approuvés, prix dépassant 100 000 USD.</li>
+                    <li>• <strong>Juillet 2010 :</strong> Premier prix documenté à ~0,05 USD.</li>
+                    <li>• <strong>2011 :</strong> Premier franchissement du seuil de 1 USD (février).</li>
+                    <li>• <strong>2013 :</strong> Première grande bull run, atteignant ~750 USD.</li>
+                    <li>• <strong>2017 :</strong> Bull run historique jusqu'à ~19 000 USD.</li>
+                    <li>• <strong>2021 :</strong> Nouveau record à ~69 000 USD.</li>
+                    <li>• <strong>2024-2025 :</strong> ETF Bitcoin approuvés, prix dépassant 100 000 USD.</li>
                 </ul>
             </div>
             <div class="methodology-section orange">
@@ -358,7 +356,7 @@
     <footer class="text-center mt-4 py-4 text-muted" style="font-size: 0.8rem;">
         <p class="font-medium">© 2025 - Projet éducatif à but non lucratif</p>
         <p class="mt-2">💪 Il n'est jamais trop tard pour investir dans votre santé</p>
-        <p class="mt-2">Sources: <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
+        <p class="mt-2">Sources : <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
         <p class="mt-2 text-xs">Les données sont fournies à titre informatif. Ce site ne constitue pas un conseil financier ou médical.</p>
     </footer>
     
@@ -389,79 +387,79 @@
             2019: {1: 3550.61, 2: 3807.08, 3: 4041.65, 4: 5142.24, 5: 7908.66, 6: 10818.48, 7: 10742.28, 8: 9639.03, 9: 9161.06, 10: 8811.85, 11: 8695.04, 12: 7193.60},
             2020: {1: 8503.94, 2: 9395.80, 3: 6428.98, 4: 7590.62, 5: 9446.57, 6: 9239.14, 7: 10916.74, 8: 11669.40, 9: 10783.53, 10: 12969.90, 11: 17711.76, 12: 23172.25},
             2021: {1: 34279.51, 2: 45137.58, 3: 55847.12, 4: 57748.68, 5: 49312.68, 6: 35563.27, 7: 37315.87, 8: 45882.25, 9: 46925.50, 10: 60992.66, 11: 57005.43, 12: 47686.81},
-            2022: {1: 38013.22, 2: 39316.73, 3: 42206.78, 4: 38540.79, 5: 30283.24, 6: 20498.35, 7: 21564.19, 8: 21346.55, 9: 19426.95, 10: 19315.02, 11: 16950.53, 12: 16833.02},
+            2022: {1: 38013.22, 2: 39316.73, 3: 42206.78, 4: 38540.79, 5: 30283.24, 6: 20498.35, 7: 21564.19, 8: 21346.55, 9: 19426.95, 10: 19315.95, 11: 16950.53, 12: 16833.02},
             2023: {1: 20961.86, 2: 23445.69, 3: 27491.65, 4: 28469.34, 5: 27228.25, 6: 30401.88, 7: 29866.84, 8: 29196.21, 9: 26920.29, 10: 33926.27, 11: 36660.47, 12: 42201.12},
             2024: {1: 43037.79, 2: 51780.76, 3: 66606.85, 4: 64063.23, 5: 66824.03, 6: 61255.01, 7: 64285.59, 8: 59702.45, 9: 60253.86, 10: 67000.00, 11: 88000.00, 12: 95000.00},
             2025: {1: 100000.00, 2: 103000.00, 3: 105000.00, 4: 102000.00, 5: 98000.00, 6: 95000.00, 7: 92000.00, 8: 90000.00, 9: 88000.00, 10: 67000.00}
         };
 
-        // Traductions mises à jour
+        // Traductions
         const translations = {
             fr: {
                 hook: "Bitcoin ou Cigarettes ?",
                 title: "Et si vous aviez investi dans le Bitcoin plutôt que dans les cigarettes...",
                 countryLabel: "Dans quel pays vivez-vous ?",
                 cigsLabel: "En moyenne, combien de cigarettes fumez-vous par jour ?",
-                yearsLabel: "Depuis combien d'années fumez-vous ?",
+                yearsLabel: "Depuis combien d'années ?",
                 calcButton: "Calculer",
-                resultsTitle: "Quel manque à gagner !!!",
+                resultsTitle: "Quel manque à gagner !",
                 spentText: "Argent dépensé en cigarettes :",
                 btcText: "Vous auriez pu accumuler :",
                 avgBtcText: "Prix moyen d'achat du Bitcoin :",
                 currentBtcText: "Prix actuel du Bitcoin :",
-                btcValue: "Valeur en Bitcoin aujourd'hui",
+                btcValue: "Valeur en Bitcoin aujourd'hui :",
+                profitText: "Profit net :",
+                profitPercentText: "(% de rendement)",
                 motivation: "Imaginez ce que vous pourriez faire avec cet argent ! Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.",
                 shareButton: "Partager sur X",
                 disclaimer: "⚠️ Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement, mais il n'est jamais trop tard pour investir dans votre santé.",
                 methodologyButton: "Méthodologie",
                 years: "ans",
-                year: "an",
-                profitText: "Profit net :",
-                profitPercentText: "(%)"
+                year: "an"
             },
             en: {
                 hook: "Bitcoin or Cigarettes?",
-                title: "What if you had invested in Bitcoin instead of cigarettes...",
-                countryLabel: "In which country do you live?",
-                cigsLabel: "On average, how many cigarettes do you smoke per day?",
-                yearsLabel: "How many years have you been smoking?",
+                title: "What if you had invested in Bitcoin instead of cigarettes?",
+                countryLabel: "Your country",
+                cigsLabel: "Cigarettes per day",
+                yearsLabel: "Smoking since",
                 calcButton: "Calculate",
-                resultsTitle: "What an opportunity cost!!!",
+                resultsTitle: "Your opportunity cost!",
                 spentText: "Money spent on cigarettes:",
                 btcText: "You could have accumulated:",
                 avgBtcText: "Average Bitcoin purchase price:",
                 currentBtcText: "Current Bitcoin price:",
-                btcValue: "Value in Bitcoin today",
+                btcValue: "Bitcoin value today:",
+                profitText: "Net profit:",
+                profitPercentText: "(return %)",
                 motivation: "Imagine what you could do with that money! Quit smoking today for a healthier, richer life.",
                 shareButton: "Share on X",
                 disclaimer: "⚠️ Past performance does not guarantee future results. This site is not investment advice, but it's never too late to invest in your health.",
                 methodologyButton: "Methodology",
                 years: "years",
-                year: "year",
-                profitText: "Net profit:",
-                profitPercentText: "(%)"
+                year: "year"
             },
             es: {
-                hook: "¿Bitcoin o Cigarrillos?",
-                title: "¿Y si hubieras invertido en Bitcoin en lugar de cigarrillos...",
-                countryLabel: "¿En qué país vives?",
-                cigsLabel: "¿En promedio, cuántos cigarrillos fumas al día?",
-                yearsLabel: "¿Desde hace cuántos años fumas?",
+                hook: "¿Bitcoin o cigarrillos?",
+                title: "¿Y si hubieras invertido en Bitcoin en lugar de cigarrillos?",
+                countryLabel: "Tu país",
+                cigsLabel: "Cigarrillos por día",
+                yearsLabel: "Fumador desde",
                 calcButton: "Calcular",
-                resultsTitle: "¡Qué coste de oportunidad!!!",
+                resultsTitle: "¡Tu coste de oportunidad!",
                 spentText: "Dinero gastado en cigarrillos:",
                 btcText: "Podrías haber acumulado:",
                 avgBtcText: "Precio medio de compra de Bitcoin:",
                 currentBtcText: "Precio actual de Bitcoin:",
-                btcValue: "Valor en Bitcoin hoy",
+                btcValue: "Valor en Bitcoin hoy:",
+                profitText: "Beneficio neto:",
+                profitPercentText: "(rendimiento %)",
                 motivation: "¡Imagina lo que podrías hacer con ese dinero! Deja de fumar hoy para una vida más sana y rica.",
                 shareButton: "Compartir en X",
                 disclaimer: "⚠️ El rendimiento pasado no garantiza resultados futuros. Este sitio no es un consejo de inversión, pero nunca es tarde para invertir en tu salud.",
                 methodologyButton: "Metodología",
                 years: "años",
-                year: "año",
-                profitText: "Ganancia neta:",
-                profitPercentText: "(%)"
+                year: "año"
             }
         };
 
@@ -582,7 +580,7 @@
                 document.getElementById('avgBtcPrice').innerHTML = formatCurrency(avgBtcPrice);
                 document.getElementById('currentBtcPrice').innerHTML = formatCurrency(currentBtcPrice);
                 document.getElementById('currentValue').innerHTML = formatCurrency(currentValue);
-                document.getElementById('profitDisplay').innerHTML = `${translations[lang].profitText} ${formatCurrency(profit)} <span class="text-sm">${translations[lang].profitPercentText} ${profitPercent.toFixed(0)}%)</span>`;
+                document.getElementById('profit').innerHTML = `${formatCurrency(profit)} <span class="text-small">(${profitPercent.toFixed(0)}%)</span>`;
 
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('result').style.display = 'block';
@@ -605,8 +603,8 @@
 
         function shareOnX() {
             const currentValue = document.getElementById('currentValue').innerHTML;
-            const profit = document.getElementById('profitDisplay').textContent;
-            const text = encodeURIComponent(`${translations[lang].motivation} ${translations[lang].resultsTitle}: ${currentValue} - ${profit} #StopSmoking #Bitcoin [insérer lien site]`);
+            const profit = document.getElementById('profit').innerHTML;
+            const text = encodeURIComponent(`${translations[lang].motivation} ${translations[lang].resultsTitle}: ${currentValue} (${profit}) #StopSmoking #Bitcoin [insérer lien site]`);
             window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
         }
 
