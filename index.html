@@ -1,455 +1,597 @@
-import React, { useState, useEffect } from 'react';
-import { TrendingUp, Cigarette, Bitcoin, Globe, Info, AlertCircle } from 'lucide-react';
-
-// Base de données des prix des cigarettes (prix moyen par paquet de 20 en USD)
-const cigarettePriceData = {
-  'USA': {
-    2010: 5.51, 2011: 5.95, 2012: 6.23, 2013: 6.41, 2014: 6.53, 
-    2015: 6.43, 2016: 6.52, 2017: 6.65, 2018: 6.85, 2019: 6.96,
-    2020: 7.10, 2021: 7.35, 2022: 7.93, 2023: 8.25, 2024: 8.75, 2025: 9.10
-  },
-  'Canada': {
-    2010: 8.20, 2011: 8.85, 2012: 9.45, 2013: 10.15, 2014: 10.80,
-    2015: 11.50, 2016: 12.30, 2017: 13.15, 2018: 14.05, 2019: 14.95,
-    2020: 15.90, 2021: 16.85, 2022: 17.80, 2023: 19.50, 2024: 21.20, 2025: 22.50
-  },
-  'France': {
-    2010: 6.50, 2011: 6.80, 2012: 7.10, 2013: 7.50, 2014: 7.90,
-    2015: 8.30, 2016: 8.70, 2017: 9.20, 2018: 9.70, 2019: 10.20,
-    2020: 10.70, 2021: 11.30, 2022: 11.90, 2023: 12.50, 2024: 13.10, 2025: 13.50
-  },
-  'Germany': {
-    2010: 5.80, 2011: 6.05, 2012: 6.30, 2013: 6.55, 2014: 6.80,
-    2015: 7.05, 2016: 7.30, 2017: 7.55, 2018: 7.80, 2019: 8.05,
-    2020: 8.30, 2021: 8.55, 2022: 8.90, 2023: 9.25, 2024: 9.60, 2025: 9.85
-  },
-  'UK': {
-    2010: 9.20, 2011: 9.80, 2012: 10.40, 2013: 11.00, 2014: 11.60,
-    2015: 12.20, 2016: 12.80, 2017: 13.50, 2018: 14.20, 2019: 14.90,
-    2020: 15.60, 2021: 16.30, 2022: 17.10, 2023: 17.90, 2024: 18.70, 2025: 19.50
-  },
-  'Spain': {
-    2010: 4.80, 2011: 5.00, 2012: 5.20, 2013: 5.40, 2014: 5.60,
-    2015: 5.80, 2016: 6.00, 2017: 6.20, 2018: 6.45, 2019: 6.70,
-    2020: 6.95, 2021: 7.20, 2022: 7.50, 2023: 7.80, 2024: 8.10, 2025: 8.40
-  },
-  'Italy': {
-    2010: 5.50, 2011: 5.70, 2012: 5.90, 2013: 6.10, 2014: 6.30,
-    2015: 6.50, 2016: 6.70, 2017: 6.90, 2018: 7.15, 2019: 7.40,
-    2020: 7.65, 2021: 7.90, 2022: 8.20, 2023: 8.50, 2024: 8.80, 2025: 9.10
-  },
-  'Australia': {
-    2010: 13.50, 2011: 15.20, 2012: 17.00, 2013: 18.90, 2014: 20.80,
-    2015: 22.70, 2016: 24.80, 2017: 27.00, 2018: 29.50, 2019: 32.10,
-    2020: 34.90, 2021: 37.80, 2022: 40.90, 2023: 44.20, 2024: 47.60, 2025: 51.20
-  }
-};
-
-const translations = {
-  fr: {
-    title: "Bitcoin vs Cigarettes",
-    subtitle: "Et si vous aviez investi dans le Bitcoin plutôt que dans les cigarettes ?",
-    country: "Votre pays",
-    cigarettesPerDay: "Cigarettes par jour",
-    smokingSince: "Fumeur depuis",
-    calculate: "Calculer mon manque à gagner",
-    result: "Votre manque à gagner",
-    totalSpent: "Argent dépensé en cigarettes",
-    btcValue: "Valeur en Bitcoin aujourd'hui",
-    btcAmount: "Bitcoin accumulé",
-    avgBtcPrice: "Prix moyen du Bitcoin",
-    loading: "Chargement des données Bitcoin...",
-    error: "Impossible de charger les données Bitcoin",
-    methodology: "Voir la méthodologie",
-    disclaimer: "Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement mais il n'est jamais trop tard pour investir dans votre santé.",
-    years: "ans"
-  },
-  en: {
-    title: "Bitcoin vs Cigarettes",
-    subtitle: "What if you had invested in Bitcoin instead of cigarettes?",
-    country: "Your country",
-    cigarettesPerDay: "Cigarettes per day",
-    smokingSince: "Smoking since",
-    calculate: "Calculate my opportunity cost",
-    result: "Your opportunity cost",
-    totalSpent: "Money spent on cigarettes",
-    btcValue: "Bitcoin value today",
-    btcAmount: "Bitcoin accumulated",
-    avgBtcPrice: "Average Bitcoin price",
-    loading: "Loading Bitcoin data...",
-    error: "Unable to load Bitcoin data",
-    methodology: "View methodology",
-    disclaimer: "Past performance does not guarantee future results. This site is not investment advice, but it's never too late to invest in your health.",
-    years: "years"
-  },
-  es: {
-    title: "Bitcoin vs Cigarrillos",
-    subtitle: "¿Y si hubieras invertido en Bitcoin en lugar de en cigarrillos?",
-    country: "Tu país",
-    cigarettesPerDay: "Cigarrillos por día",
-    smokingSince: "Fumador desde",
-    calculate: "Calcular mi coste de oportunidad",
-    result: "Tu coste de oportunidad",
-    totalSpent: "Dinero gastado en cigarrillos",
-    btcValue: "Valor en Bitcoin hoy",
-    btcAmount: "Bitcoin acumulado",
-    avgBtcPrice: "Precio medio del Bitcoin",
-    loading: "Cargando datos de Bitcoin...",
-    error: "No se pueden cargar los datos de Bitcoin",
-    methodology: "Ver metodología",
-    disclaimer: "El rendimiento pasado no garantiza resultados futuros. Este sitio no es un consejo de inversión, pero nunca es tarde para invertir en tu salud.",
-    years: "años"
-  }
-};
-
-export default function BitcoinVsCigarettes() {
-  const [language, setLanguage] = useState('fr');
-  const [country, setCountry] = useState('France');
-  const [cigarettesPerDay, setCigarettesPerDay] = useState(10);
-  const [yearsSmoking, setYearsSmoking] = useState(5);
-  const [result, setResult] = useState(null);
-  const [btcPriceData, setBtcPriceData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [showMethodology, setShowMethodology] = useState(false);
-
-  const t = translations[language];
-
-  // Détecter le pays de l'utilisateur
-  useEffect(() => {
-    const detectCountry = async () => {
-      try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        const countryCode = data.country_code;
-        
-        const countryMap = {
-          'US': 'USA',
-          'CA': 'Canada',
-          'FR': 'France',
-          'DE': 'Germany',
-          'GB': 'UK',
-          'ES': 'Spain',
-          'IT': 'Italy',
-          'AU': 'Australia'
-        };
-        
-        if (countryMap[countryCode]) {
-          setCountry(countryMap[countryCode]);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin vs Cigarettes Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
         }
-        
-        // Détecter la langue
-        if (countryCode === 'FR') setLanguage('fr');
-        else if (countryCode === 'ES') setLanguage('es');
-        else setLanguage('en');
-      } catch (error) {
-        console.log('Country detection failed, using default');
-      }
-    };
-    
-    detectCountry();
-  }, []);
-
-  const calculateInvestment = async () => {
-    setLoading(true);
-    
-    try {
-      // Récupérer les prix historiques du Bitcoin
-      const response = await fetch(
-        'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=max&interval=monthly'
-      );
-      const data = await response.json();
-      
-      // Créer un index mensuel des prix BTC
-      const btcMonthlyPrices = {};
-      data.prices.forEach(([timestamp, price]) => {
-        const date = new Date(timestamp);
-        const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-        btcMonthlyPrices[monthKey] = price;
-      });
-
-      // Calculer l'investissement cumulé
-      const startYear = Math.max(2010, new Date().getFullYear() - yearsSmoking);
-      const currentYear = new Date().getFullYear();
-      const currentMonth = new Date().getMonth() + 1;
-      
-      let totalSpent = 0;
-      let totalBTC = 0;
-      let monthCount = 0;
-      
-      for (let year = startYear; year <= currentYear; year++) {
-        const startMonth = (year === startYear) ? new Date().getMonth() + 1 : 1;
-        const endMonth = (year === currentYear) ? currentMonth : 12;
-        
-        for (let month = startMonth; month <= endMonth; month++) {
-          const monthKey = `${year}-${String(month).padStart(2, '0')}`;
-          
-          // Prix des cigarettes pour ce mois
-          const cigarettePrice = cigarettePriceData[country][year] || cigarettePriceData[country][2025];
-          const packsPerMonth = (cigarettesPerDay * 30) / 20; // 20 cigarettes par paquet
-          const monthlySpent = packsPerMonth * cigarettePrice;
-          
-          totalSpent += monthlySpent;
-          
-          // Prix du Bitcoin pour ce mois
-          const btcPrice = btcMonthlyPrices[monthKey];
-          if (btcPrice) {
-            const btcBought = monthlySpent / btcPrice;
-            totalBTC += btcBought;
-            monthCount++;
-          }
+        .header {
+            background: linear-gradient(90deg, #198754, #28a745);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #ffc107;
         }
-      }
-      
-      const currentBTCPrice = data.prices[data.prices.length - 1][1];
-      const currentValue = totalBTC * currentBTCPrice;
-      const avgBTCPrice = totalSpent / totalBTC;
-      
-      setResult({
-        totalSpent,
-        currentValue,
-        btcAmount: totalBTC,
-        avgBtcPrice: avgBTCPrice,
-        currentBtcPrice: currentBTCPrice
-      });
-      
-    } catch (error) {
-      console.error('Error:', error);
-      alert(t.error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(value);
-  };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800 p-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8 pt-8">
-          <div className="flex justify-center items-center gap-3 mb-4">
-            <Bitcoin className="w-12 h-12 text-yellow-400" />
-            <h1 className="text-5xl font-bold text-white">{t.title}</h1>
-            <Cigarette className="w-12 h-12 text-red-400" />
-          </div>
-          <p className="text-xl text-purple-100">{t.subtitle}</p>
-          
-          {/* Language selector */}
-          <div className="flex justify-center gap-2 mt-4">
-            <button
-              onClick={() => setLanguage('fr')}
-              className={`px-4 py-2 rounded ${language === 'fr' ? 'bg-white text-purple-700' : 'bg-purple-500 text-white'}`}
-            >
-              FR
-            </button>
-            <button
-              onClick={() => setLanguage('en')}
-              className={`px-4 py-2 rounded ${language === 'en' ? 'bg-white text-purple-700' : 'bg-purple-500 text-white'}`}
-            >
-              EN
-            </button>
-            <button
-              onClick={() => setLanguage('es')}
-              className={`px-4 py-2 rounded ${language === 'es' ? 'bg-white text-purple-700' : 'bg-purple-500 text-white'}`}
-            >
-              ES
-            </button>
-          </div>
-        </div>
-
-        {/* Calculator Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8 mb-6">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                <Globe className="inline w-5 h-5 mr-2" />
-                {t.country}
-              </label>
-              <select
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none"
-              >
-                <option value="USA">USA</option>
-                <option value="Canada">Canada</option>
-                <option value="France">France</option>
-                <option value="Germany">Germany / Deutschland</option>
-                <option value="UK">United Kingdom</option>
-                <option value="Spain">Spain / España</option>
-                <option value="Italy">Italy / Italia</option>
-                <option value="Australia">Australia</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-semibold mb-2">
-                <Cigarette className="inline w-5 h-5 mr-2" />
-                {t.cigarettesPerDay}
-              </label>
-              <input
-                type="number"
-                min="1"
-                max="60"
-                value={cigarettesPerDay}
-                onChange={(e) => setCigarettesPerDay(parseInt(e.target.value))}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none"
-              />
-            </div>
-
-            <div className="md:col-span-2">
-              <label className="block text-gray-700 font-semibold mb-2">
-                <TrendingUp className="inline w-5 h-5 mr-2" />
-                {t.smokingSince}
-              </label>
-              <input
-                type="range"
-                min="1"
-                max="15"
-                value={yearsSmoking}
-                onChange={(e) => setYearsSmoking(parseInt(e.target.value))}
-                className="w-full"
-              />
-              <div className="text-center text-2xl font-bold text-purple-600 mt-2">
-                {yearsSmoking} {t.years}
-              </div>
-            </div>
-          </div>
-
-          <button
-            onClick={calculateInvestment}
-            disabled={loading}
-            className="w-full mt-6 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xl font-bold rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? t.loading : t.calculate}
-          </button>
-        </div>
-
-        {/* Results */}
-        {result && (
-          <div className="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl shadow-2xl p-8 text-white animate-fadeIn">
-            <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold mb-2">😱 {t.result}</h2>
-              <div className="text-6xl font-extrabold my-6">
-                {formatCurrency(result.currentValue)}
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 mt-6 pt-6 border-t-2 border-white/30">
-              <div>
-                <p className="text-white/80 text-sm mb-1">{t.totalSpent}</p>
-                <p className="text-2xl font-bold">{formatCurrency(result.totalSpent)}</p>
-              </div>
-              <div>
-                <p className="text-white/80 text-sm mb-1">{t.btcAmount}</p>
-                <p className="text-2xl font-bold">{result.btcAmount.toFixed(4)} BTC</p>
-              </div>
-              <div>
-                <p className="text-white/80 text-sm mb-1">{t.avgBtcPrice}</p>
-                <p className="text-2xl font-bold">{formatCurrency(result.avgBtcPrice)}</p>
-              </div>
-              <div>
-                <p className="text-white/80 text-sm mb-1">Bitcoin {new Date().getFullYear()}</p>
-                <p className="text-2xl font-bold">{formatCurrency(result.currentBtcPrice)}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Disclaimer */}
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded mt-6">
-          <div className="flex items-start">
-            <AlertCircle className="w-6 h-6 text-yellow-600 mr-3 flex-shrink-0 mt-1" />
-            <p className="text-sm text-yellow-800">{t.disclaimer}</p>
-          </div>
-        </div>
-
-        {/* Methodology Link */}
-        <div className="text-center mt-6">
-          <button
-            onClick={() => setShowMethodology(!showMethodology)}
-            className="text-white underline hover:text-purple-200 flex items-center gap-2 mx-auto"
-          >
-            <Info className="w-5 h-5" />
-            {t.methodology}
-          </button>
-        </div>
-
-        {/* Methodology Section */}
-        {showMethodology && (
-          <div className="bg-white rounded-2xl shadow-2xl p-8 mt-6 mb-8">
-            <h3 className="text-2xl font-bold mb-4">Méthodologie / Methodology</h3>
-            
-            <div className="space-y-4 text-gray-700">
-              <section>
-                <h4 className="font-bold text-lg mb-2">📊 Sources des données</h4>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li><strong>Bitcoin:</strong> Prix historiques via CoinGecko API (données quotidiennes/mensuelles depuis juillet 2010)</li>
-                  <li><strong>USA:</strong> U.S. Bureau of Labor Statistics - Consumer Price Index for Cigarettes</li>
-                  <li><strong>Canada:</strong> Statistics Canada - Average Retail Price for Cigarettes</li>
-                  <li><strong>France:</strong> OFDT (Observatoire Français des Drogues et Toxicomanies)</li>
-                  <li><strong>Europe:</strong> Euromonitor, WHO Global Tobacco Price Database</li>
-                  <li><strong>Australia:</strong> Australian Government Department of Health</li>
-                </ul>
-              </section>
-
-              <section>
-                <h4 className="font-bold text-lg mb-2">🧮 Méthode de calcul</h4>
-                <ol className="list-decimal pl-6 space-y-2">
-                  <li><strong>Période:</strong> Calcul depuis juillet 2010 (première cotation fiable du Bitcoin) jusqu'à aujourd'hui</li>
-                  <li><strong>Investissement simulé:</strong> Achat mensuel de Bitcoin avec l'argent qui aurait été dépensé en cigarettes</li>
-                  <li><strong>Prix des cigarettes:</strong> Prix moyen annuel par pays, ajusté mensuellement</li>
-                  <li><strong>Prix du Bitcoin:</strong> Prix mensuel moyen basé sur les données historiques réelles</li>
-                  <li><strong>DCA (Dollar Cost Averaging):</strong> Simulation d'achats réguliers, méthode reconnue comme plus réaliste qu'un achat unique</li>
-                </ol>
-              </section>
-
-              <section>
-                <h4 className="font-bold text-lg mb-2">📈 Estimation des prix des cigarettes</h4>
-                <p>Les prix sont basés sur les données officielles disponibles. Pour les années où les données exactes manquent, nous avons appliqué:</p>
-                <ul className="list-disc pl-6 space-y-1 mt-2">
-                  <li>Taux d'inflation du tabac spécifique à chaque pays</li>
-                  <li>Augmentations fiscales documentées</li>
-                  <li>Interpolation linéaire entre points de données connus</li>
-                </ul>
-              </section>
-
-              <section>
-                <h4 className="font-bold text-lg mb-2">⚠️ Limites et avertissements</h4>
-                <ul className="list-disc pl-6 space-y-1">
-                  <li>Calcul à titre indicatif et éducatif uniquement</li>
-                  <li>Ne tient pas compte des variations régionales de prix</li>
-                  <li>Ne constitue pas un conseil financier ou d'investissement</li>
-                  <li>Les performances passées ne garantissent pas les résultats futurs</li>
-                  <li>Ne considère pas les frais de transaction Bitcoin</li>
-                </ul>
-              </section>
-
-              <section className="bg-blue-50 p-4 rounded-lg">
-                <h4 className="font-bold text-lg mb-2">🔗 Liens utiles</h4>
-                <ul className="space-y-1">
-                  <li><a href="https://www.coingecko.com/en/coins/bitcoin" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">CoinGecko - Bitcoin Historical Data</a></li>
-                  <li><a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">U.S. Bureau of Labor Statistics</a></li>
-                  <li><a href="https://www.who.int/data/gho/data/themes/topics/topic-details/GHO/gho-tobacco-control-raise-taxes-price" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">WHO - Tobacco Prices Database</a></li>
-                  <li><a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Statistics Canada</a></li>
-                </ul>
-              </section>
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
-        <div className="text-center text-white text-sm py-8 opacity-75">
-          <p>© 2025 - Projet éducatif à but non lucratif</p>
-          <p className="mt-2">Il n'est jamais trop tard pour investir dans votre santé 💪</p>
-        </div>
-      </div>
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .header h2 {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-top: 8px;
+        }
+        .icon {
+            margin-right: 8px;
+            font-size: 2.3rem;
+            vertical-align: middle;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .form-label {
+            font-weight: bold;
+            color: #198754;
+        }
+        .btn-calculate {
+            background-color: #198754;
+            border: none;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .btn-calculate:hover {
+            background-color: #146c43;
+        }
+        .btn-share {
+            background-color: #17a2b8;
+            border: none;
+            transition: transform 0.2s;
+        }
+        .btn-share:hover {
+            transform: scale(1.05);
+        }
+        .btn-methodology {
+            background-color: #6c757d;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-methodology:hover {
+            background-color: #5a6268;
+        }
+        #result {
+            margin-top: 25px;
+            text-align: center;
+            background: linear-gradient(to right, #dc3545, #fd7e14);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .result-value {
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        .million {
+            font-size: 2.1rem;
+            color: #ffc107;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .motivation {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #fff;
+            font-weight: bold;
+        }
+        .disclaimer {
+            font-size: 0.8rem;
+            color: #fff;
+            margin-top: 15px;
+            line-height: 1.4;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .methodology {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .methodology h3 {
+            color: #198754;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .methodology-section {
+            background: #e9ecef;
+            padding: 15px;
+            border-left: 4px solid;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .methodology-section.blue {
+            border-color: #0d6efd;
+        }
+        .methodology-section.green {
+            border-color: #198754;
+        }
+        .methodology-section.purple {
+            border-color: #6f42c1;
+        }
+        .methodology-section.orange {
+            border-color: #fd7e14;
+        }
+        .methodology-section.red {
+            border-color: #dc3545;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto !important;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            margin: 20px;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+        @media (max-width: 576px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .header h2 {
+                font-size: 1.1rem;
+            }
+            .icon {
+                font-size: 1.8rem;
+            }
+            .container {
+                padding: 10px;
+            }
+            .result-value {
+                font-size: 1.4rem;
+            }
+            .million {
+                font-size: 1.7rem;
+            }
+            .methodology h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2 id="hook">Can Bitcoin save your life and finances?</h2>
+        <h1><i class="fas fa-lungs icon"></i><i class="fab fa-bitcoin icon"></i> <span id="title">Bitcoin vs Cigarettes</span></h1>
     </div>
-  );
-}
+    
+    <div class="container">
+        <div class="d-flex justify-content-center gap-2 mb-4">
+            <button onclick="applyTranslation('fr')" class="btn btn-sm btn-primary">FR</button>
+            <button onclick="applyTranslation('en')" class="btn btn-sm btn-primary">EN</button>
+            <button onclick="applyTranslation('es')" class="btn btn-sm btn-primary">ES</button>
+        </div>
+
+        <form id="calcForm" aria-label="Bitcoin vs Cigarettes Calculator">
+            <div class="mb-3">
+                <label for="country" class="form-label" id="countryLabel">Your country</label>
+                <select class="form-select" id="country" aria-describedby="countryHelp">
+                    <option value="USA">USA 🇺🇸</option>
+                    <option value="Canada">Canada 🇨🇦</option>
+                    <option value="France" selected>France 🇫🇷</option>
+                    <option value="Germany">Germany 🇩🇪</option>
+                    <option value="UK">United Kingdom 🇬🇧</option>
+                    <option value="Spain">España 🇪🇸</option>
+                    <option value="Italy">Italia 🇮🇹</option>
+                    <option value="Australia">Australia 🇦🇺</option>
+                </select>
+                <small id="countryHelp" class="form-text text-muted">Select your country</small>
+            </div>
+            
+            <div class="mb-3">
+                <label for="cigsPerDay" class="form-label" id="cigsLabel">Cigarettes per day</label>
+                <input type="number" class="form-control" id="cigsPerDay" min="1" max="60" value="10" aria-describedby="cigsHelp">
+                <small id="cigsHelp" class="form-text text-muted">Enter daily cigarette consumption</small>
+            </div>
+            
+            <div class="mb-3">
+                <label for="yearsSmoking" class="form-label" id="yearsLabel">Smoking since</label>
+                <input type="range" class="form-range" id="yearsSmoking" min="1" max="15" value="5" aria-describedby="yearsHelp">
+                <div class="text-center text-lg font-bold text-success" id="yearsDisplay">5 years</div>
+                <small id="yearsHelp" class="form-text text-muted">Select how long you've been smoking (1-15 years)</small>
+            </div>
+            
+            <button type="button" class="btn btn-primary btn-calculate" onclick="calculate()" id="calcButton"><i class="fas fa-calculator"></i> Calculate</button>
+        </form>
+        
+        <div class="loader" id="loader">
+            <i class="fas fa-spinner fa-spin"></i> Calculating...
+        </div>
+        
+        <div class="error" id="error">An error occurred. Please check your inputs and try again.</div>
+        
+        <div id="result" style="display: none;" role="region" aria-live="polite">
+            <h3 id="resultsTitle">Your opportunity cost</h3>
+            <div class="text-center mb-4">
+                <div class="text-5xl mb-2">😱</div>
+                <div class="text-4xl font-bold" id="currentValue"></div>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="bg-white bg-opacity-10 p-3 rounded">
+                        <p class="text-white opacity-75 small" id="spentText">Money spent on cigarettes</p>
+                        <p class="result-value" id="totalSpent"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white bg-opacity-10 p-3 rounded">
+                        <p class="text-white opacity-75 small" id="btcText">Bitcoin accumulated</p>
+                        <p class="result-value" id="totalBtc"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white bg-opacity-10 p-3 rounded">
+                        <p class="text-white opacity-75 small" id="avgBtcText">Average Bitcoin purchase price</p>
+                        <p class="result-value" id="avgBtcPrice"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white bg-opacity-10 p-3 rounded">
+                        <p class="text-white opacity-75 small" id="currentBtcText">Current Bitcoin price</p>
+                        <p class="result-value" id="currentBtcPrice"></p>
+                    </div>
+                </div>
+            </div>
+            <canvas id="evolutionChart" class="mt-4"></canvas>
+            <p class="motivation" id="motivation">Imagine what you could do with that money! Quit smoking today for a healthier, richer life.</p>
+            <button class="btn btn-share mt-2" onclick="shareOnX()" id="shareButton"><i class="fab fa-x-twitter"></i> Share on X</button>
+            <p class="disclaimer" id="disclaimer">⚠️ Past performance does not guarantee future results. This site is not investment advice, but it's never too late to invest in your health.</p>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-methodology" onclick="toggleMethodology()" id="methodologyButton"><i class="fas fa-info-circle"></i> Methodology</button>
+        </div>
+
+        <div class="methodology" id="methodology" style="display: none;">
+            <h3>📊 Methodology</h3>
+            <div class="methodology-section blue">
+                <h4 class="font-bold mb-2">🔍 Data Sources</h4>
+                <ul class="list-disc pl-5">
+                    <li><strong>Bitcoin:</strong> Historical prices from CoinGecko, Investing.com, and public archives (July 2010 - October 2025).</li>
+                    <li><strong>USA:</strong> U.S. Bureau of Labor Statistics - Consumer Price Index for Cigarettes.</li>
+                    <li><strong>Canada:</strong> Statistics Canada - Average Retail Price for Cigarettes.</li>
+                    <li><strong>France:</strong> OFDT (Observatoire Français des Drogues et Toxicomanies).</li>
+                    <li><strong>Europe:</strong> Euromonitor International, WHO Global Tobacco Price Database.</li>
+                    <li><strong>Australia:</strong> Australian Government Department of Health.</li>
+                </ul>
+            </div>
+            <div class="methodology-section green">
+                <h4 class="font-bold mb-2">🧮 Calculation Method</h4>
+                <ol class="list-decimal pl-5">
+                    <li><strong>Calculation Period:</strong> From July 2010 (first reliable Bitcoin price) to October 2025.</li>
+                    <li><strong>Simulated Investment:</strong> Monthly Bitcoin purchases with money spent on cigarettes.</li>
+                    <li><strong>Cigarette Prices:</strong> Official annual average prices per country, distributed monthly.</li>
+                    <li><strong>Bitcoin Prices:</strong> Real monthly average prices based on verified historical data.</li>
+                    <li><strong>DCA (Dollar Cost Averaging):</strong> Simulates regular monthly purchases, a realistic method.</li>
+                    <li><strong>Cumulative Calculation:</strong> Each month builds on the previous month's investment.</li>
+                </ol>
+            </div>
+            <div class="methodology-section purple">
+                <h4 class="font-bold mb-2">📈 Notable Bitcoin Data</h4>
+                <ul class="list-disc pl-5">
+                    <li>July 2010: First documented price at ~0.05 USD.</li>
+                    <li>2011: First crossing of the 1 USD threshold (February).</li>
+                    <li>2013: First major bull run, reaching ~750 USD.</li>
+                    <li>2017: Historic bull run up to ~19,000 USD.</li>
+                    <li>2021: New record at ~69,000 USD.</li>
+                    <li>2024-2025: Bitcoin ETFs approved, price surpassing 100,000 USD.</li>
+                </ul>
+            </div>
+            <div class="methodology-section orange">
+                <h4 class="font-bold mb-2">📊 Cigarette Price Estimation</h4>
+                <ul class="list-disc pl-5">
+                    <li>Uses official tobacco inflation indices by country.</li>
+                    <li>Accounts for documented tax increases.</li>
+                    <li>Linear interpolation between verified data points.</li>
+                    <li>National average prices (regional variations not included).</li>
+                    <li>Based on standard 20-cigarette packs.</li>
+                </ul>
+            </div>
+            <div class="methodology-section red">
+                <h4 class="font-bold mb-2">⚠️ Limitations and Warnings</h4>
+                <ul class="list-disc pl-5">
+                    <li><strong>Educational Calculation:</strong> This site is for informational purposes only, not financial advice.</li>
+                    <li><strong>Simplifications:</strong> Excludes Bitcoin transaction fees and taxes.</li>
+                    <li><strong>Local Variations:</strong> Cigarette prices vary by region/state.</li>
+                    <li><strong>Purchase Assumption:</strong> Assumes Bitcoin was easily accessible and held.</li>
+                    <li><strong>Volatility:</strong> Bitcoin is a highly volatile asset with significant risks.</li>
+                    <li><strong>Past Performance:</strong> Does not guarantee future results.</li>
+                </ul>
+            </div>
+            <div class="methodology-section green">
+                <h4 class="font-bold mb-2">💚 Public Health Message</h4>
+                <p>This calculator illustrates the financial opportunity cost of smoking, but the greatest impact is on your health. Each cigarette not smoked is an investment in your well-being, life expectancy, and quality of life. Tobacco kills over 8 million people annually worldwide. <strong>It's never too late to quit.</strong></p>
+                <div class="mt-3 p-3 bg-gray-100 rounded">
+                    <p class="text-sm"><strong>Resources to quit smoking:</strong></p>
+                    <ul class="text-sm mt-2 list-disc pl-5">
+                        <li>🇫🇷 France: <a href="https://www.tabac-info-service.fr" target="_blank" rel="noopener noreferrer" class="text-primary">Tabac Info Service</a> - 39 89</li>
+                        <li>🇺🇸 USA: <a href="https://www.smokefree.gov" target="_blank" rel="noopener noreferrer" class="text-primary">Smokefree.gov</a> - 1-800-QUIT-NOW</li>
+                        <li>🇨🇦 Canada: <a href="https://www.canada.ca/fr/sante-canada/services/tabagisme-et-tabac.html" target="_blank" rel="noopener noreferrer" class="text-primary">Santé Canada</a></li>
+                        <li>🇬🇧 UK: <a href="https://www.nhs.uk/better-health/quit-smoking/" target="_blank" rel="noopener noreferrer" class="text-primary">NHS - Quit Smoking</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="text-center mt-4 py-4 text-muted" style="font-size: 0.8rem;">
+        <p class="font-medium">© 2025 - Educational non-profit project</p>
+        <p class="mt-2">💪 It's never too late to invest in your health</p>
+        <p class="mt-2">Sources: <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
+        <p class="mt-2 text-xs">Data provided for informational purposes. This site is not financial or medical advice.</p>
+    </footer>
+    
+    <script>
+        // Données cigarettes (USD, paquet de 20)
+        const cigarettePriceData = {
+            'USA': {2010: 5.51, 2011: 5.95, 2012: 6.23, 2013: 6.41, 2014: 6.53, 2015: 6.43, 2016: 6.52, 2017: 6.65, 2018: 6.85, 2019: 6.96, 2020: 7.10, 2021: 7.35, 2022: 7.93, 2023: 8.25, 2024: 8.75, 2025: 9.10},
+            'Canada': {2010: 8.20, 2011: 8.85, 2012: 9.45, 2013: 10.15, 2014: 10.80, 2015: 11.50, 2016: 12.30, 2017: 13.15, 2018: 14.05, 2019: 14.95, 2020: 15.90, 2021: 16.85, 2022: 17.80, 2023: 19.50, 2024: 21.20, 2025: 22.50},
+            'France': {2010: 6.50, 2011: 6.80, 2012: 7.10, 2013: 7.50, 2014: 7.90, 2015: 8.30, 2016: 8.70, 2017: 9.20, 2018: 9.70, 2019: 10.20, 2020: 10.70, 2021: 11.30, 2022: 11.90, 2023: 12.50, 2024: 13.10, 2025: 13.50},
+            'Germany': {2010: 5.80, 2011: 6.05, 2012: 6.30, 2013: 6.55, 2014: 6.80, 2015: 7.05, 2016: 7.30, 2017: 7.55, 2018: 7.80, 2019: 8.05, 2020: 8.30, 2021: 8.55, 2022: 8.90, 2023: 9.25, 2024: 9.60, 2025: 9.85},
+            'UK': {2010: 9.20, 2011: 9.80, 2012: 10.40, 2013: 11.00, 2014: 11.60, 2015: 12.20, 2016: 12.80, 2017: 13.50, 2018: 14.20, 2019: 14.90, 2020: 15.60, 2021: 16.30, 2022: 17.10, 2023: 17.90, 2024: 18.70, 2025: 19.50},
+            'Spain': {2010: 4.80, 2011: 5.00, 2012: 5.20, 2013: 5.40, 2014: 5.60, 2015: 5.80, 2016: 6.00, 2017: 6.20, 2018: 6.45, 2019: 6.70, 2020: 6.95, 2021: 7.20, 2022: 7.50, 2023: 7.80, 2024: 8.10, 2025: 8.40},
+            'Italy': {2010: 5.50, 2011: 5.70, 2012: 5.90, 2013: 6.10, 2014: 6.30, 2015: 6.50, 2016: 6.70, 2017: 6.90, 2018: 7.15, 2019: 7.40, 2020: 7.65, 2021: 7.90, 2022: 8.20, 2023: 8.50, 2024: 8.80, 2025: 9.10},
+            'Australia': {2010: 13.50, 2011: 15.20, 2012: 17.00, 2013: 18.90, 2014: 20.80, 2015: 22.70, 2016: 24.80, 2017: 27.00, 2018: 29.50, 2019: 32.10, 2020: 34.90, 2021: 37.80, 2022: 40.90, 2023: 44.20, 2024: 47.60, 2025: 51.20}
+        };
+
+        // Prix moyens mensuels du Bitcoin (USD)
+        const btcMonthlyPrices = {
+            2010: {7: 0.05, 8: 0.06, 9: 0.06, 10: 0.10, 11: 0.25, 12: 0.30},
+            2011: {1: 0.30, 2: 1.00, 3: 0.87, 4: 1.27, 5: 5.23, 6: 17.90, 7: 13.90, 8: 10.50, 9: 5.50, 10: 3.40, 11: 2.80, 12: 4.25},
+            2012: {1: 5.27, 2: 4.89, 3: 4.93, 4: 5.08, 5: 5.20, 6: 6.49, 7: 8.22, 8: 10.50, 9: 11.78, 10: 11.20, 11: 11.35, 12: 13.45},
+            2013: {1: 13.51, 2: 26.36, 3: 92.48, 4: 144.54, 5: 128.15, 6: 102.24, 7: 95.50, 8: 118.67, 9: 127.10, 10: 196.50, 11: 744.00, 12: 754.00},
+            2014: {1: 815.94, 2: 636.77, 3: 584.48, 4: 449.89, 5: 448.38, 6: 593.06, 7: 609.27, 8: 519.37, 9: 408.53, 10: 382.03, 11: 375.35, 12: 320.19},
+            2015: {1: 225.88, 2: 238.59, 3: 244.93, 4: 235.54, 5: 233.73, 6: 246.01, 7: 285.95, 8: 274.70, 9: 234.53, 10: 274.71, 11: 360.48, 12: 430.10},
+            2016: {1: 433.28, 2: 421.63, 3: 414.97, 4: 447.04, 5: 530.59, 6: 650.63, 7: 631.48, 8: 578.61, 9: 610.86, 10: 661.70, 11: 728.87, 12: 913.66},
+            2017: {1: 998.33, 2: 1154.63, 3: 1163.03, 4: 1341.61, 5: 2277.14, 6: 2506.71, 7: 2595.88, 8: 4335.93, 9: 4192.03, 10: 5753.07, 11: 9251.14, 12: 13880.57},
+            2018: {1: 11341.30, 2: 10412.84, 3: 8865.63, 4: 9243.23, 5: 7603.35, 6: 6614.99, 7: 7609.69, 8: 6943.87, 9: 6601.36, 10: 6361.81, 11: 4316.01, 12: 3742.70},
+            2019: {1: 3550.61, 2: 3807.08, 3: 4041.65, 4: 5142.24, 5: 7908.66, 6: 10818.48, 7: 10742.28, 8: 9639.03, 9: 9161.06, 10: 8811.85, 11: 8695.04, 12: 7193.60},
+            2020: {1: 8503.94, 2: 9395.80, 3: 6428.98, 4: 7590.62, 5: 9446.57, 6: 9239.14, 7: 10916.74, 8: 11669.40, 9: 10783.53, 10: 12969.90, 11: 17711.76, 12: 23172.25},
+            2021: {1: 34279.51, 2: 45137.58, 3: 55847.12, 4: 57748.68, 5: 49312.68, 6: 35563.27, 7: 37315.87, 8: 45882.25, 9: 46925.50, 10: 60992.66, 11: 57005.43, 12: 47686.81},
+            2022: {1: 38013.22, 2: 39316.73, 3: 42206.78, 4: 38540.79, 5: 30283.24, 6: 20498.35, 7: 21564.19, 8: 21346.55, 9: 19426.95, 10: 19315.02, 11: 16950.53, 12: 16833.02},
+            2023: {1: 20961.86, 2: 23445.69, 3: 27491.65, 4: 28469.34, 5: 27228.25, 6: 30401.88, 7: 29866.84, 8: 29196.21, 9: 26920.29, 10: 33926.27, 11: 36660.47, 12: 42201.12},
+            2024: {1: 43037.79, 2: 51780.76, 3: 66606.85, 4: 64063.23, 5: 66824.03, 6: 61255.01, 7: 64285.59, 8: 59702.45, 9: 60253.86, 10: 67000.00, 11: 88000.00, 12: 95000.00},
+            2025: {1: 100000.00, 2: 103000.00, 3: 105000.00, 4: 102000.00, 5: 98000.00, 6: 95000.00, 7: 92000.00, 8: 90000.00, 9: 88000.00, 10: 67000.00}
+        };
+
+        // Traductions
+        const translations = {
+            fr: {
+                hook: "Bitcoin peut-il sauver votre vie et vos finances ?",
+                title: "Bitcoin vs Cigarettes",
+                countryLabel: "Votre pays",
+                cigsLabel: "Cigarettes par jour",
+                yearsLabel: "Fumeur depuis",
+                calcButton: "Calculer mon manque à gagner",
+                resultsTitle: "Votre manque à gagner",
+                spentText: "Argent dépensé en cigarettes",
+                btcText: "Bitcoin accumulé",
+                avgBtcText: "Prix moyen d'achat du Bitcoin",
+                currentBtcText: "Prix actuel du Bitcoin",
+                motivation: "Imaginez ce que vous pourriez faire avec cet argent ! Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.",
+                shareButton: "Partager sur X",
+                disclaimer: "⚠️ Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement, mais il n'est jamais trop tard pour investir dans votre santé.",
+                methodologyButton: "Méthodologie",
+                years: "ans",
+                year: "an"
+            },
+            en: {
+                hook: "Can Bitcoin save your life and finances?",
+                title: "Bitcoin vs Cigarettes",
+                countryLabel: "Your country",
+                cigsLabel: "Cigarettes per day",
+                yearsLabel: "Smoking since",
+                calcButton: "Calculate my opportunity cost",
+                resultsTitle: "Your opportunity cost",
+                spentText: "Money spent on cigarettes",
+                btcText: "Bitcoin accumulated",
+                avgBtcText: "Average Bitcoin purchase price",
+                currentBtcText: "Current Bitcoin price",
+                motivation: "Imagine what you could do with that money! Quit smoking today for a healthier, richer life.",
+                shareButton: "Share on X",
+                disclaimer: "⚠️ Past performance does not guarantee future results. This site is not investment advice, but it's never too late to invest in your health.",
+                methodologyButton: "Methodology",
+                years: "years",
+                year: "year"
+            },
+            es: {
+                hook: "¿Puede Bitcoin salvar tu vida y tus finanzas?",
+                title: "Bitcoin vs Cigarrillos",
+                countryLabel: "Tu país",
+                cigsLabel: "Cigarrillos por día",
+                yearsLabel: "Fumador desde",
+                calcButton: "Calcular mi coste de oportunidad",
+                resultsTitle: "Tu coste de oportunidad",
+                spentText: "Dinero gastado en cigarrillos",
+                btcText: "Bitcoin acumulado",
+                avgBtcText: "Precio medio de compra de Bitcoin",
+                currentBtcText: "Precio actual de Bitcoin",
+                motivation: "¡Imagina lo que podrías hacer con ese dinero! Deja de fumar hoy para una vida más sana y rica.",
+                shareButton: "Compartir en X",
+                disclaimer: "⚠️ El rendimiento pasado no garantiza resultados futuros. Este sitio no es un consejo de inversión, pero nunca es tarde para invertir en tu salud.",
+                methodologyButton: "Metodología",
+                years: "años",
+                year: "año"
+            }
+        };
+
+        let lang = 'fr';
+        let chart = null;
+
+        function applyTranslation(l) {
+            lang = l;
+            const t = translations[l];
+            document.getElementById('hook').textContent = t.hook;
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('countryLabel').textContent = t.countryLabel;
+            document.getElementById('cigsLabel').textContent = t.cigsLabel;
+            document.getElementById('yearsLabel').textContent = t.yearsLabel;
+            document.getElementById('calcButton').innerHTML = '<i class="fas fa-calculator"></i> ' + t.calcButton;
+            document.getElementById('resultsTitle').textContent = t.resultsTitle;
+            document.getElementById('spentText').textContent = t.spentText;
+            document.getElementById('btcText').textContent = t.btcText;
+            document.getElementById('avgBtcText').textContent = t.avgBtcText;
+            document.getElementById('currentBtcText').textContent = t.currentBtcText;
+            document.getElementById('motivation').textContent = t.motivation;
+            document.getElementById('shareButton').innerHTML = '<i class="fab fa-x-twitter"></i> ' + t.shareButton;
+            document.getElementById('disclaimer').textContent = t.disclaimer;
+            document.getElementById('methodologyButton').innerHTML = '<i class="fas fa-info-circle"></i> ' + t.methodologyButton;
+            updateYearsDisplay();
+        }
+
+        function updateYearsDisplay() {
+            const years = parseInt(document.getElementById('yearsSmoking').value) || 5;
+            const t = translations[lang];
+            document.getElementById('yearsDisplay').textContent = `${years} ${years === 1 ? t.year : t.years}`;
+        }
+
+        function toggleMethodology() {
+            const methodology = document.getElementById('methodology');
+            methodology.style.display = methodology.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function formatCurrency(value) {
+            if (value >= 1000000) return `<span class="million">${(value / 1000000).toFixed(3)} M USD</span>`;
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+        }
+
+        function calculate() {
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+
+            setTimeout(() => {
+                const country = document.getElementById('country').value;
+                const cigarettesPerDay = parseInt(document.getElementById('cigsPerDay').value) || 10;
+                const yearsSmoking = parseInt(document.getElementById('yearsSmoking').value) || 5;
+
+                if (cigarettesPerDay < 1 || cigarettesPerDay > 60 || yearsSmoking < 1 || yearsSmoking > 15) {
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('loader').style.display = 'none';
+                    return;
+                }
+
+                const currentYear = 2025;
+                const currentMonth = 10; // October 2025
+                const startYear = Math.max(2010, currentYear - yearsSmoking);
+
+                let totalSpent = 0;
+                let totalBTC = 0;
+                let monthCount = 0;
+                const yearlyData = { years: [], spent: [], btcValue: [] };
+
+                for (let year = startYear; year <= currentYear; year++) {
+                    const startMonth = (year === startYear) ? 7 : 1; // Start from July 2010
+                    const endMonth = (year === currentYear) ? currentMonth : 12;
+
+                    let yearlySpent = 0;
+                    let yearlyBTC = 0;
+
+                    for (let month = startMonth; month <= endMonth; month++) {
+                        const cigarettePrice = cigarettePriceData[country][year];
+                        const btcPrice = btcMonthlyPrices[year]?.[month];
+
+                        if (!cigarettePrice || !btcPrice) {
+                            console.warn(`Données manquantes pour ${year}-${month} (cigarette: ${cigarettePrice}, BTC: ${btcPrice})`);
+                            continue;
+                        }
+
+                        const packsPerMonth = (cigarettesPerDay * 30) / 20;
+                        const monthlySpent = packsPerMonth * cigarettePrice;
+                        const btcBought = monthlySpent / btcPrice;
+
+                        totalSpent += monthlySpent;
+                        totalBTC += btcBought;
+                        yearlySpent += monthlySpent;
+                        yearlyBTC += btcBought;
+                        monthCount++;
+                    }
+
+                    if (yearlySpent > 0) {
+                        yearlyData.years.push(year);
+                        yearlyData.spent.push(totalSpent);
+                        yearlyData.btcValue.push(totalBTC * btcMonthlyPrices[2025][10]);
+                    }
+                }
+
+                if (monthCount === 0 || isNaN(totalSpent) || isNaN(totalBTC)) {
+                    console.error('Erreur de calcul: aucune donnée valide', { totalSpent, totalBTC, monthCount });
+                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('loader').style.display = 'none';
+                    return;
+                }
+
+                const currentBtcPrice = btcMonthlyPrices[2025][10];
+                const currentValue = totalBTC * currentBtcPrice;
+                const avgBtcPrice = totalSpent / totalBTC;
+                const profit = currentValue - totalSpent;
+                const profitPercent = ((currentValue - totalSpent) / totalSpent) * 100;
+
+                document.getElementById('totalSpent').innerHTML = formatCurrency(totalSpent);
+                document.getElementById('totalBtc').textContent = totalBTC.toFixed(6) + ' BTC';
+                document.getElementById('avgBtcPrice').innerHTML = formatCurrency(avgBtcPrice);
+                document.getElementById('currentBtcPrice').innerHTML = formatCurrency(currentBtcPrice);
+                document.getElementById('currentValue').innerHTML = formatCurrency(currentValue);
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('result').style.display = 'block';
+
+                if (chart) chart.destroy();
+                const ctx = document.getElementById('evolutionChart').getContext('2d');
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: yearlyData.years,
+                        datasets: [
+                            { label: translations[lang].spentText, data: yearlyData.spent, borderColor: '#dc3545', fill: false },
+                            { label: translations[lang].btcValue, data: yearlyData.btcValue, borderColor: '#198754', fill: false }
+                        ]
+                    },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                });
+            }, 500); // Simule chargement
+        }
+
+        function shareOnX() {
+            const currentValue = document.getElementById('currentValue').innerHTML;
+            const text = encodeURIComponent(`${translations[lang].motivation} ${translations[lang].resultsTitle}: ${currentValue} #StopSmoking #Bitcoin [insérer lien site]`);
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        }
+
+        // Initialisation
+        document.getElementById('yearsSmoking').addEventListener('input', updateYearsDisplay);
+        applyTranslation('fr');
+    </script>
+</body>
+</html>
