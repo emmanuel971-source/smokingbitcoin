@@ -1112,7 +1112,10 @@ footer a:hover {
 
     function shareOnX() {
         const currentValue = document.getElementById('currentValue').innerText;
-        const text = encodeURIComponent(`Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... Quel manque à gagner : ${currentValue} ! #StopSmoking #Bitcoin https://smokingbitcoin.pages.dev/`);
+        const text = encodeURIComponent(`Et si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
+        Quel manque à gagner : ${currentValue} ! 
+        #StopSmoking #Bitcoin 
+        https://smokingbitcoin.pages.dev/`);
         window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
     }
 
@@ -1120,7 +1123,7 @@ function shareOnLinkedIn() {
   const siteUrl = "https://smokingbitcoin.pages.dev/";
   const currentValue = document.getElementById("currentValue").innerText || "";
   
-  const message = `Et si j'avais investi dans le ₿itcoin plutôt que dans les cigarettes... 🤔
+  const message = `Et si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
 Quel manque à gagner : ${currentValue} !
 Découvrez le calcul ici 👉 ${siteUrl}
 #StopSmoking #Bitcoin #Health #Finance`;
@@ -1128,18 +1131,13 @@ Découvrez le calcul ici 👉 ${siteUrl}
   // Copie du message complet dans le presse-papier
   navigator.clipboard.writeText(message)
     .then(() => {
-      // Affiche le toast Bootstrap
-      const toastElement = document.getElementById('copyToast');
-      const toast = new bootstrap.Toast(toastElement);
-      toast.show();
-
-      // Ouvre LinkedIn après un petit délai (pour lisibilité)
-      setTimeout(() => {
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
-      }, 800);
+      alert("✅ Message copié dans le presse-papier. Il ne reste plus qu’à le coller dans LinkedIn !");
+      // Ouvre la fenêtre de partage LinkedIn
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
     })
     .catch(err => {
       console.error("Erreur de copie :", err);
+      // En cas d’échec, on ouvre quand même la page LinkedIn
       window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
     });
 }
@@ -1154,6 +1152,7 @@ Découvrez le calcul ici 👉 ${siteUrl}
     </script>
 </body>
 </html>
+
 
 
 
