@@ -1,371 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitcoin vs Cigarettes Calculator</title>
+    <meta name="description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Calculateur gratuit sans publicité ni inscription.">
+    <meta name="keywords" content="bitcoin vs cigarettes, calculateur bitcoin tabac, investissement bitcoin, arrêter de fumer, coût du tabac, santé et finance">
+    <meta name="robots" content="index, follow">
+    <title>Bitcoin vs Cigarettes Calculator - Investir dans BTC au lieu du tabac</title>
+    <link rel="canonical" href="https://smokingbitcoin.pages.dev/">
+    <link rel="alternate" href="https://smokingbitcoin.pages.dev/?lang=fr" hreflang="fr">
+    <link rel="alternate" href="https://smokingbitcoin.pages.dev/?lang=en" hreflang="en">
+    <link rel="alternate" href="https://smokingbitcoin.pages.dev/?lang=es" hreflang="es">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <!-- Open Graph / LinkedIn -->
-<meta property="og:title" content="Bitcoin vs Cigarettes - Et si vous aviez investi autrement ?">
-<meta property="og:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que de fumer. Une approche éducative et santé publique.">
-<meta property="og:image" content="https://smokingbitcoin.pages.dev/preview.png">
-<meta property="og:url" content="https://smokingbitcoin.pages.dev/">
-<meta property="og:type" content="website">
+    <meta property="og:title" content="Bitcoin vs Cigarettes - Et si vous aviez investi autrement ?">
+    <meta property="og:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que de fumer. Une approche éducative et santé publique. Gratuit, sans pub ni inscription.">
+    <meta property="og:image" content="https://smokingbitcoin.pages.dev/preview.png">
+    <meta property="og:url" content="https://smokingbitcoin.pages.dev/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://smokingbitcoin.pages.dev/">
-<meta name="twitter:title" content="Bitcoin vs Cigarettes - Calculez votre manque à gagner">
-<meta name="twitter:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes.">
-<meta name="twitter:image" content="https://smokingbitcoin.pages.dev/preview.png">
-    <style>
-body {
-    background-color: #f8f9fa;
-    font-family: 'Poppins', 'Arial', sans-serif;
-}
-.header {
-    background: linear-gradient(135deg, #198754 0%, #28a745 70%, #ffc107 100%);
-    color: white;
-    padding: 40px 20px;
-    text-align: center;
-    border-bottom: 6px solid #ffc107;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
-}
-.header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-    z-index: 1;
-}
-.header h1, .header h2 {
-    position: relative;
-    z-index: 2;
-}
-.header h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 0;
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-}
-.header h2 {
-    font-size: 1.6rem;
-    font-style: italic;
-    margin-top: 12px;
-    opacity: 0.9;
-}
-.icon {
-    margin: 0 12px;
-    font-size: 2.5rem;
-    vertical-align: middle;
-    transition: transform 0.3s ease;
-}
-.icon.pulse {
-    animation: pulse 2s infinite;
-}
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 15px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.form-label {
-    font-weight: 600;
-    color: #198754;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    transition: color 0.3s ease;
-}
-.form-label:hover {
-    color: #146c43;
-}
-.form-select, .form-control {
-    border-radius: 8px;
-    border: 2px solid #28a745;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.form-select:focus, .form-control:focus {
-    border-color: #ffc107;
-    box-shadow: 0 0 8px rgba(255,193,7,0.3);
-}
-.form-range {
-    background: #e9ecef;
-    border-radius: 10px;
-    height: 8px;
-}
-.form-range::-webkit-slider-thumb {
-    background: #198754;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease;
-}
-.form-range::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-.form-range::-webkit-slider-thumb:active {
-    background: #146c43;
-}
-.btn-calculate {
-    background: linear-gradient(90deg, #198754, #28a745);
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    width: 100%;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn-calculate:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.btn-calculate:active {
-    transform: translateY(0);
-}
-.btn-share-x {
-    background-color: #000000;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    color: white;
-}
-.btn-share-x:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.btn-share-linkedin {
-    background-color: #0A66C2;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    color: white;
-}
-.btn-share-linkedin:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.btn-methodology {
-    background-color: #f8f9fa;
-    border: 2px solid #28a745;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-.btn-methodology:hover {
-    background-color: #28a745;
-    color: white;
-}
-#result {
-    margin-top: 30px;
-    padding: 25px;
-    background: linear-gradient(to right, #d4edda, #e6f4ea);
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
-}
-.result-card {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.result-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-}
-.result-value {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #198754;
-}
-.million {
-    font-size: 2.1rem;
-    color: #ffc107;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-}
-.motivation {
-    margin-top: 15px;
-    font-size: 1.1rem;
-    font-style: italic;
-    color: #198754;
-    font-weight: 600;
-}
-.motivation-big {
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-.disclaimer {
-    font-size: 0.8rem;
-    color: #333;
-    margin-top: 15px;
-    line-height: 1.4;
-    background: rgba(255,255,255,0.2);
-    padding: 10px;
-    border-radius: 8px;
-}
-.methodology {
-    margin-top: 25px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.methodology h3 {
-    color: #198754;
-    font-size: 1.8rem;
-    font-weight: 700;
-}
-.methodology-section {
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    transition: transform 0.3s ease;
-}
-.methodology-section:hover {
-    transform: translateX(5px);
-}
-.methodology-section h4::before {
-    font-family: 'FontAwesome';
-    margin-right: 8px;
-}
-.methodology-section.green h4::before { content: '\f004'; }
-.methodology-section.blue h4::before { content: '\f002'; }
-.methodology-section.purple h4::before { content: '\f080'; }
-.methodology-section.orange h4::before { content: '\f1ec'; }
-.methodology-section.red h4::before { content: '\f071'; }
-.chart-container {
-    max-width: 100%;
-    margin: 20px auto;
-    padding: 10px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-canvas {
-    max-width: 100%;
-    height: auto !important;
-}
-.loader {
-    display: none;
-    text-align: center;
-    margin: 20px;
-    font-size: 1.2rem;
-    color: #198754;
-}
-.error {
-    color: #dc3545;
-    font-weight: 600;
-    margin-top: 20px;
-    display: none;
-}
-#averagePriceField {
-    display: none;
-}
-.share-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 15px;
-}
-#currentValue {
-    font-size: 2.8rem !important;
-    color: #146c43;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-}
-#emoji {
-    font-size: 4.5rem;
-    transition: transform 0.3s ease;
-}
-#emoji:hover {
-    transform: scale(1.1);
-}
-#cigarettesSmoked {
-    background: rgba(255,255,255,0.2);
-    padding: 15px;
-    border-radius: 10px;
-}
-footer {
-    background: #f1f3f5;
-    padding: 20px;
-    border-top: 3px solid #28a745;
-    border-radius: 0 0 10px 10px;
-}
-footer p {
-    margin: 5px 0;
-    font-size: 0.9rem;
-}
-footer a {
-    color: #198754;
-    transition: color 0.3s ease;
-}
-footer a:hover {
-    color: #146c43;
-}
-@media (max-width: 576px) {
-    .header h1 {
-        font-size: 2rem;
-    }
-    .header h2 {
-        font-size: 1.2rem;
-    }
-    .icon {
-        font-size: 2rem;
-    }
-    .container {
-        padding: 12px;
-        margin: 10px;
-    }
-    .result-value {
-        font-size: 1.5rem;
-    }
-    .million {
-        font-size: 1.8rem;
-    }
-    .methodology h3 {
-        font-size: 1.6rem;
-    }
-    .methodology-section {
-        padding: 15px;
-    }
-    #currentValue {
-        font-size: 2.2rem !important;
-    }
-    #emoji {
-        font-size: 3.5rem;
-    }
-    .result-card {
-        padding: 12px;
-    }
-    .form-label {
-        font-size: 1rem;
-    }
-    .btn-calculate {
-        font-size: 1.1rem;
-        padding: 10px;
-    }
-    .share-buttons .btn {
-        padding: 8px 16px;
-    }
-}
-    </style>
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://smokingbitcoin.pages.dev/">
+    <meta name="twitter:title" content="Bitcoin vs Cigarettes - Calculez votre manque à gagner">
+    <meta name="twitter:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Gratuit et éducatif.">
+    <meta name="twitter:image" content="https://smokingbitcoin.pages.dev/preview.png">
+
+    <style>body{background-color:#f8f9fa;font-family:'Poppins','Arial',sans-serif}.header{background:linear-gradient(135deg,#198754 0%,#28a745 70%,#ffc107 100%);color:white;padding:40px 20px;text-align:center;border-bottom:6px solid #ffc107;box-shadow:0 4px 8px rgba(0,0,0,.2);position:relative;overflow:hidden}.header::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,rgba(255,255,255,0) 70%);z-index:1}.header h1,.header h2{position:relative;z-index:2}.header h1{font-size:3rem;font-weight:700;margin:0;text-shadow:2px 2px 6px rgba(0,0,0,.3)}.header h2{font-size:1.6rem;font-style:italic;margin-top:12px;opacity:.9}.icon{margin:0 12px;font-size:2.5rem;vertical-align:middle;transition:transform .3s ease}.icon.pulse{animation:pulse 2s infinite}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}.container{max-width:800px;margin:20px auto;padding:15px;background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}.form-label{font-weight:600;color:#198754;font-size:1.1rem;margin-bottom:8px;transition:color .3s ease}.form-label:hover{color:#146c43}.form-select,.form-control{border-radius:8px;border:2px solid #28a745;transition:border-color .3s ease,box-shadow .3s ease}.form-select:focus,.form-control:focus{border-color:#ffc107;box-shadow:0 0 8px rgba(255,193,7,.3)}.form-range{background:#e9ecef;border-radius:10px;height:8px}.form-range::-webkit-slider-thumb{background:#198754;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .2s ease}.form-range::-webkit-slider-thumb:hover{transform:scale(1.2)}.form-range::-webkit-slider-thumb:active{background:#146c43}.btn-calculate{background:linear-gradient(90deg,#198754,#28a745);border:none;border-radius:8px;padding:12px;font-size:1.2rem;font-weight:600;width:100%;transition:transform .2s ease,box-shadow .2s ease}.btn-calculate:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}.btn-calculate:active{transform:translateY(0)}.btn-share-x{background-color:#000;border:none;border-radius:50px;padding:10px 20px;transition:transform .2s ease,box-shadow .2s ease;color:white}.btn-share-x:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}.btn-share-linkedin{background-color:#0A66C2;border:none;border-radius:50px;padding:10px 20px;transition:transform .2s ease,box-shadow .2s ease;color:white}.btn-share-linkedin:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}.btn-methodology{background-color:#f8f9fa;border:2px solid #28a745;border-radius:8px;transition:background-color .3s ease,color .3s ease}.btn-methodology:hover{background-color:#28a745;color:white}#result{margin-top:30px;padding:25px;background:linear-gradient(to right,#d4edda,#e6f4ea);border-radius:12px;box-shadow:0 6px 12px rgba(0,0,0,.15);transition:transform .3s ease}.result-card{background:#fff;padding:15px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:transform .3s ease,box-shadow .3s ease}.result-card:hover{transform:translateY(-4px);box-shadow:0 4px 16px rgba(0,0,0,.2)}.result-value{font-size:1.8rem;font-weight:700;color:#198754}.million{font-size:2.1rem;color:#ffc107;text-shadow:1px 1px 2px rgba(0,0,0,.3)}.motivation{margin-top:15px;font-size:1.1rem;font-style:italic;color:#198754;font-weight:600}.motivation-big{font-size:1.3rem;font-weight:700}.disclaimer{font-size:.8rem;color:#333;margin-top:15px;line-height:1.4;background:rgba(255,255,255,.2);padding:10px;border-radius:8px}.methodology{margin-top:25px;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}.methodology h3{color:#198754;font-size:1.8rem;font-weight:700}.methodology-section{padding:20px;border-radius:8px;margin-bottom:15px;transition:transform .3s ease}.methodology-section:hover{transform:translateX(5px)}.methodology-section h4::before{font-family:FontAwesome;margin-right:8px}.methodology-section.green h4::before{content:'\f004'}.methodology-section.blue h4::before{content:'\f002'}.methodology-section.purple h4::before{content:'\f080'}.methodology-section.orange h4::before{content:'\f1ec'}.methodology-section.red h4::before{content:'\f071'}.chart-container{max-width:100%;margin:20px auto;padding:10px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1)}canvas{max-width:100%;height:auto!important}.loader{display:none;text-align:center;margin:20px;font-size:1.2rem;color:#198754}.error{color:#dc3545;font-weight:600;margin-top:20px;display:none}#averagePriceField{display:none}.share-buttons{display:flex;justify-content:center;gap:12px;margin-top:15px}#currentValue{font-size:2.8rem!important;color:#146c43;text-shadow:1px 1px 3px rgba(0,0,0,.2)}#emoji{font-size:4.5rem;transition:transform .3s ease}#emoji:hover{transform:scale(1.1)}#cigarettesSmoked{background:rgba(255,255,255,.2);padding:15px;border-radius:10px}footer{background:#f1f3f5;padding:20px;border-top:3px solid #28a745;border-radius:0 0 10px 10px}footer p{margin:5px 0;font-size:.9rem}footer a{color:#198754;transition:color .3s ease}footer a:hover{color:#146c43}@media (max-width:576px){.header h1{font-size:2rem}.header h2{font-size:1.2rem}.icon{font-size:2rem}.container{padding:12px;margin:10px}.result-value{font-size:1.5rem}.million{font-size:1.8rem}.methodology h3{font-size:1.6rem}.methodology-section{padding:15px}#currentValue{font-size:2.2rem!important}#emoji{font-size:3.5rem}.result-card{padding:12px}.form-label{font-size:1rem}.btn-calculate{font-size:1.1rem;padding:10px}.share-buttons .btn{padding:8px 16px}}</style>
 </head>
 <body>
     <div class="header">
@@ -426,48 +92,48 @@ footer a:hover {
         
         <div class="error" id="error">Une erreur est survenue. Vérifiez vos saisies et réessayez.</div>
         
-       <div id="result" style="display: none;" role="region" aria-live="polite">
-    <div class="text-center mb-4 animate__animated animate__zoomIn">
-        <div id="emoji" class="text-5xl mb-2">😱</div>
-        <div id="currentValue" class="text-4xl font-bold text-success"></div>
-    </div>
-    <h3 id="resultsTitle">Quel manque à gagner !</h3>
-    <div class="row g-3 mb-3">
-        <div class="col-md-6">
-            <div class="result-card" id="cigarettesSmoked">
-                <p class="small" id="cigarettesSmokedText">Nombre de cigarettes fumées :</p>
-                <p class="result-value" id="totalCigarettes"></p>
+        <div id="result" style="display: none;" role="region" aria-live="polite">
+            <div class="text-center mb-4 animate__animated animate__zoomIn">
+                <div id="emoji" class="text-5xl mb-2">😱</div>
+                <div id="currentValue" class="text-4xl font-bold text-success"></div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="result-card">
-                <p class="small" id="spentText">Argent dépensé en cigarettes :</p>
-                <p class="result-value" id="totalSpent"></p>
+            <h3 id="resultsTitle">Quel manque à gagner !</h3>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <div class="result-card" id="cigarettesSmoked">
+                        <p class="small" id="cigarettesSmokedText">Nombre de cigarettes fumées :</p>
+                        <p class="result-value" id="totalCigarettes"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="result-card">
+                        <p class="small" id="spentText">Argent dépensé en cigarettes :</p>
+                        <p class="result-value" id="totalSpent"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="result-card">
+                        <p class="small" id="btcText">Nombre de bitcoin accumulé :</p>
+                        <p class="result-value" id="totalBtc"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="result-card">
+                        <p class="small" id="currentBtcText">Prix actuel du Bitcoin :</p>
+                        <p class="result-value" id="currentBtcPrice"></p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="result-card">
-                <p class="small" id="btcText">Nombre de bitcoin accumulé :</p>
-                <p class="result-value" id="totalBtc"></p>
+            <div class="chart-container">
+                <canvas id="evolutionChart" class="mt-4"></canvas>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="result-card">
-                <p class="small" id="currentBtcText">Prix actuel du Bitcoin :</p>
-                <p class="result-value" id="currentBtcPrice"></p>
+            <p class="motivation" id="motivation">Imaginez ce que vous pourriez faire avec cet argent !<br><span class="motivation-big">Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.</span></p>
+            <div class="share-buttons">
+                <button class="btn btn-share-x mt-2" onclick="shareOnX()" id="shareXButton"><i class="fab fa-x-twitter"></i> Partager sur X</button>
+                <button class="btn btn-share-linkedin mt-2" onclick="shareOnLinkedIn()" id="shareLinkedInButton"><i class="fab fa-linkedin"></i> Partager sur LinkedIn</button>
             </div>
+            <p class="disclaimer" id="disclaimer">⚠️ Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement, mais il n'est jamais trop tard pour investir dans votre santé.</p>
         </div>
-    </div>
-    <div class="chart-container">
-        <canvas id="evolutionChart" class="mt-4"></canvas>
-    </div>
-    <p class="motivation" id="motivation">Imaginez ce que vous pourriez faire avec cet argent !<br><span class="motivation-big">Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.</span></p>
-    <div class="share-buttons">
-        <button class="btn btn-share-x mt-2" onclick="shareOnX()" id="shareXButton"><i class="fab fa-x-twitter"></i> Partager sur X</button>
-        <button class="btn btn-share-linkedin mt-2" onclick="shareOnLinkedIn()" id="shareLinkedInButton"><i class="fab fa-linkedin"></i> Partager sur LinkedIn</button>
-    </div>
-    <p class="disclaimer" id="disclaimer">⚠️ Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement, mais il n'est jamais trop tard pour investir dans votre santé.</p>
-</div>
         <div class="text-center mt-4">
             <button class="btn btn-methodology" onclick="toggleMethodology()" id="methodologyButton"><i class="fas fa-info-circle"></i> Méthodologie</button>
         </div>
@@ -690,7 +356,17 @@ footer a:hover {
                     <p class="mt-2">💪 Il n'est jamais trop tard pour investir dans votre santé</p>
                     <p class="mt-2">Sources : <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
                     <p class="mt-2 text-xs">Les données sont fournies à titre informatif. Ce site ne constitue pas un conseil financier ou médical.</p>
-                `
+                `,
+                meta: {
+                    title: "Bitcoin vs Cigarettes Calculator - Investir dans BTC au lieu du tabac",
+                    description: "Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Calculateur gratuit sans publicité ni inscription.",
+                    keywords: "bitcoin vs cigarettes, calculateur bitcoin tabac, investissement bitcoin, arrêter de fumer, coût du tabac, santé et finance",
+                    ogTitle: "Bitcoin vs Cigarettes - Et si vous aviez investi autrement ?",
+                    ogDescription: "Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que de fumer. Une approche éducative et santé publique. Gratuit, sans pub ni inscription.",
+                    twitterTitle: "Bitcoin vs Cigarettes - Calculez votre manque à gagner",
+                    twitterDescription: "Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Gratuit et éducatif.",
+                    ogLocale: "fr_FR"
+                }
             },
             en: {
                 hook: "₿itcoin or Cigarettes?",
@@ -796,7 +472,17 @@ footer a:hover {
                     <p class="mt-2">💪 It's never too late to invest in your health</p>
                     <p class="mt-2">Sources: <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
                     <p class="mt-2 text-xs">The data is provided for informational purposes. This site does not constitute financial or medical advice.</p>
-                `
+                `,
+                meta: {
+                    title: "Bitcoin vs Cigarettes Calculator - Invest in BTC Instead of Tobacco",
+                    description: "Discover how much you could have earned by investing in Bitcoin instead of cigarettes. Free calculator with no ads or registration.",
+                    keywords: "bitcoin vs cigarettes, bitcoin smoking calculator, bitcoin investment, quit smoking, cost of smoking, health and finance",
+                    ogTitle: "Bitcoin vs Cigarettes - What If You Had Invested Differently?",
+                    ogDescription: "Discover how much you could have earned by investing in Bitcoin instead of smoking. An educational and public health approach. Free, no ads, no registration.",
+                    twitterTitle: "Bitcoin vs Cigarettes - Calculate Your Missed Gains",
+                    twitterDescription: "Discover how much you could have earned by investing in Bitcoin instead of cigarettes. Free and educational.",
+                    ogLocale: "en_US"
+                }
             },
             es: {
                 hook: "¿₿itcoin o cigarrillos?",
@@ -824,9 +510,9 @@ footer a:hover {
                 yearsHelp: "Selecciona la duración de tu tabaquismo (1-15 años)",
                 shareX: "Compartir en X",
                 shareLinkedIn: "Compartir en LinkedIn",
-                shareWhatsApp: "Compartir en WhatsApp",
-                shareFacebook: "Compartir en Facebook",
-                shareInstagram: "Compartir en Instagram",
+                shareWhatsApp: "Compartir sur WhatsApp",
+                shareFacebook: "Compartir sur Facebook",
+                shareInstagram: "Compartir sur Instagram",
                 methodology: `
                     <h3>📊 Metodología</h3>
                     <div class="methodology-section green">
@@ -902,12 +588,35 @@ footer a:hover {
                     <p class="mt-2">💪 Nunca es demasiado tarde para invertir en tu salud</p>
                     <p class="mt-2">Fuentes: <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
                     <p class="mt-2 text-xs">Los datos se proporcionan con fines informativos. Este sitio no constituye consejo financiero o médico.</p>
-                `
+                `,
+                meta: {
+                    title: "Calculadora Bitcoin vs Cigarrillos - Invertir en BTC en lugar de tabaco",
+                    description: "Descubre cuánto podrías haber ganado invirtiendo en Bitcoin en lugar de cigarrillos. Calculadora gratuita sin publicidad ni registro.",
+                    keywords: "bitcoin vs cigarrillos, calculadora bitcoin tabaco, inversión bitcoin, dejar de fumar, costo del tabaco, salud y finanzas",
+                    ogTitle: "Bitcoin vs Cigarrillos - ¿Y si hubieras invertido de otra manera?",
+                    ogDescription: "Descubre cuánto podrías haber ganado invirtiendo en Bitcoin en lugar de fumar. Un enfoque educativo y de salud pública. Gratuito, sin anuncios ni registro.",
+                    twitterTitle: "Bitcoin vs Cigarrillos - Calcula tus ganancias perdidas",
+                    twitterDescription: "Descubre cuánto podrías haber ganado invirtiendo en Bitcoin en lugar de cigarrillos. Gratuito y educativo.",
+                    ogLocale: "es_ES"
+                }
             }
         };
 
         let lang = 'fr';
         let chart = null;
+
+        function updateMetaTags(l) {
+            const m = translations[l].meta;
+            document.title = m.title;
+            document.querySelector('meta[name="description"]').content = m.description;
+            document.querySelector('meta[name="keywords"]').content = m.keywords;
+            document.querySelector('meta[property="og:title"]').content = m.ogTitle;
+            document.querySelector('meta[property="og:description"]').content = m.ogDescription;
+            document.querySelector('meta[property="og:locale"]').content = m.ogLocale;
+            document.querySelector('meta[name="twitter:title"]').content = m.twitterTitle;
+            document.querySelector('meta[name="twitter:description"]').content = m.twitterDescription;
+            document.documentElement.lang = l;
+        }
 
         function applyTranslation(l) {
             lang = l;
@@ -937,6 +646,7 @@ footer a:hover {
             document.getElementById('footer').innerHTML = t.footer;
             updateCigsDisplay();
             updateYearsDisplay();
+            updateMetaTags(l);
         }
 
         function updateCigsDisplay() {
@@ -960,28 +670,28 @@ footer a:hover {
             methodology.style.display = methodology.style.display === 'none' ? 'block' : 'none';
         }
 
-    function formatCurrency(value, currency = 'USD') {
-        const locale = currency === 'EUR' ? 'fr-FR' : 'en-US';
-        const symbol = currency === 'EUR' ? '€' : '$';
-        const formatter = new Intl.NumberFormat(locale, {
-            style: 'currency',
-            currency: currency,
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        });
-        let formatted = formatter.format(value);
-        // Ajouter un espace avant le symbole pour EUR
-        if (currency === 'EUR') {
-            formatted = formatted.replace('€', ' €');
+        function formatCurrency(value, currency = 'USD') {
+            const locale = currency === 'EUR' ? 'fr-FR' : 'en-US';
+            const symbol = currency === 'EUR' ? '€' : '$';
+            const formatter = new Intl.NumberFormat(locale, {
+                style: 'currency',
+                currency: currency,
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+            let formatted = formatter.format(value);
+            // Ajouter un espace avant le symbole pour EUR
+            if (currency === 'EUR') {
+                formatted = formatted.replace('€', ' €');
+            }
+            // Remplacer l'espace insécable par un espace standard
+            formatted = formatted.replace(/\u00A0/g, ' ');
+            // Gérer les millions
+            if (value >= 1000000) {
+                return `<span class="million">${(value / 1000000).toFixed(3).replace('.', ',')} M ${symbol}</span>`;
+            }
+            return formatted;
         }
-        // Remplacer l'espace insécable par un espace standard
-        formatted = formatted.replace(/\u00A0/g, ' ');
-        // Gérer les millions
-        if (value >= 1000000) {
-            return `<span class="million">${(value / 1000000).toFixed(3).replace('.', ',')} M ${symbol}</span>`;
-        }
-        return formatted;
-    }
 
         async function getCurrentPrices() {
             try {
@@ -1110,57 +820,48 @@ footer a:hover {
             });
         }
 
-    function shareOnX() {
-        const currentValue = document.getElementById('currentValue').innerText;
-        const text = encodeURIComponent(`Et si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
-        Quel manque à gagner : ${currentValue} ! 
-        #StopSmoking #Bitcoin 
-        https://smokingbitcoin.pages.dev/`);
-        window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-    }
+        function shareOnX() {
+            const currentValue = document.getElementById('currentValue').innerText;
+            const text = encodeURIComponent(`Et si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
+Quel manque à gagner : ${currentValue} ! 
+#StopSmoking #Bitcoin 
+https://smokingbitcoin.pages.dev/`);
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        }
 
-function shareOnLinkedIn() {
-  const siteUrl = "https://smokingbitcoin.pages.dev/";
-  const currentValue = document.getElementById("currentValue").innerText || "";
-  
-  const message = `Et si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
+        function shareOnLinkedIn() {
+            const siteUrl = "https://smokingbitcoin.pages.dev/";
+            const currentValue = document.getElementById("currentValue").innerText || "";
+            
+            const message = `Et si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
 Quel manque à gagner : ${currentValue} !
 Découvrez le calcul ici 👉 ${siteUrl}
 #StopSmoking #Bitcoin #Health #Finance`;
 
-  // Copie du message complet dans le presse-papier
-  navigator.clipboard.writeText(message)
-    .then(() => {
-      alert("✅ Message copié dans le presse-papier. Il ne reste plus qu’à le coller dans LinkedIn !");
-      // Ouvre la fenêtre de partage LinkedIn
-      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
-    })
-    .catch(err => {
-      console.error("Erreur de copie :", err);
-      // En cas d’échec, on ouvre quand même la page LinkedIn
-      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
-    });
-}
-
-
-
+            // Copie du message complet dans le presse-papier
+            navigator.clipboard.writeText(message)
+              .then(() => {
+                alert("✅ Message copié dans le presse-papier. Il ne reste plus qu’à le coller dans LinkedIn !");
+                // Ouvre la fenêtre de partage LinkedIn
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
+              })
+              .catch(err => {
+                console.error("Erreur de copie :", err);
+                // En cas d’échec, on ouvre quand même la page LinkedIn
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
+              });
+        }
 
         // Initialisation
         document.getElementById('cigsPerDay').addEventListener('input', updateCigsDisplay);
         document.getElementById('yearsSmoking').addEventListener('input', updateYearsDisplay);
         applyTranslation('fr');
+
+        // Détection de la langue du navigateur
+        const browserLang = navigator.language.slice(0,2);
+        if (['fr', 'en', 'es'].includes(browserLang)) {
+            applyTranslation(browserLang);
+        }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
