@@ -15,11 +15,11 @@ body {
     font-family: 'Poppins', 'Arial', sans-serif;
 }
 .header {
-    background: linear-gradient(135deg, #198754 0%, #28a745 70%, #ffc107 100%);
+    background: linear-gradient(135deg, #198754 0%, #28a745 50%, #6abf69 100%); /* Vert santé */
     color: white;
     padding: 40px 20px;
     text-align: center;
-    border-bottom: 6px solid #ffc107;
+    border-bottom: 6px solid #28a745;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     position: relative;
     overflow: hidden;
@@ -88,8 +88,8 @@ body {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .form-select:focus, .form-control:focus {
-    border-color: #ffc107;
-    box-shadow: 0 0 8px rgba(255,193,7,0.3);
+    border-color: #0d6efd; /* Bleu médical */
+    box-shadow: 0 0 8px rgba(13,110,253,0.3);
 }
 .form-range {
     background: #e9ecef;
@@ -151,24 +151,24 @@ body {
 }
 .btn-methodology {
     background-color: #f8f9fa;
-    border: 2px solid #28a745;
+    border: 2px solid #0d6efd; /* Bleu médical */
     border-radius: 8px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 .btn-methodology:hover {
-    background-color: #28a745;
+    background-color: #0d6efd;
     color: white;
 }
 #result {
     margin-top: 30px;
     padding: 25px;
-    background: linear-gradient(to right, #d4edda, #e6f4ea);
+    background: linear-gradient(to right, #C5E3F0, #EAF6FC); /* Bleu clair médical */
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     transition: transform 0.3s ease;
 }
 .result-card {
-    background: #ffffff;
+    background: #f0f8ff;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -181,18 +181,18 @@ body {
 .result-value {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #198754;
+    color: #0d6efd; /* Bleu médical */
 }
 .million {
     font-size: 2.1rem;
-    color: #ffc107;
+    color: #28a745; /* Vert pour les millions, pour contraste */
     text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 .motivation {
     margin-top: 15px;
     font-size: 1.1rem;
     font-style: italic;
-    color: #198754;
+    color: #0d6efd; /* Bleu pour cohérence */
     font-weight: 600;
 }
 .motivation-big {
@@ -216,7 +216,7 @@ body {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 .methodology h3 {
-    color: #198754;
+    color: #0d6efd; /* Bleu médical */
     font-size: 1.8rem;
     font-weight: 700;
 }
@@ -233,11 +233,11 @@ body {
     font-family: 'FontAwesome';
     margin-right: 8px;
 }
-.methodology-section.green h4::before { content: '\f004'; }
-.methodology-section.blue h4::before { content: '\f002'; }
-.methodology-section.purple h4::before { content: '\f080'; }
-.methodology-section.orange h4::before { content: '\f1ec'; }
-.methodology-section.red h4::before { content: '\f071'; }
+.methodology-section.green { border-left: 4px solid #28a745; }
+.methodology-section.blue { border-left: 4px solid #0d6efd; }
+.methodology-section.purple { border-left: 4px solid #6f42c1; }
+.methodology-section.orange { border-left: 4px solid #fd7e14; }
+.methodology-section.red { border-left: 4px solid #dc3545; }
 .chart-container {
     max-width: 100%;
     margin: 20px auto;
@@ -255,7 +255,7 @@ canvas {
     text-align: center;
     margin: 20px;
     font-size: 1.2rem;
-    color: #198754;
+    color: #0d6efd; /* Bleu médical */
 }
 .error {
     color: #dc3545;
@@ -274,7 +274,7 @@ canvas {
 }
 #currentValue {
     font-size: 2.8rem !important;
-    color: #146c43;
+    color: #0d6efd; /* Bleu médical */
     text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
 #emoji {
@@ -292,7 +292,7 @@ canvas {
 footer {
     background: #f1f3f5;
     padding: 20px;
-    border-top: 3px solid #28a745;
+    border-top: 3px solid #0d6efd; /* Bleu médical */
     border-radius: 0 0 10px 10px;
 }
 footer p {
@@ -300,11 +300,11 @@ footer p {
     font-size: 0.9rem;
 }
 footer a {
-    color: #198754;
+    color: #0d6efd; /* Bleu médical */
     transition: color 0.3s ease;
 }
 footer a:hover {
-    color: #146c43;
+    color: #0a58ca;
 }
 @media (max-width: 576px) {
     .header h1 {
@@ -580,8 +580,8 @@ footer a:hover {
                 averagePriceLabel: "En moyenne, quel a été le prix d'un paquet de 20 cigarettes dans votre passé de fumeur ?",
                 cigsLabel: "En moyenne, combien de cigarettes fumez-vous par jour ?",
                 yearsLabel: "Depuis combien d'années ?",
-                calcButton: "Calculer",
-                resultsTitle: "Quel manque à gagner !",
+                calcButton: "Calculer mon manque à gagner",
+                resultsTitle: "Détails du calcul :",
                 cigarettesSmokedText: "Nombre de cigarettes fumées",
                 spentText: "Argent dépensé en cigarettes",
                 btcText: "Nombre de ₿itcoin que j'aurais pu accumuler",
@@ -686,8 +686,8 @@ footer a:hover {
                 averagePriceLabel: "On average, what was the price of a pack of 20 cigarettes in your smoking past?",
                 cigsLabel: "On average, how many cigarettes do you smoke per day?",
                 yearsLabel: "For how many years?",
-                calcButton: "Calculate",
-                resultsTitle: "What a missed opportunity!",
+                calcButton: "Calculate my loss of earnings",
+                resultsTitle: "Calculation details:",
                 cigarettesSmokedText: "Number of cigarettes smoked",
                 spentText: "Money spent on cigarettes",
                 btcText: "Number of ₿itcoin I could have accumulated",
@@ -792,8 +792,8 @@ footer a:hover {
                 averagePriceLabel: "En promedio, ¿cuál fue el precio de un paquete de 20 cigarrillos en tu pasado como fumador?",
                 cigsLabel: "En promedio, ¿cuántos cigarrillos fumas por día?",
                 yearsLabel: "¿Durante cuántos años?",
-                calcButton: "Calcular",
-                resultsTitle: "¡Qué oportunidad perdida!",
+                calcButton: "Calcular mi pérdida de ingresos",
+                resultsTitle: "Detalles del cálculo:",
                 cigarettesSmokedText: "Número de cigarrillos fumados",
                 spentText: "Dinero gastado en cigarrillos",
                 btcText: "Número de ₿itcoins que podrías haber acumulado",
@@ -1088,10 +1088,10 @@ footer a:hover {
                 type: 'line',
                 data: {
                     labels: yearlyData.years,
-                    datasets: [
-                        { label: translations[lang].spentText, data: yearlyData.spent, borderColor: '#dc3545', fill: false },
-                        { label: translations[lang].currentValue, data: yearlyData.btcValue, borderColor: '#198754', fill: false }
-                    ]
+               datasets: [
+    { label: translations[lang].spentText, data: yearlyData.spent, borderColor: '#dc3545', fill: false },
+    { label: translations[lang].currentValue, data: yearlyData.btcValue, borderColor: '#0d6efd', fill: false } /* Bleu médical */
+]
                 },
                 options: { responsive: true, scales: { y: { beginAtZero: true } } }
             });
@@ -1116,6 +1116,7 @@ footer a:hover {
     </script>
 </body>
 </html>
+
 
 
 
