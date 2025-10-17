@@ -10,11 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <!-- Open Graph / LinkedIn -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smokingbitcoin.pages.dev/">
-<meta property="og:title" content="Bitcoin vs Cigarettes - Calculez votre manque à gagner">
-<meta property="og:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Un outil éducatif pour la santé et les finances.">
+<meta property="og:title" content="Bitcoin vs Cigarettes - Et si vous aviez investi autrement ?">
+<meta property="og:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que de fumer. Une approche éducative et santé publique.">
 <meta property="og:image" content="https://smokingbitcoin.pages.dev/preview.png">
+<meta property="og:url" content="https://smokingbitcoin.pages.dev/">
+<meta property="og:type" content="website">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
@@ -1117,9 +1117,13 @@ footer a:hover {
     }
 
 function shareOnLinkedIn() {
-        const url = encodeURIComponent('https://smokingbitcoin.pages.dev/');
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
-    }
+  const currentValue = document.getElementById('currentValue').innerText;
+  const message = `Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... Quel manque à gagner : ${currentValue} ! #StopSmoking #Bitcoin`;
+  navigator.clipboard.writeText(message);
+  alert("💬 Texte copié dans le presse-papier. Collez-le dans LinkedIn !");
+  window.open("https://www.linkedin.com/sharing/share-offsite/?url=https://smokingbitcoin.pages.dev/", "_blank");
+}
+
 
         // Initialisation
         document.getElementById('cigsPerDay').addEventListener('input', updateCigsDisplay);
@@ -1128,6 +1132,7 @@ function shareOnLinkedIn() {
     </script>
 </body>
 </html>
+
 
 
 
