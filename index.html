@@ -9,6 +9,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <!-- Open Graph / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://smokingbitcoin.pages.dev/">
+<meta property="og:title" content="Bitcoin vs Cigarettes - Calculez votre manque à gagner">
+<meta property="og:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Un outil éducatif pour la santé et les finances.">
+<meta property="og:image" content="https://smokingbitcoin.pages.dev/preview.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://smokingbitcoin.pages.dev/">
+<meta name="twitter:title" content="Bitcoin vs Cigarettes - Calculez votre manque à gagner">
+<meta name="twitter:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes.">
+<meta name="twitter:image" content="https://smokingbitcoin.pages.dev/preview.png">
     <style>
 body {
     background-color: #f8f9fa;
@@ -1103,10 +1116,9 @@ footer a:hover {
         window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
     }
 
-    function shareOnLinkedIn() {
-        const currentValue = document.getElementById('currentValue').innerText;
-        const text = encodeURIComponent(`Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... Quel manque à gagner : ${currentValue} ! #StopSmoking #Bitcoin`);
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://smokingbitcoin.pages.dev/&title=${text}`, '_blank');
+function shareOnLinkedIn() {
+        const url = encodeURIComponent('https://smokingbitcoin.pages.dev/');
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
     }
 
         // Initialisation
@@ -1116,6 +1128,7 @@ footer a:hover {
     </script>
 </body>
 </html>
+
 
 
 
