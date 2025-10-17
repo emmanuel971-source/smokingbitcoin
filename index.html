@@ -1117,12 +1117,28 @@ footer a:hover {
     }
 
 function shareOnLinkedIn() {
-  const currentValue = document.getElementById('currentValue').innerText;
-  const message = `Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... Quel manque à gagner : ${currentValue} ! #StopSmoking #Bitcoin`;
-  navigator.clipboard.writeText(message);
-  alert("💬 Texte copié dans le presse-papier. Collez-le dans LinkedIn !");
-  window.open("https://www.linkedin.com/sharing/share-offsite/?url=https://smokingbitcoin.pages.dev/", "_blank");
+  const siteUrl = "https://smokingbitcoin.pages.dev/";
+  const currentValue = document.getElementById("currentValue").innerText || "";
+  
+  const message = `💡 Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
+Quel manque à gagner : ${currentValue} !
+Découvrez le calcul ici 👉 ${siteUrl}
+#StopSmoking #Bitcoin #Health #Finance`;
+
+  // Copie du message complet dans le presse-papier
+  navigator.clipboard.writeText(message)
+    .then(() => {
+      alert("✅ Message copié dans le presse-papier. Il ne reste plus qu’à le coller dans LinkedIn !");
+      // Ouvre la fenêtre de partage LinkedIn
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
+    })
+    .catch(err => {
+      console.error("Erreur de copie :", err);
+      // En cas d’échec, on ouvre quand même la page LinkedIn
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
+    });
 }
+
 
 
         // Initialisation
@@ -1132,6 +1148,7 @@ function shareOnLinkedIn() {
     </script>
 </body>
 </html>
+
 
 
 
