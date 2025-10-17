@@ -818,12 +818,28 @@
             methodology.style.display = methodology.style.display === 'none' ? 'block' : 'none';
         }
 
-        function formatCurrency(value, currency = 'USD') {
-            const locale = currency === 'EUR' ? 'de-DE' : 'en-US';
-            const symbol = currency === 'EUR' ? 'EUR' : 'USD';
-            if (value >= 1000000) return `<span class="million">${(value / 1000000).toFixed(3)} M ${symbol}</span>`;
-            return new Intl.NumberFormat(locale, { style: 'currency', currency: symbol, minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+    function formatCurrency(value, currency = 'USD') {
+        const locale = currency === 'EUR' ? 'fr-FR' : 'en-US';
+        const symbol = currency === 'EUR' ? '€' : '$';
+        const formatter = new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency: currency,
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+        let formatted = formatter.format(value);
+        // Ajouter un espace avant le symbole pour EUR
+        if (currency === 'EUR') {
+            formatted = formatted.replace('€', ' €');
         }
+        // Remplacer l'espace insécable par un espace standard
+        formatted = formatted.replace(/\u00A0/g, ' ');
+        // Gérer les millions
+        if (value >= 1000000) {
+            return `<span class="million">${(value / 1000000).toFixed(3).replace('.', ',')} M ${symbol}</span>`;
+        }
+        return formatted;
+    }
 
         async function getCurrentPrices() {
             try {
@@ -952,17 +968,17 @@
             });
         }
 
-        function shareOnX() {
-            const currentValue = document.getElementById('currentValue').innerHTML;
-            const text = encodeURIComponent(`Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... Quel manque à gagner : ${currentValue} ! #StopSmoking #Bitcoin https://example.com`);
-            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-        }
+    function shareOnX() {
+        const currentValue = document.getElementById('currentValue').innerText;
+        const text = encodeURIComponent(`Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... Quel manque à gagner : ${currentValue} ! #StopSmoking #Bitcoin https://example.com`);
+        window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+    }
 
-        function shareOnLinkedIn() {
-            const currentValue = document.getElementById('currentValue').innerHTML;
-            const text = encodeURIComponent(`Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... Quel manque à gagner : ${currentValue} ! #StopSmoking #Bitcoin`);
-            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://example.com&title=${text}`, '_blank');
-        }
+    function shareOnLinkedIn() {
+        const currentValue = document.getElementById('currentValue').innerText;
+        const text = encodeURIComponent(`Si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... Quel manque à gagner : ${currentValue} ! #StopSmoking #Bitcoin`);
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=https://example.com&title=${text}`, '_blank');
+    }
 
         // Initialisation
         document.getElementById('cigsPerDay').addEventListener('input', updateCigsDisplay);
@@ -971,4 +987,5 @@
     </script>
 </body>
 </html>
+
 
