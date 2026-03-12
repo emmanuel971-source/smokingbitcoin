@@ -83,9 +83,9 @@ body::before{
     radial-gradient(ellipse 50% 35% at 90% 80%,rgba(46,216,160,.22) 0%,transparent 60%),
     radial-gradient(ellipse 40% 30% at 50% 55%,rgba(249,208,0,.14) 0%,transparent 65%);
   pointer-events:none;z-index:0;
-  animation:blobDrift 8s ease-in-out infinite alternate;
+  /* blobDrift désactivé sur mobile — économie GPU */
 }
-@keyframes blobDrift{from{opacity:.7}to{opacity:1}}
+@keyframes blobDrift{0%,100%{opacity:.85}}
 
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .cdot{position:absolute;border-radius:50%;opacity:0;animation:cdotFloat var(--cd) ease-in-out var(--cdelay) infinite;}
@@ -108,7 +108,7 @@ body::before{
   flex:1;display:flex;flex-direction:column;min-height:0;position:relative;overflow:hidden;
 }
 
-/* ── CUVE : pleine largeur ── */
+/* ── CUVE : pleine largeur, PAS de position:relative ici ── */
 #board{
   flex:1;
   display:grid;
@@ -117,87 +117,98 @@ body::before{
   border-left:2px solid rgba(100,200,220,.2);
   border-right:2px solid rgba(100,200,220,.2);
   border-top:2px solid rgba(100,200,220,.2);
-  overflow:hidden;
-  position:relative;
-}
-
-/* ── HUD flottant au-dessus de la cuve ── */
-#hud {
-  position:absolute;
-  top:8px;left:0;right:0;
-  z-index:20;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 10px;
-  pointer-events:none;
+  overflow:hidden; /* les cells restent clippées */
+  position:relative; /* pour z-index enfants */
 }
 
 /* ══════════════════════════════════════
-   HUD flottant — sans labels, sans pilules
+   HUD — sur #game-area qui lui N'a pas overflow:hidden
+   Taille = 100vw/8 = largeur exacte d'une cellule
    ══════════════════════════════════════ */
+#game-area { position:relative; } /* ancrage du HUD absolu */
+
 #hud {
   position:absolute;
-  top:0;left:0;right:0;
-  z-index:20;
+  top:0; left:0; right:0;
+  z-index:50;           /* au-dessus de tout */
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:6px 10px 4px;
+  padding:6px 6px 16px;
   pointer-events:none;
-  /* fond semi-transparent unique sur toute la barre */
-  background:linear-gradient(to bottom, rgba(255,255,255,.65) 0%, rgba(255,255,255,0) 100%);
+  background:linear-gradient(to bottom,
+    rgba(255,255,255,.92) 0%,
+    rgba(255,255,255,.65) 55%,
+    rgba(255,255,255,0)  100%);
 }
 
-/* ── Next kana : même taille que les kanas du plateau ── */
-#hud-next-box {
-  display:flex;flex-direction:column;align-items:center;gap:0;
-  min-width:44px;
+/* cellule de référence : 100vw / 8 */
+:root { --cell: calc(100vw / 8); }
+
+/* ── NIVEAU à GAUCHE ── */
+#hud-level-box {
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+  width:calc(var(--cell) * 1.6);
+  flex-shrink:0;
 }
-#next-kana{
-  font-size:clamp(26px,8vw,38px);
-  font-weight:900;
-  font-family:'Noto Sans JP',sans-serif;
-  color:var(--text-dark);
+.hud-level-emoji {
+  font-size:calc(var(--cell) * 0.92);
+  line-height:1; display:block;
+}
+.hud-level-num {
+  font-family:'Fredoka One', cursive;
+  font-size:calc(var(--cell) * 0.35);
   line-height:1;
-  display:block;
-  /* fond coloré doux comme les kanas du plateau */
-  background:rgba(255,255,255,.75);
-  border-radius:10px;
-  padding:2px 6px;
-  box-shadow:0 2px 8px rgba(0,0,0,.12);
-}
-#next-kana.pop{animation:nextPop .28s ease forwards;}
-@keyframes nextPop{
-  0%  {transform:scale(.5) rotate(-15deg);opacity:.2}
-  55% {transform:scale(1.18) rotate(4deg);opacity:1}
-  75% {transform:scale(.94) rotate(-1deg)}
-  100%{transform:scale(1) rotate(0deg);opacity:1}
 }
 
-/* ── Score : grand et percutant ── */
-#hud-score-val{
-  font-family:'Fredoka One',cursive;
-  font-size:clamp(26px,7.5vw,36px);
+/* ── SCORE au CENTRE ── */
+#hud-score-val {
+  font-family:'Fredoka One', cursive;
+  font-size:calc(var(--cell) * 0.90);
   color:var(--neon-violet);
   line-height:1;
-  text-shadow:0 1px 6px rgba(0,102,255,.25);
+  text-shadow:0 2px 10px rgba(0,102,255,.22);
+  flex:1; text-align:center;
+  /* overflow visible pour que le scale(1.9) ne soit pas coupé */
+  overflow:visible;
 }
-#hud-score-val.bump{animation:scoreBump .42s cubic-bezier(.34,1.56,.64,1);}
-@keyframes scoreBump{
-  0%  {transform:scale(1)}
-  35% {transform:scale(1.7) rotate(-3deg);color:var(--neon-pink);text-shadow:0 0 20px rgba(255,0,102,.7),0 0 40px rgba(255,0,102,.3);}
-  65% {transform:scale(.92) rotate(1deg);}
-  100%{transform:scale(1);color:var(--neon-violet);}
+#hud-score-val.bump { animation:scoreBump .48s cubic-bezier(.34,1.56,.64,1); }
+@keyframes scoreBump {
+  0%   { transform:scale(1); }
+  32%  { transform:scale(1.85) rotate(-4deg);
+         color:var(--neon-pink);
+         text-shadow:0 0 28px rgba(255,0,102,1), 0 0 56px rgba(255,0,102,.45); }
+  64%  { transform:scale(.88) rotate(2deg); }
+  100% { transform:scale(1); color:var(--neon-violet); }
 }
 
-/* ── Niveau : emoji grand + num discret ── */
-#hud-level-box {
-  display:flex;flex-direction:column;align-items:center;gap:0;
-  min-width:44px;
+/* ── NEXT KANA à DROITE ── */
+#hud-next-box {
+  display:flex; align-items:center; justify-content:center;
+  width:calc(var(--cell) * 1.6);
+  flex-shrink:0;
 }
-.hud-level-emoji{font-size:clamp(24px,7vw,32px);line-height:1.1;display:block;}
-.hud-level-num  {font-family:'Fredoka One',cursive;font-size:clamp(12px,3.2vw,15px);line-height:1;}
+#next-kana {
+  font-size:calc(var(--cell) * 0.90);
+  font-weight:900;
+  font-family:'Noto Sans JP', sans-serif;
+  color:#1a1040;
+  line-height:1;
+  display:block;
+  text-align:center;
+  background:rgba(255,255,255,.88);
+  border-radius:calc(var(--cell) * 0.16);
+  padding:3px calc(var(--cell) * 0.14);
+  box-shadow:0 3px 14px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.95);
+  width:calc(var(--cell) * 1.15);
+}
+#next-kana.pop { animation:nextPop .36s cubic-bezier(.34,1.56,.64,1) forwards; }
+@keyframes nextPop {
+  0%   { transform:scale(.22) rotate(-28deg); opacity:0; }
+  50%  { transform:scale(1.38) rotate(7deg);  opacity:1; }
+  75%  { transform:scale(.90) rotate(-2deg); }
+  100% { transform:scale(1)   rotate(0deg);  opacity:1; }
+}
 
 /* ── cells ── */
 .cell{
@@ -351,6 +362,7 @@ body::before{
   /* pas de padding-top ici — géré dans menu-header pour éviter tout cumul */
 }
 #menu-overlay.hidden{display:none;}
+#menu-overlay.hidden *{ animation:none !important; }
 
 .menu-header{
   flex-shrink:0;width:100%;text-align:center;
@@ -359,39 +371,37 @@ body::before{
 }
 .logo-wrap{
   display:flex;flex-direction:column;align-items:center;
-  /* translateY positif uniquement → le logo ne monte jamais hors écran */
-  animation:floatPulse 3s ease-in-out infinite;
+  /* STATIQUE sur mobile — aucune animation pour préserver les perf GPU en jeu */
   cursor:default;position:relative;
-  /* réserve de l'espace en haut pour l'animation */
   margin-top:8px;
+  transform:rotate(-4deg); /* inclinaison fixe sans animation */
 }
-@keyframes floatPulse{
-  0%,100%{transform:translateY(0)   scale(1)    rotate(-4deg)}
-  50%    {transform:translateY(5px) scale(1.02) rotate(-4deg)}
-  /* translateY positif = descend → jamais coupé en haut */
-}
+/* floatPulse désactivé — stub vide pour ne pas casser d'éventuels appels */
+@keyframes floatPulse{ 0%,100%{ transform:rotate(-4deg); } }
+
 .logo-card{position:relative;padding:0 20px;display:flex;flex-direction:column;align-items:center;gap:4px;overflow:visible;}
 .kana-group{position:relative;display:inline-block;line-height:1;}
 .kana-main{
   font-family:"Noto Sans JP",sans-serif;font-weight:900;
   font-size:clamp(58px,16vw,88px);letter-spacing:-2px;line-height:1;display:block;
-  /* fallback couleur pour Firefox qui ne supporte pas background-clip:text */
+  /* gradient fixe — pas d'animation background-position */
   color:#ff6b35;
-  background:linear-gradient(135deg,#ff6b35,#ffbe0b,#6bcb77,#4d96ff,#c77dff,#ff6b6b,#ffbe0b,#ff6b35);
-  background-size:300% 300%;
+  background:linear-gradient(135deg,#ff6b35,#ffbe0b,#6bcb77,#4d96ff,#c77dff,#ff6b6b);
+  background-size:100% 100%;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
-  animation:kanaRainbow 3s linear infinite;
+  /* PAS d'animation kanaRainbow */
   position:relative;z-index:2;
   filter:drop-shadow(2px 4px 0 #1a0050);
 }
-/* Firefox ne supporte pas -webkit-text-fill-color → couleur via color: */
 @supports not (-webkit-background-clip: text){
   .kana-main{ color:#ff6b35 !important; background:none !important; }
   .drop-main{ color:#ffb300 !important; background:none !important; }
 }
-@keyframes kanaRainbow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+/* kanaRainbow désactivé */
+@keyframes kanaRainbow{ 0%,100%{ background-position:0% 50%; } }
+
 .kana-outline-w{position:absolute;inset:0;font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(58px,16vw,88px);letter-spacing:-2px;line-height:1;-webkit-text-fill-color:transparent;-webkit-text-stroke:12px #ffffff;z-index:1;pointer-events:none;}
 .kana-outline-d{position:absolute;inset:0;font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(58px,16vw,88px);letter-spacing:-2px;line-height:1;-webkit-text-fill-color:transparent;-webkit-text-stroke:18px #1a0050;z-index:0;pointer-events:none;}
 .drop-group{position:relative;display:inline-block;line-height:1;margin-top:-2px;}
@@ -404,23 +414,29 @@ body::before{
   -webkit-text-fill-color:transparent;
   background-clip:text;
   position:relative;z-index:2;
+  /* PAS d'animation shimmerDrop */
   filter:drop-shadow(2px 3px 0 #1a0050);
-  animation:shimmerDrop 2.2s ease-in-out infinite;
 }
-@keyframes shimmerDrop{0%,100%{filter:drop-shadow(2px 3px 0 #1a0050) brightness(1)}50%{filter:drop-shadow(2px 3px 0 #1a0050) brightness(1.3) drop-shadow(0 0 12px rgba(255,120,120,.6))}}
+/* shimmerDrop désactivé */
+@keyframes shimmerDrop{ 0%,100%{ filter:drop-shadow(2px 3px 0 #1a0050); } }
+
 .drop-outline-w{position:absolute;inset:0;font-family:"Black Han Sans",sans-serif;font-weight:900;font-size:clamp(38px,11vw,58px);letter-spacing:4px;-webkit-text-fill-color:transparent;-webkit-text-stroke:10px #ffffff;z-index:1;pointer-events:none;}
 .drop-outline-d{position:absolute;inset:0;font-family:"Black Han Sans",sans-serif;font-weight:900;font-size:clamp(38px,11vw,58px);letter-spacing:4px;-webkit-text-fill-color:transparent;-webkit-text-stroke:16px #1a0050;z-index:0;pointer-events:none;}
-.logo-droplet{position:absolute;animation:dropBounce 2.4s ease-in-out infinite;}
-.ld1{top:-18px;left:14px;animation-delay:0s}.ld2{top:-12px;right:24px;animation-delay:.5s}.ld3{bottom:-16px;left:32px;animation-delay:1s}.ld4{bottom:-10px;right:18px;animation-delay:1.5s}.ld5{top:24px;left:-14px;animation-delay:.8s}
-@keyframes dropBounce{0%,100%{transform:translateY(0) scale(1);opacity:1}50%{transform:translateY(5px) scale(.88);opacity:.8}}
-.logo-bubble{position:absolute;border-radius:50%;border:3px solid #fff;animation:bubblePop 2s ease-in-out infinite;}
-.lb1{width:18px;height:18px;background:radial-gradient(circle at 30% 30%,#ffb3e6,#ff3fab);top:-10px;right:-10px;animation-delay:0s;box-shadow:0 2px 8px #ff3fab88;}
-.lb2{width:13px;height:13px;background:radial-gradient(circle at 30% 30%,#b3eeff,#00cfff);bottom:-8px;left:-8px;animation-delay:.7s;box-shadow:0 2px 6px #00cfffaa;}
-.lb3{width:10px;height:10px;background:radial-gradient(circle at 30% 30%,#fffeb3,#ffbe0b);top:8px;left:-11px;animation-delay:1.4s;box-shadow:0 2px 6px #ffbe0baa;}
-@keyframes bubblePop{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+
+/* Gouttelettes & bulles — STATIQUES */
+.logo-droplet{ position:absolute; /* pas d'animation dropBounce */ }
+.ld1{top:-18px;left:14px}.ld2{top:-12px;right:24px}.ld3{bottom:-16px;left:32px}.ld4{bottom:-10px;right:18px}.ld5{top:24px;left:-14px}
+@keyframes dropBounce{ 0%,100%{ transform:none; } }
+.logo-bubble{position:absolute;border-radius:50%;border:3px solid #fff; /* pas d'animation bubblePop */}
+.lb1{width:18px;height:18px;background:radial-gradient(circle at 30% 30%,#ffb3e6,#ff3fab);top:-10px;right:-10px;box-shadow:0 2px 8px #ff3fab88;}
+.lb2{width:13px;height:13px;background:radial-gradient(circle at 30% 30%,#b3eeff,#00cfff);bottom:-8px;left:-8px;box-shadow:0 2px 6px #00cfffaa;}
+.lb3{width:10px;height:10px;background:radial-gradient(circle at 30% 30%,#fffeb3,#ffbe0b);top:8px;left:-11px;box-shadow:0 2px 6px #ffbe0baa;}
+@keyframes bubblePop{ 0%,100%{ transform:none; } }
+
 .menu-sub{font-family:'Nunito',sans-serif;font-size:clamp(13px,3.5vw,17px);color:var(--text-mid);margin-top:8px;letter-spacing:1px;font-weight:700;}
-.menu-wave{display:inline-block;animation:waveIt .9s ease-in-out infinite alternate;}
-@keyframes waveIt{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+/* menu-wave statique aussi */
+.menu-wave{display:inline-block;transform:rotate(-5deg);}
+@keyframes waveIt{ 0%,100%{ transform:rotate(-5deg); } }
 
 .menu-section-lbl{font-family:'Fredoka One',cursive;font-size:clamp(17px,4.5vw,21px);color:var(--sky);text-align:center;flex-shrink:0;padding:0 16px 6px;}
 
@@ -455,7 +471,8 @@ body::before{
 /* ══════════════════════════════════════
    TUTO
    ══════════════════════════════════════ */
-#tuto-overlay{position:fixed;inset:0;z-index:210;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--bg-top),var(--bg-mid),var(--bg-bot));padding:20px 20px;gap:0;padding-top:calc(var(--safe-top) + 20px);padding-bottom:calc(var(--safe-bot) + 20px);}
+#tuto-overlay.hidden *{ animation:none !important; }
+#tuto-overlay{position:fixed;inset:0;z-index:210;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--bg-top),var(--bg-mid),var(--bg-bot));padding:20px 20px;gap:0;padding-top:calc(env(safe-area-inset-top,0px) + 20px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 20px);}
 #tuto-overlay.hidden{display:none;}
 .tuto-title{font-family:'Fredoka One',cursive;font-size:clamp(24px,7vw,32px);color:var(--sky);text-align:center;margin-bottom:4px;}
 .tuto-sub{font-family:'Nunito',sans-serif;font-size:clamp(14px,3.8vw,17px);color:var(--text-mid);text-align:center;margin-bottom:16px;font-weight:700;}
@@ -544,20 +561,23 @@ body::before{
 <!-- ═══ JEU ═══ -->
 <div id="shell">
   <div id="game-area">
+
+    <!-- HUD flottant — HORS du grid board, positionné sur game-area -->
+    <div id="hud">
+      <div id="hud-level-box">
+        <span class="hud-level-emoji">🐬</span>
+        <span class="hud-level-num" style="color:var(--sky)">Lv.1</span>
+      </div>
+      <div id="hud-score-val">0</div>
+      <div id="hud-next-box">
+        <span id="next-kana">？</span>
+      </div>
+    </div>
+
+    <!-- CUVE : grid pur -->
     <div id="board">
       <div id="board-flash"></div>
-      <!-- HUD flottant -->
-      <div id="hud">
-        <div id="hud-next-box">
-          <span id="next-kana">？</span>
-        </div>
-        <div id="hud-score-val">0</div>
-        <div id="hud-level-box">
-          <span class="hud-level-emoji">🐬</span>
-          <span class="hud-level-num" style="color:var(--sky)">Lv.1</span>
-        </div>
-      </div>
-      <!-- toasts & overlays dans la cuve -->
+      <!-- toasts & overlays -->
       <div id="word-popup">
         <span class="wp-emoji"></span><span class="wp-kana"></span>
         <div class="wp-romaji"></div><div class="wp-meaning"></div><div class="wp-pts"></div>
@@ -736,17 +756,8 @@ const ALL_LEVELS=[
 
 let currentLevelIdx=0,LEVEL_WORDS=ALL_LEVELS[0].words,pendingLevelIdx=0;
 
-/* ── confetti ── */
-(()=>{
-  const c=document.getElementById('confetti');
-  const cols=['#00c8e8','#5cb85c','#e8833a','#c4a8ff','#72e8b8','#ffaa7a'];
-  for(let i=0;i<30;i++){
-    const d=document.createElement('div');d.className='cdot';
-    const sz=Math.random()*6+3;
-    d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${cols[i%cols.length]};--cd:${(Math.random()*5+3).toFixed(1)}s;--cdelay:${(Math.random()*4).toFixed(1)}s;--cop:.3;`;
-    c.appendChild(d);
-  }
-})();
+/* confetti désactivés sur mobile */
+(()=>{ /* pas de cdot créés — économie de paint continu */ })();
 
 /* ── menu : 3 vignettes visibles ── */
 (()=>{
@@ -1046,7 +1057,23 @@ function showOverlay({title,sub,words=[],btn1,act1,btn2=null,act2=null}){
   document.getElementById('board-overlay').classList.remove('hidden');
 }
 function hideOverlay(){document.getElementById('board-overlay').classList.add('hidden');}
-function showMenu(){clearInterval(dropTimer);gameRunning=false;resolvingWords=false;hideOverlay();document.getElementById('tuto-overlay').classList.add('hidden');document.getElementById('menu-overlay').classList.remove('hidden');}
+
+/* Cache ET détache le menu du DOM pour libérer le GPU pendant le jeu */
+function showMenu(){
+  clearInterval(dropTimer);gameRunning=false;resolvingWords=false;
+  hideOverlay();
+  document.getElementById('tuto-overlay').classList.add('hidden');
+  /* Remettre le menu dans le DOM s'il avait été retiré */
+  let menu=document.getElementById('menu-overlay');
+  if(!menu){
+    menu=_menuNode;
+    document.body.insertBefore(menu,document.body.firstChild);
+  }
+  menu.classList.remove('hidden');
+}
+
+/* Référence du nœud menu pour pouvoir le remettre plus tard */
+let _menuNode=null;
 
 function startGame(levelIdx){
   currentLevelIdx=(levelIdx!==undefined)?levelIdx:0;
@@ -1058,7 +1085,10 @@ function startGame(levelIdx){
   isLastCycle=false;
   document.getElementById('word-panel').innerHTML='';resolvingWords=false;
   calcRows();buildDOM();initBoard();
-  document.getElementById('menu-overlay').classList.add('hidden');
+
+  /* Retirer physiquement le menu du DOM → libère GPU (animations CSS arrêtées) */
+  const menu=document.getElementById('menu-overlay');
+  if(menu){ _menuNode=menu; menu.remove(); }
   document.getElementById('tuto-overlay').classList.add('hidden');
   hideOverlay();gameRunning=true;
 
