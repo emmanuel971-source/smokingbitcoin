@@ -1,873 +1,1115 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "8cb945cc67b445e0ae12cd94db078aeb"}'></script><!-- End Cloudflare Web Analytics -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Calculateur gratuit sans publicité ni inscription.">
-    <meta name="keywords" content="bitcoin vs cigarettes, calculateur bitcoin tabac, investissement bitcoin, arrêter de fumer, coût du tabac, santé et finance">
-    <meta name="robots" content="index, follow">
-    <title>Bitcoin vs Cigarettes Calculator - Investir dans BTC au lieu du tabac</title>
-    <link rel="canonical" href="https://smokingbitcoin.pages.dev/">
-    <link rel="alternate" href="https://smokingbitcoin.pages.dev/?lang=fr" hreflang="fr">
-    <link rel="alternate" href="https://smokingbitcoin.pages.dev/?lang=en" hreflang="en">
-    <link rel="alternate" href="https://smokingbitcoin.pages.dev/?lang=es" hreflang="es">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-    <!-- Open Graph / LinkedIn -->
-    <meta property="og:title" content="Bitcoin vs Cigarettes - Et si vous aviez investi autrement ?">
-    <meta property="og:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que de fumer. Une approche éducative et santé publique. Gratuit, sans pub ni inscription.">
-    <meta property="og:image" content="https://smokingbitcoin.pages.dev/preview.png">
-    <meta property="og:url" content="https://smokingbitcoin.pages.dev/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="fr_FR">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>かなDROP ✨</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&family=Noto+Sans+JP:wght@400;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-top:#d4f4ff;--bg-mid:#d8f7ef;--bg-bot:#fdf6d8;
+  --rose:#ff5fa0;--peach:#ff8c42;--lemon:#f9d000;--mint:#2ed8a0;
+  --sky:#00aaee;--lavender:#a855f7;--coral:#ff4d6d;--lime:#7bc900;--teal:#00c8c8;
+  --text-dark:#1a3050;--text-mid:#2a6080;--text-dim:#5090a8;
+  --cell-bg:#eafbff;--cell-bdr:#9ae8ff;--board-bg:#f0fbff;
+  --surface:#e8f9f4;--border:#72d9c8;
+  --neon-pink:#ff0066;--neon-violet:#0066ff;--neon-cyan:#00b8ff;--neon-gold:#e8a000;
+  --lv1-top:#d4f4ff;--lv1-mid:#c8f7ef;--lv1-bot:#d4fff0;
+  --lv2-top:#fff3d4;--lv2-mid:#ffe8c0;--lv2-bot:#fdffd4;
+  --lv3-top:#d8ffd4;--lv3-mid:#e8ffd0;--lv3-bot:#fdffd4;
+  --lv4-top:#fff0d4;--lv4-mid:#ffe8cc;--lv4-bot:#fff8d4;
+  --lv5-top:#ffd4f0;--lv5-mid:#f0d4ff;--lv5-bot:#fff9d4;
+  --lv6-top:#d4eeff;--lv6-mid:#c8f4ff;--lv6-bot:#d4fff8;
+  --lv7-top:#fffbd4;--lv7-mid:#fff5c0;--lv7-bot:#fdffd4;
+  --lv8-top:#d8ffd4;--lv8-mid:#e8ffd0;--lv8-bot:#fdffd4;
+  --lv9-top:#ffd4e8;--lv9-mid:#ffe8d0;--lv9-bot:#fff9d4;
+  --lv10-top:#d4ffe8;--lv10-mid:#d4fff7;--lv10-bot:#f0ffd4;
+  --lv11-top:#d4eeff;--lv11-mid:#e8f4ff;--lv11-bot:#fff8d4;
+  --lv12-top:#d4ffd8;--lv12-mid:#f0ffd4;--lv12-bot:#fff7d4;
+  --lv13-top:#ffe8d4;--lv13-mid:#fff0e0;--lv13-bot:#fffbd4;
+  --lv14-top:#ead4ff;--lv14-mid:#ffd4f0;--lv14-bot:#fff4ff;
+  --lv15-top:#d4eeff;--lv15-mid:#d4f8ff;--lv15-bot:#f0f8ff;
+  --lv16-top:#ffd4d4;--lv16-mid:#ffe0d4;--lv16-bot:#fff4d4;
+  --lv17-top:#ead4ff;--lv17-mid:#ffd4f8;--lv17-bot:#fff9ff;
+  --lv18-top:#ffe8d4;--lv18-mid:#fff0e0;--lv18-bot:#fffbd4;
+  --lv19-top:#d4ffe8;--lv19-mid:#d4fff7;--lv19-bot:#f0fff8;
+  --lv20-top:#ffe8d0;--lv20-mid:#ffd4b0;--lv20-bot:#fff8e8;
+  --lv21-top:#d4eeff;--lv21-mid:#c8f4ff;--lv21-bot:#e8f8ff;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+}
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://smokingbitcoin.pages.dev/">
-    <meta name="twitter:title" content="Bitcoin vs Cigarettes - Calculez votre manque à gagner">
-    <meta name="twitter:description" content="Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Gratuit et éducatif.">
-    <meta name="twitter:image" content="https://smokingbitcoin.pages.dev/preview.png">
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 
-    <style>body{background-color:#f8f9fa;font-family:'Poppins','Arial',sans-serif}.header{background:linear-gradient(135deg,#198754 0%,#28a745 70%,#ffc107 100%);color:white;padding:40px 20px;text-align:center;border-bottom:6px solid #ffc107;box-shadow:0 4px 8px rgba(0,0,0,.2);position:relative;overflow:hidden}.header::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,rgba(255,255,255,0) 70%);z-index:1}.header h1,.header h2{position:relative;z-index:2}.header h1{font-size:3rem;font-weight:700;margin:0;text-shadow:2px 2px 6px rgba(0,0,0,.3)}.header h2{font-size:1.6rem;font-style:italic;margin-top:12px;opacity:.9}.icon{margin:0 12px;font-size:2.5rem;vertical-align:middle;transition:transform .3s ease}.icon.pulse{animation:pulse 2s infinite}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}.container{max-width:800px;margin:20px auto;padding:15px;background:white;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}.form-label{font-weight:600;color:#198754;font-size:1.1rem;margin-bottom:8px;transition:color .3s ease}.form-label:hover{color:#146c43}.form-select,.form-control{border-radius:8px;border:2px solid #28a745;transition:border-color .3s ease,box-shadow .3s ease}.form-select:focus,.form-control:focus{border-color:#ffc107;box-shadow:0 0 8px rgba(255,193,7,.3)}.form-range{background:#e9ecef;border-radius:10px;height:8px}.form-range::-webkit-slider-thumb{background:#198754;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .2s ease}.form-range::-webkit-slider-thumb:hover{transform:scale(1.2)}.form-range::-webkit-slider-thumb:active{background:#146c43}.btn-calculate{background:linear-gradient(90deg,#198754,#28a745);border:none;border-radius:8px;padding:12px;font-size:1.2rem;font-weight:600;width:100%;transition:transform .2s ease,box-shadow .2s ease}.btn-calculate:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}.btn-calculate:active{transform:translateY(0)}.btn-share-x{background-color:#000;border:none;border-radius:50px;padding:10px 20px;transition:transform .2s ease,box-shadow .2s ease;color:white}.btn-share-x:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}.btn-share-linkedin{background-color:#0A66C2;border:none;border-radius:50px;padding:10px 20px;transition:transform .2s ease,box-shadow .2s ease;color:white}.btn-share-linkedin:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}.btn-methodology{background-color:#f8f9fa;border:2px solid #28a745;border-radius:8px;transition:background-color .3s ease,color .3s ease}.btn-methodology:hover{background-color:#28a745;color:white}#result{margin-top:30px;padding:25px;background:linear-gradient(to right,#d4edda,#e6f4ea);border-radius:12px;box-shadow:0 6px 12px rgba(0,0,0,.15);transition:transform .3s ease}.result-card{background:#fff;padding:15px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:transform .3s ease,box-shadow .3s ease}.result-card:hover{transform:translateY(-4px);box-shadow:0 4px 16px rgba(0,0,0,.2)}.result-value{font-size:1.8rem;font-weight:700;color:#198754}.million{font-size:2.1rem;color:#ffc107;text-shadow:1px 1px 2px rgba(0,0,0,.3)}.motivation{margin-top:15px;font-size:1.1rem;font-style:italic;color:#198754;font-weight:600}.motivation-big{font-size:1.3rem;font-weight:700}.disclaimer{font-size:.8rem;color:#333;margin-top:15px;line-height:1.4;background:rgba(255,255,255,.2);padding:10px;border-radius:8px}.methodology{margin-top:25px;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1)}.methodology h3{color:#198754;font-size:1.8rem;font-weight:700}.methodology-section{padding:20px;border-radius:8px;margin-bottom:15px;transition:transform .3s ease}.methodology-section:hover{transform:translateX(5px)}.methodology-section h4::before{font-family:FontAwesome;margin-right:8px}.methodology-section.green h4::before{content:'\f004'}.methodology-section.blue h4::before{content:'\f002'}.methodology-section.purple h4::before{content:'\f080'}.methodology-section.orange h4::before{content:'\f1ec'}.methodology-section.red h4::before{content:'\f071'}.chart-container{max-width:100%;margin:20px auto;padding:10px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1)}canvas{max-width:100%;height:auto!important}.loader{display:none;text-align:center;margin:20px;font-size:1.2rem;color:#198754}.error{color:#dc3545;font-weight:600;margin-top:20px;display:none}#averagePriceField{display:none}.share-buttons{display:flex;justify-content:center;gap:12px;margin-top:15px}#currentValue{font-size:2.8rem!important;color:#146c43;text-shadow:1px 1px 3px rgba(0,0,0,.2)}#emoji{font-size:4.5rem;transition:transform .3s ease}#emoji:hover{transform:scale(1.1)}#cigarettesSmoked{background:rgba(255,255,255,.2);padding:15px;border-radius:10px}footer{background:#f1f3f5;padding:20px;border-top:3px solid #28a745;border-radius:0 0 10px 10px}footer p{margin:5px 0;font-size:.9rem}footer a{color:#198754;transition:color .3s ease}footer a:hover{color:#146c43}@media (max-width:576px){.header h1{font-size:2rem}.header h2{font-size:1.2rem}.icon{font-size:2rem}.container{padding:12px;margin:10px}.result-value{font-size:1.5rem}.million{font-size:1.8rem}.methodology h3{font-size:1.6rem}.methodology-section{padding:15px}#currentValue{font-size:2.2rem!important}#emoji{font-size:3.5rem}.result-card{padding:12px}.form-label{font-size:1rem}.btn-calculate{font-size:1.1rem;padding:10px}.share-buttons .btn{padding:8px 16px}}</style>
+html,body{
+  width:100%;height:100%;
+  background:linear-gradient(160deg,var(--bg-top) 0%,var(--bg-mid) 50%,var(--bg-bot) 100%);
+  color:var(--text-dark);
+  font-family:'Nunito','Noto Sans JP',sans-serif;
+  overflow:hidden;touch-action:none;
+  position:fixed; /* empêche tout scroll/zoom natif */
+}
+
+/* ── flash fond cuve lors d'un mot ── */
+#board-flash {
+  position:absolute;inset:0;pointer-events:none;z-index:5;border-radius:0;
+  opacity:0;
+  transition:opacity .08s ease;
+}
+#board-flash.flash-word  { background:rgba(46,216,160,.22); animation:boardFlash .55s ease forwards; }
+#board-flash.flash-combo { background:rgba(255,0,102,.18);  animation:boardFlash .65s ease forwards; }
+@keyframes boardFlash {
+  0%  { opacity:1; }
+  60% { opacity:.7; }
+  100%{ opacity:0; }
+}
+
+/* ── teinte colorée écran shake combo ── */
+#screen-tint {
+  position:fixed;inset:0;pointer-events:none;z-index:998;opacity:0;
+}
+#screen-tint.tint-combo { animation: tintCombo .55s ease forwards; }
+@keyframes tintCombo {
+  0%  { opacity:0; background:rgba(255,0,102,.15); }
+  25% { opacity:1; }
+  100%{ opacity:0; }
+}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 55% 40% at 10% 20%,rgba(0,170,238,.22) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 35% at 90% 80%,rgba(46,216,160,.22) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 55%,rgba(249,208,0,.14) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+  animation:blobDrift 8s ease-in-out infinite alternate;
+}
+@keyframes blobDrift{from{opacity:.7}to{opacity:1}}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.cdot{position:absolute;border-radius:50%;opacity:0;animation:cdotFloat var(--cd) ease-in-out var(--cdelay) infinite;}
+@keyframes cdotFloat{0%{opacity:0;transform:translateY(0) scale(.5)}30%{opacity:var(--cop)}70%{opacity:var(--cop)}100%{opacity:0;transform:translateY(-40px) scale(1)}}
+
+/* ══════════════════════════════════════
+   SHELL PRINCIPAL — full screen mobile
+   ══════════════════════════════════════ */
+#shell{
+  position:fixed;inset:0;
+  z-index:1;
+  display:flex;flex-direction:column;
+  padding-top:var(--safe-top);
+  padding-bottom:var(--safe-bot);
+  overflow:hidden;
+}
+
+/* ── zone de jeu : cuve pleine largeur + word-panel ── */
+#game-area {
+  flex:1;display:flex;flex-direction:column;min-height:0;position:relative;overflow:hidden;
+}
+
+/* ── CUVE : pleine largeur ── */
+#board{
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  background:var(--board-bg);
+  border-left:2px solid rgba(100,200,220,.2);
+  border-right:2px solid rgba(100,200,220,.2);
+  border-top:2px solid rgba(100,200,220,.2);
+  overflow:hidden;
+  position:relative;
+}
+
+/* ── HUD flottant au-dessus de la cuve ── */
+#hud {
+  position:absolute;
+  top:8px;left:0;right:0;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10px;
+  pointer-events:none;
+}
+
+.hud-pill {
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1.5px solid rgba(255,255,255,.9);
+  border-radius:20px;
+  padding:5px 11px;
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+  box-shadow:0 2px 12px rgba(0,0,0,.10);
+}
+
+.hud-label {
+  font-family:'Fredoka One',cursive;
+  font-size:9px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  line-height:1;
+}
+
+#hud-next {
+  width:48px;height:48px;
+  border-radius:14px;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:2px solid rgba(255,255,255,.95);
+  box-shadow:0 2px 14px rgba(0,170,238,.18);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+}
+#hud-next .hud-label { color:var(--text-dim); }
+#next-kana{
+  font-size:22px;font-weight:900;font-family:'Noto Sans JP',sans-serif;
+  color:var(--text-dark);line-height:1;
+}
+#next-kana.pop{animation:nextPop .28s ease forwards;}
+@keyframes nextPop{0%{transform:scale(.65) rotate(-12deg);opacity:.4}65%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+
+#hud-score-val{
+  font-family:'Fredoka One',cursive;font-size:18px;
+  color:var(--neon-violet);line-height:1;
+}
+#hud-score-val.bump{animation:scoreBump .38s ease;}
+@keyframes scoreBump{0%{transform:scale(1)}40%{transform:scale(1.45);color:var(--neon-pink);text-shadow:0 0 14px rgba(255,0,102,.5)}100%{transform:scale(1)}}
+
+#hud-level {
+  display:flex;flex-direction:column;align-items:center;gap:0;
+}
+.hud-level-emoji { font-size:22px;line-height:1.1; }
+.hud-level-num   { font-family:'Fredoka One',cursive;font-size:11px;line-height:1; }
+
+/* ── cells ── */
+.cell{
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(18px,6.5vw,32px);font-weight:900;
+  font-family:'Noto Sans JP',sans-serif;
+  border:1px solid rgba(100,200,220,.10);
+  user-select:none;position:relative;background:transparent;
+  border-radius:4px;
+}
+.cell.empty{color:transparent;}
+.cell.filled{
+  border:none;border-radius:7px;color:#1a1040;
+  box-shadow:0 2px 0 rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.7);
+}
+.cell.active{
+  border:2.5px solid rgba(0,0,0,.18)!important;border-radius:9px;color:#1a1040;
+  box-shadow:0 3px 0 rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.7);
+  animation:activePulse .65s ease infinite alternate;
+}
+@keyframes activePulse{from{transform:scale(1);filter:brightness(1)}to{transform:scale(1.07);filter:brightness(1.09)}}
+.cell.ghost{background:rgba(0,0,0,.04);border:1.5px dashed rgba(0,0,0,.15)!important;color:rgba(0,0,0,.2);border-radius:6px;}
+
+/* ── LAND BOUNCE amplifié pour mobile ── */
+.cell.land{animation:landBounce .42s cubic-bezier(.36,.07,.19,.97) forwards;}
+@keyframes landBounce{
+  0%  {transform:scaleY(1.55) scaleX(.72)}
+  30% {transform:scaleY(.75) scaleX(1.18)}
+  55% {transform:scaleY(1.12) scaleX(.93)}
+  75% {transform:scaleY(.96) scaleX(1.03)}
+  100%{transform:scaleY(1)   scaleX(1)}
+}
+
+.cell.flash      {animation:cellFlash .65s ease forwards !important;}
+.cell.combo-flash{animation:comboFlash .65s ease forwards !important;}
+@keyframes cellFlash{0%{background:#f9d000!important;color:#1a1040;transform:scale(1.18);z-index:10}40%{background:#2ed8a0!important;color:#1a1040}100%{opacity:0;transform:scale(.6) rotate(12deg)}}
+@keyframes comboFlash{0%{background:#ff5fa0!important;color:#fff;transform:scale(1.22) rotate(-4deg);z-index:10}30%{background:#f9d000!important;color:#1a1040;transform:scale(1.08) rotate(3deg)}100%{opacity:0;transform:scale(.5) rotate(18deg)}}
+
+/* particules légères (remplace spawnParticles — CSS only) */
+.particle{position:absolute;border-radius:50%;pointer-events:none;z-index:30;animation:particleFly var(--dur) ease-out forwards;}
+@keyframes particleFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}}
+
+/* ── popups & toasts ── */
+#word-popup{
+  position:absolute;left:10px;right:10px;top:50%;transform:translateY(-50%);
+  background:white;border:3px solid var(--lemon);border-radius:24px;padding:12px 14px;
+  text-align:center;z-index:40;pointer-events:none;display:none;
+  box-shadow:0 8px 32px rgba(255,165,0,.3),0 2px 8px rgba(0,0,0,.1);
+}
+#word-popup.show{display:block;animation:popupIn 2.1s ease forwards;}
+#word-popup.combo{border-color:var(--rose);box-shadow:0 8px 32px rgba(255,0,102,.2);}
+.wp-emoji{font-size:44px;display:block;line-height:1.1;}
+.wp-kana{font-family:'Fredoka One',cursive;font-size:32px;color:var(--neon-gold);text-shadow:0 0 12px rgba(232,160,0,.5);display:block;line-height:1;}
+#word-popup.combo .wp-kana{color:var(--neon-pink);text-shadow:0 0 12px rgba(255,0,102,.5);}
+.wp-romaji{font-size:15px;color:var(--teal);letter-spacing:2px;margin:3px 0;font-family:'Fredoka One',sans-serif;font-weight:700;text-transform:uppercase;}
+.wp-meaning{font-size:16px;color:var(--text-mid);font-family:'Nunito',sans-serif;font-weight:700;}
+.wp-pts{font-family:'Fredoka One',cursive;font-size:22px;color:var(--neon-violet);margin-top:4px;text-shadow:0 0 10px rgba(0,102,255,.3);}
+@keyframes popupIn{0%{opacity:0;transform:translateY(-50%) scale(.72) rotate(-2deg)}10%{opacity:1;transform:translateY(-50%) scale(1.05) rotate(1deg)}75%{opacity:1;transform:translateY(-50%) scale(1) rotate(0deg)}100%{opacity:0;transform:translateY(-50%) scale(.92)}}
+
+#combo-banner{position:absolute;left:50%;top:18%;transform:translateX(-50%);font-family:'Fredoka One',cursive;font-size:clamp(28px,8vw,40px);color:var(--neon-pink);text-shadow:0 0 20px rgba(255,0,102,.7),0 2px 4px rgba(0,0,0,.15);pointer-events:none;z-index:41;white-space:nowrap;display:none;}
+#combo-banner.show{display:block;animation:comboBannerAnim 1.8s ease forwards;}
+@keyframes comboBannerAnim{0%{opacity:0;transform:translateX(-50%) scale(.6) rotate(-6deg)}15%{opacity:1;transform:translateX(-50%) scale(1.2) rotate(2deg)}55%{opacity:1;transform:translateX(-50%) scale(1) rotate(0deg)}100%{opacity:0;transform:translateX(-50%) scale(.9) translateY(-60px)}}
+
+#streak{position:absolute;right:8px;top:72px;font-family:'Fredoka One',cursive;font-size:clamp(14px,4vw,19px);color:var(--neon-gold);text-shadow:0 0 8px rgba(232,160,0,.7);z-index:35;display:none;}
+
+#enc-toast{position:absolute;left:50%;bottom:30%;transform:translateX(-50%);text-align:center;pointer-events:none;z-index:45;display:none;white-space:nowrap;}
+#enc-toast.show{display:block;animation:encRise 2.2s ease forwards;}
+.enc-jp{font-family:'Fredoka One',cursive;font-size:clamp(26px,8vw,36px);color:var(--neon-gold);text-shadow:0 0 16px rgba(232,160,0,.6);display:block;}
+.enc-fr{font-size:14px;color:var(--text-mid);letter-spacing:1.5px;display:block;margin-top:2px;font-family:'Nunito',sans-serif;font-weight:700;}
+@keyframes encRise{0%{opacity:0;transform:translateX(-50%) translateY(0) scale(.7)}12%{opacity:1;transform:translateX(-50%) translateY(-8px) scale(1.08)}65%{opacity:1;transform:translateX(-50%) translateY(-18px) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-70px) scale(.9)}}
+
+/* ── shake amplifié + teinte combo ── */
+@keyframes screenShake{0%,100%{transform:translate(0,0)}15%{transform:translate(-6px,4px)}30%{transform:translate(6px,-5px)}45%{transform:translate(-5px,3px)}65%{transform:translate(5px,-4px)}80%{transform:translate(-3px,2px)}}
+@keyframes screenShakeCombo{0%,100%{transform:translate(0,0)}10%{transform:translate(-8px,6px)}25%{transform:translate(8px,-7px)}40%{transform:translate(-7px,5px)}55%{transform:translate(7px,-6px)}70%{transform:translate(-5px,4px)}85%{transform:translate(4px,-3px)}}
+#shell.shake      {animation:screenShake .35s ease forwards;}
+#shell.shake-combo{animation:screenShakeCombo .55s ease forwards;}
+
+/* ── word panel ── */
+#word-panel{
+  background:var(--surface);border-top:3px solid var(--border);
+  flex-shrink:0;padding:6px 8px 8px;
+  display:flex;flex-direction:column;gap:5px;
+  max-height:38dvh;overflow-y:auto;
+  will-change:transform;-webkit-transform:translateZ(0);transform:translateZ(0);
+}
+.word-row{
+  display:flex;align-items:center;gap:7px;
+  background:white;border:2px solid var(--border);border-radius:14px;padding:6px 9px;
+  animation:rowSlideIn .45s cubic-bezier(.34,1.56,.64,1) forwards;
+  position:relative;overflow:hidden;
+  box-shadow:0 3px 10px rgba(0,150,255,.1);
+  transition:background .4s ease,border-color .4s ease,box-shadow .4s ease;
+}
+@keyframes rowSlideIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+.word-row.boss{border-color:rgba(255,77,109,.5);background:rgba(255,245,248,1);}
+
+.word-row.validated{background:#e8faf0!important;border-color:#52c97a!important;box-shadow:0 3px 12px rgba(46,200,110,.18)!important;}
+.word-row.validated .wr-kana{color:#1a7a3a;}
+.word-row.validated .wr-romaji{color:#2a9a50;}
+.word-row.validated .wr-mult{color:#2ed880;}
+.word-row.validated::before{content:'';position:absolute;inset:0;border-radius:12px;background:linear-gradient(90deg,transparent 0%,rgba(82,201,122,.35) 50%,transparent 100%);background-size:200% 100%;animation:validatedGlow 2.2s ease-in-out infinite;pointer-events:none;z-index:0;}
+@keyframes validatedGlow{0%{background-position:-100% 0;opacity:0}20%{opacity:1}80%{opacity:1}100%{background-position:200% 0;opacity:0}}
+
+.word-row.pending{background:#fff0f5!important;border-color:#ff85b3!important;box-shadow:0 3px 14px rgba(255,80,140,.22)!important;}
+.word-row.pending .wr-kana{color:#cc1050;}
+.word-row.pending .wr-romaji{color:#e83070;}
+.word-row.pending .wr-mult{color:#ff5fa0;}
+.word-row.pending.last-one{animation:pendingPulse .85s ease-in-out infinite!important;}
+@keyframes pendingPulse{0%,100%{background:#fff0f5!important;border-color:#ff85b3!important;transform:scale(1);box-shadow:0 3px 14px rgba(255,80,140,.22)!important}50%{background:#ffd6e8!important;border-color:#ff2d78!important;transform:scale(1.018);box-shadow:0 5px 22px rgba(255,45,120,.45)!important}}
+.word-row.boss.pending{border-color:#ff3d6d!important;}
+.word-row.boss.validated{border-color:#52c97a!important;}
+
+.wr-emoji{font-size:clamp(22px,6.5vw,28px);flex-shrink:0;line-height:1;}
+.wr-info{flex:1;min-width:0;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.wr-kana{font-size:clamp(17px,5.5vw,22px);font-weight:900;color:var(--text-dark);line-height:1;font-family:'Noto Sans JP',sans-serif;}
+.wr-romaji{font-size:clamp(13px,3.8vw,17px);color:var(--sky);font-weight:900;font-family:'Fredoka One',sans-serif;}
+.wr-meaning{font-size:clamp(12px,3.2vw,15px);color:var(--text-mid);font-family:'Nunito',sans-serif;font-weight:700;}
+.wr-mult{font-family:'Fredoka One',cursive;font-size:clamp(15px,4.8vw,20px);color:var(--mint);text-shadow:0 0 5px rgba(46,216,160,.4);min-width:30px;text-align:right;flex-shrink:0;}
+.word-row.boss .wr-mult{color:var(--coral);}
+.wr-mult.bump{animation:multBump .32s cubic-bezier(.34,1.56,.64,1);}
+@keyframes multBump{0%{transform:scale(1)}50%{transform:scale(1.7) rotate(-5deg)}100%{transform:scale(1)}}
+.word-row::after{content:'';position:absolute;inset:0;opacity:0;pointer-events:none;border-radius:12px;}
+.word-row.bar-flash::after{background:linear-gradient(90deg,transparent,rgba(46,216,160,.45),transparent);animation:barSweep .5s ease forwards;}
+.word-row.bar-combo::after{background:linear-gradient(90deg,transparent,rgba(249,208,0,.5),transparent);animation:barSweep .5s ease forwards;}
+@keyframes barSweep{from{opacity:1;transform:translateX(-110%)}to{opacity:0;transform:translateX(110%)}}
+
+/* ── BOARD OVERLAY ── */
+#board-overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(240,250,255,.95);backdrop-filter:blur(12px);z-index:100;gap:10px;padding:22px 16px;overflow-y:auto;}
+#board-overlay.hidden{display:none;}
+.ov-title{font-family:'Fredoka One',cursive;font-size:clamp(26px,8vw,38px);color:var(--sky);text-align:center;line-height:1.2;}
+.ov-sub{font-size:clamp(14px,3.8vw,17px);color:var(--text-mid);text-align:center;line-height:2;max-width:280px;font-family:'Nunito',sans-serif;font-weight:700;}
+.ov-words{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-width:300px;}
+.ov-word{background:white;border:2px solid var(--border);border-radius:14px;padding:6px 10px;text-align:center;animation:ovWordPop .4s cubic-bezier(.34,1.56,.64,1) both;box-shadow:0 3px 10px rgba(0,0,0,.07);}
+.ov-word:nth-child(1){animation-delay:.05s}.ov-word:nth-child(2){animation-delay:.1s}.ov-word:nth-child(3){animation-delay:.15s}.ov-word:nth-child(4){animation-delay:.2s}
+@keyframes ovWordPop{from{opacity:0;transform:scale(.6) rotate(-6deg)}to{opacity:1;transform:none}}
+.ov-word .ow-emoji{font-size:24px;display:block;}
+.ov-word .ow-kana{font-family:'Fredoka One',sans-serif;font-size:16px;color:var(--sky);display:block;font-weight:700;}
+.ov-word .ow-sub{font-size:11px;color:var(--text-dim);}
+.btn{font-family:'Fredoka One',sans-serif;font-size:clamp(18px,5vw,22px);background:linear-gradient(135deg,var(--sky),var(--mint));color:#fff;border:none;border-radius:50px;padding:13px 32px;cursor:pointer;box-shadow:0 4px 18px rgba(0,170,238,.35);width:100%;max-width:280px;transition:all .15s;letter-spacing:.5px;}
+.btn:active{transform:scale(.95);}
+.btn.secondary{background:white;color:var(--text-mid);border:2px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:clamp(13px,3.5vw,17px);padding:9px 22px;}
+
+/* ══════════════════════════════════════
+   MENU
+   ══════════════════════════════════════ */
+#menu-overlay{
+  position:fixed;inset:0;z-index:200;
+  display:flex;flex-direction:column;align-items:center;
+  background:linear-gradient(160deg,var(--bg-top) 0%,var(--bg-mid) 50%,var(--bg-bot) 100%);
+  overflow:hidden;
+  padding-top:calc(var(--safe-top) + 12px);
+  padding-bottom:var(--safe-bot);
+}
+#menu-overlay.hidden{display:none;}
+
+.menu-header{flex-shrink:0;width:100%;text-align:center;padding:clamp(18px,4dvh,32px) 16px clamp(6px,1.5dvh,12px);}
+.logo-wrap{display:flex;flex-direction:column;align-items:center;animation:floatPulse 3s ease-in-out infinite;cursor:default;position:relative;}
+@keyframes floatPulse{0%,100%{transform:translateY(0) scale(1) rotate(-4deg)}50%{transform:translateY(-6px) scale(1.02) rotate(-4deg)}}
+.logo-card{position:relative;padding:0 20px;display:flex;flex-direction:column;align-items:center;gap:4px;overflow:visible;}
+.kana-group{position:relative;display:inline-block;line-height:1;}
+.kana-main{font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(58px,16vw,88px);letter-spacing:-2px;line-height:1;display:block;background:linear-gradient(135deg,#ff6b35,#ffbe0b,#6bcb77,#4d96ff,#c77dff,#ff6b6b,#ffbe0b,#ff6b35);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:kanaRainbow 3s linear infinite;position:relative;z-index:2;filter:drop-shadow(2px 4px 0 #1a0050);}
+@keyframes kanaRainbow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+.kana-outline-w{position:absolute;inset:0;font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(58px,16vw,88px);letter-spacing:-2px;line-height:1;-webkit-text-fill-color:transparent;-webkit-text-stroke:12px #ffffff;z-index:1;pointer-events:none;}
+.kana-outline-d{position:absolute;inset:0;font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(58px,16vw,88px);letter-spacing:-2px;line-height:1;-webkit-text-fill-color:transparent;-webkit-text-stroke:18px #1a0050;z-index:0;pointer-events:none;}
+.drop-group{position:relative;display:inline-block;line-height:1;margin-top:-2px;}
+.drop-main{font-family:"Black Han Sans",sans-serif;font-weight:900;font-size:clamp(38px,11vw,58px);letter-spacing:4px;display:block;background:linear-gradient(180deg,#fff700 0%,#ffb300 30%,#ff6b6b 65%,#cc0000 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:2;filter:drop-shadow(2px 3px 0 #1a0050);animation:shimmerDrop 2.2s ease-in-out infinite;}
+@keyframes shimmerDrop{0%,100%{filter:drop-shadow(2px 3px 0 #1a0050) brightness(1)}50%{filter:drop-shadow(2px 3px 0 #1a0050) brightness(1.3) drop-shadow(0 0 12px rgba(255,120,120,.6))}}
+.drop-outline-w{position:absolute;inset:0;font-family:"Black Han Sans",sans-serif;font-weight:900;font-size:clamp(38px,11vw,58px);letter-spacing:4px;-webkit-text-fill-color:transparent;-webkit-text-stroke:10px #ffffff;z-index:1;pointer-events:none;}
+.drop-outline-d{position:absolute;inset:0;font-family:"Black Han Sans",sans-serif;font-weight:900;font-size:clamp(38px,11vw,58px);letter-spacing:4px;-webkit-text-fill-color:transparent;-webkit-text-stroke:16px #1a0050;z-index:0;pointer-events:none;}
+.logo-droplet{position:absolute;animation:dropBounce 2.4s ease-in-out infinite;}
+.ld1{top:-18px;left:14px;animation-delay:0s}.ld2{top:-12px;right:24px;animation-delay:.5s}.ld3{bottom:-16px;left:32px;animation-delay:1s}.ld4{bottom:-10px;right:18px;animation-delay:1.5s}.ld5{top:24px;left:-14px;animation-delay:.8s}
+@keyframes dropBounce{0%,100%{transform:translateY(0) scale(1);opacity:1}50%{transform:translateY(5px) scale(.88);opacity:.8}}
+.logo-bubble{position:absolute;border-radius:50%;border:3px solid #fff;animation:bubblePop 2s ease-in-out infinite;}
+.lb1{width:18px;height:18px;background:radial-gradient(circle at 30% 30%,#ffb3e6,#ff3fab);top:-10px;right:-10px;animation-delay:0s;box-shadow:0 2px 8px #ff3fab88;}
+.lb2{width:13px;height:13px;background:radial-gradient(circle at 30% 30%,#b3eeff,#00cfff);bottom:-8px;left:-8px;animation-delay:.7s;box-shadow:0 2px 6px #00cfffaa;}
+.lb3{width:10px;height:10px;background:radial-gradient(circle at 30% 30%,#fffeb3,#ffbe0b);top:8px;left:-11px;animation-delay:1.4s;box-shadow:0 2px 6px #ffbe0baa;}
+@keyframes bubblePop{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+.menu-sub{font-family:'Nunito',sans-serif;font-size:clamp(13px,3.5vw,17px);color:var(--text-mid);margin-top:8px;letter-spacing:1px;font-weight:700;}
+.menu-wave{display:inline-block;animation:waveIt .9s ease-in-out infinite alternate;}
+@keyframes waveIt{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+
+.menu-section-lbl{font-family:'Fredoka One',cursive;font-size:clamp(17px,4.5vw,21px);color:var(--sky);text-align:center;flex-shrink:0;padding:0 16px 6px;}
+
+/* scroll niveaux — 3 vignettes visibles */
+#lvl-scroll{
+  flex:1;overflow-y:auto;overflow-x:hidden;width:100%;
+  padding:0 14px 12px;display:flex;flex-direction:column;gap:9px;
+  -webkit-overflow-scrolling:touch;
+}
+#lvl-scroll::-webkit-scrollbar{display:none;}
+
+.lvl-card{flex-shrink:0;width:100%;border-radius:20px;padding:14px 16px;cursor:pointer;border:2.5px solid transparent;background:white;box-shadow:0 5px 16px rgba(0,0,0,.08);display:flex;align-items:center;gap:13px;transition:transform .18s,box-shadow .18s;position:relative;overflow:hidden;}
+.lvl-card::before{content:'';position:absolute;inset:0;background:var(--lc);opacity:.08;border-radius:18px;}
+.lvl-card:active{transform:scale(.97);}
+.lvl-card-left{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;}
+.lvl-card-emoji{font-size:clamp(36px,10vw,48px);line-height:1;}
+.lvl-card-num{font-family:'Fredoka One',cursive;font-size:clamp(13px,3.8vw,18px);}
+.lvl-card-right{flex:1;min-width:0;}
+.lvl-card-name{font-family:'Nunito',sans-serif;font-size:clamp(18px,5.5vw,24px);color:var(--text-dark);line-height:1.2;font-weight:900;}
+.lvl-card-words{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;}
+.lvl-card-word-chip{font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:clamp(12px,3.5vw,15px);background:var(--cell-bg);border:1.5px solid var(--cell-bdr);border-radius:50px;padding:2px 8px;color:var(--text-mid);}
+.lvl-card-count{font-family:'Nunito',sans-serif;font-size:clamp(11px,2.8vw,13px);color:var(--text-dim);margin-top:4px;font-weight:700;}
+
+.menu-scroll-hint{
+  flex-shrink:0;text-align:center;padding:5px 0 10px;
+  font-family:'Nunito',sans-serif;font-size:clamp(12px,3vw,15px);
+  color:var(--text-dim);letter-spacing:1px;
+  animation:hintPulse 1.6s ease-in-out infinite;font-weight:700;
+}
+@keyframes hintPulse{0%,100%{opacity:.4;transform:translateY(0)}50%{opacity:.9;transform:translateY(3px)}}
+
+/* ══════════════════════════════════════
+   TUTO
+   ══════════════════════════════════════ */
+#tuto-overlay{position:fixed;inset:0;z-index:210;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--bg-top),var(--bg-mid),var(--bg-bot));padding:20px 20px;gap:0;padding-top:calc(var(--safe-top) + 20px);padding-bottom:calc(var(--safe-bot) + 20px);}
+#tuto-overlay.hidden{display:none;}
+.tuto-title{font-family:'Fredoka One',cursive;font-size:clamp(24px,7vw,32px);color:var(--sky);text-align:center;margin-bottom:4px;}
+.tuto-sub{font-family:'Nunito',sans-serif;font-size:clamp(14px,3.8vw,17px);color:var(--text-mid);text-align:center;margin-bottom:16px;font-weight:700;}
+.tuto-steps{display:flex;flex-direction:column;gap:10px;width:100%;max-width:300px;}
+.tuto-step{background:white;border-radius:18px;border:2px solid var(--border);padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 14px rgba(0,0,0,.07);animation:tutoStepIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+.tuto-step:nth-child(1){animation-delay:.1s}.tuto-step:nth-child(2){animation-delay:.25s}.tuto-step:nth-child(3){animation-delay:.4s}
+@keyframes tutoStepIn{from{opacity:0;transform:translateX(-20px) scale(.92)}to{opacity:1;transform:none}}
+.tuto-anim{width:48px;flex-shrink:0;text-align:center;}
+.hand-swipe{font-size:30px;display:inline-block;animation:handSwipe 1.2s ease-in-out infinite;}
+@keyframes handSwipe{0%{transform:translateX(-10px);opacity:.5}50%{transform:translateX(10px);opacity:1}100%{transform:translateX(-10px);opacity:.5}}
+.hand-drop{font-size:30px;display:inline-block;animation:handDrop 1.1s ease-in-out infinite;}
+@keyframes handDrop{0%{transform:translateY(-8px);opacity:.5}50%{transform:translateY(8px);opacity:1}100%{transform:translateY(-8px);opacity:.5}}
+.hand-hold{font-size:30px;display:inline-block;animation:handHold 1.3s ease-in-out infinite;}
+@keyframes handHold{0%,40%{transform:scale(1)}20%{transform:scale(1.25)}60%,100%{transform:scale(.9) translateY(6px)}}
+.tuto-step-text{flex:1;}
+.tuto-step-title{font-family:'Nunito',sans-serif;font-size:clamp(15px,4.5vw,19px);color:var(--text-dark);font-weight:900;}
+.tuto-step-desc{font-family:'Nunito',sans-serif;font-size:clamp(12px,3.2vw,14px);color:var(--text-mid);margin-top:2px;line-height:1.4;font-weight:700;}
+.tuto-btn{font-family:'Fredoka One',sans-serif;font-size:clamp(19px,5vw,23px);background:linear-gradient(135deg,var(--sky),var(--mint));color:#fff;border:none;border-radius:50px;padding:13px 40px;cursor:pointer;box-shadow:0 4px 18px rgba(0,170,238,.4);margin-top:18px;transition:transform .15s;letter-spacing:.5px;animation:tutoStepIn .5s .55s cubic-bezier(.34,1.56,.64,1) both;}
+.tuto-btn:active{transform:scale(.95);}
+</style>
 </head>
 <body>
+<div id="confetti"></div>
+<div id="screen-tint"></div>
 
-    <div class="header">
-        <h2 id="hook">Bitcoin ou Cigarettes ?</h2>
-        <h1><i class="fas fa-lungs icon"></i><span id="title">Bitcoin vs Cigarettes</span><i class="fab fa-bitcoin icon"></i></h1>
+<!-- ═══ MENU ═══ -->
+<div id="menu-overlay">
+  <div class="menu-header">
+    <div class="logo-wrap">
+      <div class="logo-card">
+        <div class="logo-droplet ld1"><svg width="16" height="21" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#ff6b6b" stroke="#fff" stroke-width="3"/></svg></div>
+        <div class="logo-droplet ld2"><svg width="14" height="19" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#4d96ff" stroke="#fff" stroke-width="3"/></svg></div>
+        <div class="logo-droplet ld3"><svg width="14" height="19" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#6bcb77" stroke="#fff" stroke-width="3"/></svg></div>
+        <div class="logo-droplet ld4"><svg width="12" height="17" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#ffbe0b" stroke="#fff" stroke-width="3"/></svg></div>
+        <div class="logo-droplet ld5"><svg width="11" height="16" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#c77dff" stroke="#fff" stroke-width="3"/></svg></div>
+        <div class="logo-bubble lb1"></div><div class="logo-bubble lb2"></div><div class="logo-bubble lb3"></div>
+        <div class="kana-group">
+          <span class="kana-outline-d">かな</span>
+          <span class="kana-outline-w">かな</span>
+          <span class="kana-main">かな</span>
+        </div>
+        <div class="drop-group">
+          <span class="drop-outline-d">DROP!</span>
+          <span class="drop-outline-w">DROP!</span>
+          <span class="drop-main">DROP!</span>
+        </div>
+      </div>
     </div>
-    
-    <div class="container">
-        <div class="d-flex justify-content-center gap-2 mb-4">
-            <button onclick="applyTranslation('fr')" class="btn btn-sm btn-methodology">🇫🇷 FR</button>
-            <button onclick="applyTranslation('en')" class="btn btn-sm btn-methodology">🇬🇧 EN</button>
-            <button onclick="applyTranslation('es')" class="btn btn-sm btn-methodology">🇪🇸 ES</button>
-        </div>
+    <div class="menu-sub"><span class="menu-wave">🌊</span> Apprends les kana en jouant !</div>
+  </div>
+  <div class="menu-section-lbl">✨ Choisis ton clan</div>
+  <div id="lvl-scroll"></div>
+  <div class="menu-scroll-hint">↕ Fais défiler pour voir tous les niveaux</div>
+</div>
 
-        <form id="calcForm" aria-label="Bitcoin vs Cigarettes Calculator">
-            <div class="mb-3">
-                <label for="country" class="form-label" id="countryLabel">Dans quel pays vivez-vous ?</label>
-                <select class="form-select" id="country" aria-describedby="countryHelp" onchange="toggleAveragePrice()">
-                    <option value="USA">USA 🇺🇸</option>
-                    <option value="Canada">Canada 🇨🇦</option>
-                    <option value="France" selected>France 🇫🇷</option>
-                    <option value="Germany">Germany 🇩🇪</option>
-                    <option value="UK">United Kingdom 🇬🇧</option>
-                    <option value="Spain">España 🇪🇸</option>
-                    <option value="Italy">Italia 🇮🇹</option>
-                    <option value="Australia">Australia 🇦🇺</option>
-                    <option value="Other">Autre</option>
-                </select>
-                <small id="countryHelp" class="form-text text-muted">Sélectionnez votre pays</small>
-            </div>
-
-            <div class="mb-3" id="averagePriceField" style="display: none;">
-                <label for="averagePrice" class="form-label" id="averagePriceLabel">En moyenne, quel a été le prix d'un paquet de 20 cigarettes dans votre passé de fumeur ?</label>
-                <input type="number" step="0.01" class="form-control" id="averagePrice" min="1" value="5" aria-describedby="averagePriceHelp">
-                <small id="averagePriceHelp" class="form-text text-muted">Saisissez le prix moyen en EUR ou USD</small>
-            </div>
-            
-            <div class="mb-3">
-                <label for="cigsPerDay" class="form-label" id="cigsLabel">En moyenne, combien de cigarettes fumez-vous par jour ?</label>
-                <input type="range" class="form-range" id="cigsPerDay" min="1" max="60" value="10" aria-describedby="cigsHelp">
-                <div class="text-center text-lg font-bold text-success" id="cigsDisplay">10</div>
-                <small id="cigsHelp" class="form-text text-muted">Saisissez votre consommation quotidienne</small>
-            </div>
-            
-            <div class="mb-3">
-                <label for="yearsSmoking" class="form-label" id="yearsLabel">Depuis combien d'années ?</label>
-                <input type="range" class="form-range" id="yearsSmoking" min="1" max="15" value="5" aria-describedby="yearsHelp">
-                <div class="text-center text-lg font-bold text-success" id="yearsDisplay">5 ans</div>
-                <small id="yearsHelp" class="form-text text-muted">Sélectionnez la durée de votre tabagisme (1-15 ans)</small>
-            </div>
-            
-            <button type="button" class="btn btn-primary btn-calculate" onclick="calculate()" id="calcButton"><i class="fas fa-calculator"></i> Calculer</button>
-        </form>
-        
-        <div class="loader" id="loader">
-            <i class="fas fa-spinner fa-spin"></i> Calcul en cours...
-        </div>
-        
-        <div class="error" id="error">Une erreur est survenue. Vérifiez vos saisies et réessayez.</div>
-        
-        <div id="result" style="display: none;" role="region" aria-live="polite">
-            <div class="text-center mb-4 animate__animated animate__zoomIn">
-                <div id="emoji" class="text-5xl mb-2">😱</div>
-                <div id="currentValue" class="text-4xl font-bold text-success"></div>
-            </div>
-            <h3 id="resultsTitle">Quel manque à gagner !</h3>
-            <div class="row g-3 mb-3">
-                <div class="col-md-6">
-                    <div class="result-card" id="cigarettesSmoked">
-                        <p class="small" id="cigarettesSmokedText">Nombre de cigarettes fumées :</p>
-                        <p class="result-value" id="totalCigarettes"></p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="result-card">
-                        <p class="small" id="spentText">Argent dépensé en cigarettes :</p>
-                        <p class="result-value" id="totalSpent"></p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="result-card">
-                        <p class="small" id="btcText">Nombre de bitcoin accumulé :</p>
-                        <p class="result-value" id="totalBtc"></p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="result-card">
-                        <p class="small" id="currentBtcText">Prix actuel du Bitcoin :</p>
-                        <p class="result-value" id="currentBtcPrice"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="chart-container">
-                <canvas id="evolutionChart" class="mt-4"></canvas>
-            </div>
-            <p class="motivation" id="motivation">Imaginez ce que vous pourriez faire avec cet argent !<br><span class="motivation-big">Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.</span></p>
-            <div class="share-buttons">
-                <button class="btn btn-share-x mt-2" onclick="shareOnX()" id="shareXButton"><i class="fab fa-x-twitter"></i> Partager sur X</button>
-                <button class="btn btn-share-linkedin mt-2" onclick="shareOnLinkedIn()" id="shareLinkedInButton"><i class="fab fa-linkedin"></i> Partager sur LinkedIn</button>
-            </div>
-            <p class="disclaimer" id="disclaimer">⚠️ Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement, mais il n'est jamais trop tard pour investir dans votre santé.</p>
-        </div>
-        <div class="text-center mt-4">
-            <button class="btn btn-methodology" onclick="toggleMethodology()" id="methodologyButton"><i class="fas fa-info-circle"></i> Méthodologie</button>
-        </div>
-
-        <div class="methodology" id="methodology" style="display: none;">
-            <h3>📊 Méthodologie</h3>
-            <div class="methodology-section green">
-                <h4 class="font-bold mb-2">💚 Message de santé publique</h4>
-                <p>Ce calculateur vise à illustrer le coût d'opportunité financier du tabagisme, mais l'impact le plus important reste celui sur votre santé. Chaque cigarette non fumée est un investissement dans votre bien-être, votre espérance de vie et votre qualité de vie. Le tabac tue plus de 8 millions de personnes par an dans le monde. <strong>Il n'est jamais trop tard pour arrêter.</strong></p>
-                <div class="mt-3 p-3 bg-gray-100 rounded">
-                    <p class="text-sm"><strong>Ressources pour arrêter de fumer :</strong></p>
-                    <ul class="text-sm mt-2 list-disc pl-5">
-                        <li>🇫🇷 France : <a href="https://www.tabac-info-service.fr" target="_blank" rel="noopener noreferrer" class="text-primary">Tabac Info Service</a> - 39 89</li>
-                        <li>🇺🇸 USA : <a href="https://www.smokefree.gov" target="_blank" rel="noopener noreferrer" class="text-primary">Smokefree.gov</a> - 1-800-QUIT-NOW</li>
-                        <li>🇨🇦 Canada : <a href="https://www.canada.ca/fr/sante-canada/services/tabagisme-et-tabac.html" target="_blank" rel="noopener noreferrer" class="text-primary">Santé Canada</a></li>
-                        <li>🇬🇧 UK : <a href="https://www.nhs.uk/better-health/quit-smoking/" target="_blank" rel="noopener noreferrer" class="text-primary">NHS - Quit Smoking</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="methodology-section blue">
-                <h4 class="font-bold mb-2">🔍 Sources des données</h4>
-                <ul class="list-disc pl-5">
-                    <li><strong>Bitcoin :</strong> Prix historiques basés sur CoinGecko, Investing.com et archives publiques (juillet 2010 - octobre 2025).</li>
-                    <li><strong>USA :</strong> U.S. Bureau of Labor Statistics - Consumer Price Index for Cigarettes.</li>
-                    <li><strong>Canada :</strong> Statistics Canada - Average Retail Price for Cigarettes.</li>
-                    <li><strong>France :</strong> OFDT (Observatoire Français des Drogues et Toxicomanies).</li>
-                    <li><strong>Europe :</strong> Euromonitor International, WHO Global Tobacco Price Database.</li>
-                    <li><strong>Australie :</strong> Australian Government Department of Health.</li>
-                </ul>
-            </div>
-            <div class="methodology-section green">
-                <h4 class="font-bold mb-2">🧮 Méthode de calcul</h4>
-                <ol class="list-decimal pl-5">
-                    <li><strong>Période de calcul :</strong> Depuis juillet 2010 (première cotation fiable du Bitcoin) jusqu'à octobre 2025.</li>
-                    <li><strong>Investissement simulé :</strong> Achat mensuel de Bitcoin avec l'argent dépensé en cigarettes.</li>
-                    <li><strong>Prix des cigarettes :</strong> Prix moyen annuel officiel par pays, réparti mensuellement.</li>
-                    <li><strong>Prix du Bitcoin :</strong> Prix mensuel moyen réel basé sur les données historiques vérifiées.</li>
-                    <li><strong>DCA (Dollar Cost Averaging) :</strong> Simulation d'achats réguliers mensuels, méthode reconnue et plus réaliste.</li>
-                    <li><strong>Calcul cumulatif :</strong> Chaque mois additionne l'investissement du mois précédent (effet de capitalisation).</li>
-                </ol>
-            </div>
-            <div class="methodology-section purple">
-                <h4 class="font-bold mb-2">📈 Données Bitcoin remarquables</h4>
-                <ul class="list-disc pl-5">
-                    <li>• <strong>Juillet 2010 :</strong> Premier prix documenté à ~0,05 USD.</li>
-                    <li>• <strong>2011 :</strong> Premier franchissement du seuil de 1 USD (février).</li>
-                    <li>• <strong>2013 :</strong> Première grande bull run, atteignant ~750 USD.</li>
-                    <li>• <strong>2017 :</strong> Bull run historique jusqu'à ~19 000 USD.</li>
-                    <li>• <strong>2021 :</strong> Nouveau record à ~69 000 USD.</li>
-                    <li>• <strong>2024-2025 :</strong> ETF Bitcoin approuvés, prix dépassant 100 000 USD.</li>
-                </ul>
-            </div>
-            <div class="methodology-section orange">
-                <h4 class="font-bold mb-2">📊 Estimation des prix des cigarettes</h4>
-                <ul class="list-disc pl-5">
-                    <li>Utilisation des indices officiels d'inflation du tabac par pays.</li>
-                    <li>Prise en compte des augmentations fiscales documentées.</li>
-                    <li>Interpolation linéaire entre les points de données vérifiés.</li>
-                    <li>Prix moyens nationaux (ne tiennent pas compte des variations régionales).</li>
-                    <li>Base de 20 cigarettes par paquet standard.</li>
-                </ul>
-            </div>
-            <div class="methodology-section red">
-                <h4 class="font-bold mb-2">⚠️ Limites et avertissements</h4>
-                <ul class="list-disc pl-5">
-                    <li><strong>Calcul éducatif :</strong> Ce site est à but informatif uniquement, pas un conseil financier.</li>
-                    <li><strong>Simplifications :</strong> Ne considère pas les frais de transaction Bitcoin ni les taxes.</li>
-                    <li><strong>Variations locales :</strong> Les prix des cigarettes varient selon les régions/états.</li>
-                    <li><strong>Hypothèse d'achat :</strong> Suppose que le Bitcoin était facilement accessible et que l'investisseur aurait conservé ses BTC.</li>
-                    <li><strong>Volatilité :</strong> Le Bitcoin reste un actif très volatil avec des risques importants.</li>
-                    <li><strong>Performances passées :</strong> Ne garantissent en aucun cas les résultats futurs.</li>
-                </ul>
-            </div>
-        </div>
+<!-- ═══ TUTO ═══ -->
+<div id="tuto-overlay" class="hidden">
+  <div class="tuto-title">Comment jouer ? 🎮</div>
+  <div class="tuto-sub">C'est super simple, promis !</div>
+  <div class="tuto-steps">
+    <div class="tuto-step">
+      <div class="tuto-anim"><span class="hand-swipe">👆</span></div>
+      <div class="tuto-step-text">
+        <div class="tuto-step-title">Déplace le kana</div>
+        <div class="tuto-step-desc">Swipe à gauche ou droite pour choisir la colonne</div>
+      </div>
     </div>
-    
-    <footer class="text-center mt-4 py-4 text-muted" style="font-size: 0.8rem;" id="footer">
-        <p class="font-medium">© 2025 - Projet éducatif à but non lucratif</p>
-        <p class="mt-2">💪 Il n'est jamais trop tard pour investir dans votre santé</p>
-        <p class="mt-2">Sources : <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
-        <p class="mt-2 text-xs">Les données sont fournies à titre informatif. Ce site ne constitue pas un conseil financier ou médical.</p>
-    </footer>
-    
-    <script>
-        // Données cigarettes (USD, paquet de 20)
-        const cigarettePriceData = {
-            'USA': {2010: 5.51, 2011: 5.95, 2012: 6.23, 2013: 6.41, 2014: 6.53, 2015: 6.43, 2016: 6.52, 2017: 6.65, 2018: 6.85, 2019: 6.96, 2020: 7.10, 2021: 7.35, 2022: 7.93, 2023: 8.25, 2024: 8.75, 2025: 9.10},
-            'Canada': {2010: 8.20, 2011: 8.85, 2012: 9.45, 2013: 10.15, 2014: 10.80, 2015: 11.50, 2016: 12.30, 2017: 13.15, 2018: 14.05, 2019: 14.95, 2020: 15.90, 2021: 16.85, 2022: 17.80, 2023: 19.50, 2024: 21.20, 2025: 22.50},
-            'France': {2010: 6.50, 2011: 6.80, 2012: 7.10, 2013: 7.50, 2014: 7.90, 2015: 8.30, 2016: 8.70, 2017: 9.20, 2018: 9.70, 2019: 10.20, 2020: 10.70, 2021: 11.30, 2022: 11.90, 2023: 12.50, 2024: 13.10, 2025: 13.50},
-            'Germany': {2010: 5.80, 2011: 6.05, 2012: 6.30, 2013: 6.55, 2014: 6.80, 2015: 7.05, 2016: 7.30, 2017: 7.55, 2018: 7.80, 2019: 8.05, 2020: 8.30, 2021: 8.55, 2022: 8.90, 2023: 9.25, 2024: 9.60, 2025: 9.85},
-            'UK': {2010: 9.20, 2011: 9.80, 2012: 10.40, 2013: 11.00, 2014: 11.60, 2015: 12.20, 2016: 12.80, 2017: 13.50, 2018: 14.20, 2019: 14.90, 2020: 15.60, 2021: 16.30, 2022: 17.10, 2023: 17.90, 2024: 18.70, 2025: 19.50},
-            'Spain': {2010: 4.80, 2011: 5.00, 2012: 5.20, 2013: 5.40, 2014: 5.60, 2015: 5.80, 2016: 6.00, 2017: 6.20, 2018: 6.45, 2019: 6.70, 2020: 6.95, 2021: 7.20, 2022: 7.50, 2023: 7.80, 2024: 8.10, 2025: 8.40},
-            'Italy': {2010: 5.50, 2011: 5.70, 2012: 5.90, 2013: 6.10, 2014: 6.30, 2015: 6.50, 2016: 6.70, 2017: 6.90, 2018: 7.15, 2019: 7.40, 2020: 7.65, 2021: 7.90, 2022: 8.20, 2023: 8.50, 2024: 8.80, 2025: 9.10},
-            'Australia': {2010: 13.50, 2011: 15.20, 2012: 17.00, 2013: 18.90, 2014: 20.80, 2015: 22.70, 2016: 24.80, 2017: 27.00, 2018: 29.50, 2019: 32.10, 2020: 34.90, 2021: 37.80, 2022: 40.90, 2023: 44.20, 2024: 47.60, 2025: 51.20}
-        };
+    <div class="tuto-step">
+      <div class="tuto-anim"><span class="hand-drop">👇</span></div>
+      <div class="tuto-step-text">
+        <div class="tuto-step-title">Fais-le tomber vite !</div>
+        <div class="tuto-step-desc">Swipe vers le bas ou appui long pour chute rapide</div>
+      </div>
+    </div>
+    <div class="tuto-step">
+      <div class="tuto-anim"><span class="hand-hold">🤏</span></div>
+      <div class="tuto-step-text">
+        <div class="tuto-step-title">Forme les mots !</div>
+        <div class="tuto-step-desc">Place les kanas pour écrire les mots du panneau en bas</div>
+      </div>
+    </div>
+  </div>
+  <button class="tuto-btn" id="tuto-start-btn">C'est parti ! 🚀</button>
+</div>
 
-        // Prix moyens mensuels du Bitcoin (USD)
-        const btcMonthlyPrices = {
-            2010: {7: 0.05, 8: 0.06, 9: 0.06, 10: 0.10, 11: 0.25, 12: 0.30},
-            2011: {1: 0.30, 2: 1.00, 3: 0.87, 4: 1.27, 5: 5.23, 6: 17.90, 7: 13.90, 8: 10.50, 9: 5.50, 10: 3.40, 11: 2.80, 12: 4.25},
-            2012: {1: 5.27, 2: 4.89, 3: 4.93, 4: 5.08, 5: 5.20, 6: 6.49, 7: 8.22, 8: 10.50, 9: 11.78, 10: 11.20, 11: 11.35, 12: 13.45},
-            2013: {1: 13.51, 2: 26.36, 3: 92.48, 4: 144.54, 5: 128.15, 6: 102.24, 7: 95.50, 8: 118.67, 9: 127.10, 10: 196.50, 11: 744.00, 12: 754.00},
-            2014: {1: 815.94, 2: 636.77, 3: 584.48, 4: 449.89, 5: 448.38, 6: 593.06, 7: 609.27, 8: 519.37, 9: 408.53, 10: 382.03, 11: 375.35, 12: 320.19},
-            2015: {1: 225.88, 2: 238.59, 3: 244.93, 4: 235.54, 5: 233.73, 6: 246.01, 7: 285.95, 8: 274.70, 9: 234.53, 10: 274.71, 11: 360.48, 12: 430.10},
-            2016: {1: 433.28, 2: 421.63, 3: 414.97, 4: 447.04, 5: 530.59, 6: 650.63, 7: 631.48, 8: 578.61, 9: 610.86, 10: 661.70, 11: 728.87, 12: 913.66},
-            2017: {1: 998.33, 2: 1154.63, 3: 1163.03, 4: 1341.61, 5: 2277.14, 6: 2506.71, 7: 2595.88, 8: 4335.93, 9: 4192.03, 10: 5753.07, 11: 9251.14, 12: 13880.57},
-            2018: {1: 11341.30, 2: 10412.84, 3: 8865.63, 4: 9243.23, 5: 7603.35, 6: 6614.99, 7: 7609.69, 8: 6943.87, 9: 6601.36, 10: 6361.81, 11: 4316.01, 12: 3742.70},
-            2019: {1: 3550.61, 2: 3807.08, 3: 4041.65, 4: 5142.24, 5: 7908.66, 6: 10818.48, 7: 10742.28, 8: 9639.03, 9: 9161.06, 10: 8811.85, 11: 8695.04, 12: 7193.60},
-            2020: {1: 8503.94, 2: 9395.80, 3: 6428.98, 4: 7590.62, 5: 9446.57, 6: 9239.14, 7: 10916.74, 8: 11669.40, 9: 10783.53, 10: 12969.90, 11: 17711.76, 12: 23172.25},
-            2021: {1: 34279.51, 2: 45137.58, 3: 55847.12, 4: 57748.68, 5: 49312.68, 6: 35563.27, 7: 37315.87, 8: 45882.25, 9: 46925.50, 10: 60992.66, 11: 57005.43, 12: 47686.81},
-            2022: {1: 38013.22, 2: 39316.73, 3: 42206.78, 4: 38540.79, 5: 30283.24, 6: 20498.35, 7: 21564.19, 8: 21346.55, 9: 19426.95, 10: 19315.02, 11: 16950.53, 12: 16833.02},
-            2023: {1: 20961.86, 2: 23445.69, 3: 27491.65, 4: 28469.34, 5: 27228.25, 6: 30401.88, 7: 29866.84, 8: 29196.21, 9: 26920.29, 10: 33926.27, 11: 36660.47, 12: 42201.12},
-            2024: {1: 43037.79, 2: 51780.76, 3: 66606.85, 4: 64063.23, 5: 66824.03, 6: 61255.01, 7: 64285.59, 8: 59702.45, 9: 60253.86, 10: 67000.00, 11: 88000.00, 12: 95000.00},
-            2025: {1: 100000.00, 2: 103000.00, 3: 105000.00, 4: 102000.00, 5: 98000.00, 6: 95000.00, 7: 92000.00, 8: 90000.00, 9: 88000.00, 10: 108289.6}
-        };
+<!-- ═══ JEU ═══ -->
+<div id="shell">
+  <div id="game-area">
+    <div id="board">
+      <div id="board-flash"></div>
+      <!-- HUD flottant -->
+      <div id="hud">
+        <div id="hud-next" class="hud-pill">
+          <span class="hud-label">NEXT</span>
+          <div id="next-kana">？</div>
+        </div>
+        <div class="hud-pill">
+          <span class="hud-label">SCORE</span>
+          <div id="hud-score-val">0</div>
+        </div>
+        <div class="hud-pill" id="hud-level-pill">
+          <span class="hud-label">NIVEAU</span>
+          <div id="hud-level">
+            <span class="hud-level-emoji">🐬</span>
+            <span class="hud-level-num" style="color:var(--sky)">Lv.1</span>
+          </div>
+        </div>
+      </div>
+      <!-- toasts & overlays dans la cuve -->
+      <div id="word-popup">
+        <span class="wp-emoji"></span><span class="wp-kana"></span>
+        <div class="wp-romaji"></div><div class="wp-meaning"></div><div class="wp-pts"></div>
+      </div>
+      <div id="combo-banner"></div>
+      <div id="enc-toast"><span class="enc-jp"></span><span class="enc-fr"></span></div>
+      <div id="streak"></div>
+    </div>
+    <!-- overlay game over / level done -->
+    <div id="board-overlay" class="hidden">
+      <div class="ov-title" id="ov-title"></div>
+      <div class="ov-sub"   id="ov-sub"></div>
+      <div class="ov-words" id="ov-words"></div>
+      <button class="btn"           id="ov-btn"></button>
+      <button class="btn secondary" id="ov-btn2" style="display:none"></button>
+      <button class="btn secondary" id="ov-lvlsel" style="margin-top:4px">📋 Changer de niveau</button>
+    </div>
+  </div>
+  <div id="word-panel"></div>
+</div>
 
-        // Traductions
-        const translations = {
-            fr: {
-                hook: "₿itcoin ou Cigarettes ?",
-                title: "Et si vous aviez investi dans le ₿itcoin plutôt que dans les cigarettes..? ",
-                countryLabel: "Dans quel pays vivez-vous ?",
-                averagePriceLabel: "En moyenne, quel a été le prix d'un paquet de 20 cigarettes dans votre passé de fumeur ?",
-                cigsLabel: "En moyenne, combien de cigarettes fumez-vous par jour ?",
-                yearsLabel: "Depuis combien d'années ?",
-                calcButton: "Calculer mon manque à gagner",
-                resultsTitle: "Détails du calcul :",
-                cigarettesSmokedText: "Nombre de cigarettes fumées",
-                spentText: "Argent dépensé en cigarettes",
-                btcText: "Nombre de ₿itcoin que j'aurais pu accumuler",
-                currentBtcText: "Prix actuel du ₿itcoin",
-                currentValue: "Valeur en ₿itcoin",
-                motivation: "Imaginez ce que vous pourriez faire avec cet argent !",
-                motivationBig: "Arrêtez de fumer aujourd'hui pour une vie plus saine et plus riche.",
-                disclaimer: "⚠️ Les performances passées ne présument pas de celles à venir. Ce site n'est pas un conseil en investissement, mais il n'est jamais trop tard pour investir dans votre santé.",
-                methodologyButton: "Méthodologie",
-                years: "ans",
-                year: "an",
-                countryHelp: "Sélectionnez votre pays",
-                averagePriceHelp: "Saisissez le prix moyen en EUR ou USD",
-                cigsHelp: "Saisissez votre consommation quotidienne",
-                yearsHelp: "Sélectionnez la durée de votre tabagisme (1-15 ans)",
-                shareX: "Partager sur X",
-                shareLinkedIn: "Partager sur LinkedIn",
-                shareWhatsApp: "Partager sur WhatsApp",
-                shareFacebook: "Partager sur Facebook",
-                shareInstagram: "Partager sur Instagram",
-                methodology: `
-                    <h3>📊 Méthodologie</h3>
-                    <div class="methodology-section green">
-                        <h4 class="font-bold mb-2">💚 Message de santé publique</h4>
-                        <p>Ce calculateur vise à illustrer le coût d'opportunité financier du tabagisme, mais l'impact le plus important reste celui sur votre santé. Chaque cigarette non fumée est un investissement dans votre bien-être, votre espérance de vie et votre qualité de vie. Le tabac tue plus de 8 millions de personnes par an dans le monde. <strong>Il n'est jamais trop tard pour arrêter.</strong></p>
-                        <div class="mt-3 p-3 bg-gray-100 rounded">
-                            <p class="text-sm"><strong>Ressources pour arrêter de fumer :</strong></p>
-                            <ul class="text-sm mt-2 list-disc pl-5">
-                                <li>🇫🇷 France : <a href="https://www.tabac-info-service.fr" target="_blank" rel="noopener noreferrer" class="text-primary">Tabac Info Service</a> - 39 89</li>
-                                <li>🇺🇸 USA : <a href="https://www.smokefree.gov" target="_blank" rel="noopener noreferrer" class="text-primary">Smokefree.gov</a> - 1-800-QUIT-NOW</li>
-                                <li>🇨🇦 Canada : <a href="https://www.canada.ca/fr/sante-canada/services/tabagisme-et-tabac.html" target="_blank" rel="noopener noreferrer" class="text-primary">Santé Canada</a></li>
-                                <li>🇬🇧 UK : <a href="https://www.nhs.uk/better-health/quit-smoking/" target="_blank" rel="noopener noreferrer" class="text-primary">NHS - Quit Smoking</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="methodology-section blue">
-                        <h4 class="font-bold mb-2">🔍 Sources des données</h4>
-                        <ul class="list-disc pl-5">
-                            <li><strong>₿itcoin :</strong> Prix historiques basés sur CoinGecko, Investing.com et archives publiques (juillet 2010 - octobre 2025).</li>
-                            <li><strong>USA :</strong> U.S. Bureau of Labor Statistics - Consumer Price Index for Cigarettes.</li>
-                            <li><strong>Canada :</strong> Statistics Canada - Average Retail Price for Cigarettes.</li>
-                            <li><strong>France :</strong> OFDT (Observatoire Français des Drogues et Toxicomanies).</li>
-                            <li><strong>Europe :</strong> Euromonitor International, WHO Global Tobacco Price Database.</li>
-                            <li><strong>Australie :</strong> Australian Government Department of Health.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section green">
-                        <h4 class="font-bold mb-2">🧮 Méthode de calcul</h4>
-                        <ol class="list-decimal pl-5">
-                            <li><strong>Période de calcul :</strong> Depuis juillet 2010 (première cotation fiable du Bitcoin) jusqu'à octobre 2025.</li>
-                            <li><strong>Investissement simulé :</strong> Achat mensuel de Bitcoin avec l'argent dépensé en cigarettes.</li>
-                            <li><strong>Prix des cigarettes :</strong> Prix moyen annuel officiel par pays, réparti mensuellement.</li>
-                            <li><strong>Prix du Bitcoin :</strong> Prix mensuel moyen réel basé sur les données historiques vérifiées.</li>
-                            <li><strong>DCA (Dollar Cost Averaging) :</strong> Simulation d'achats réguliers mensuels, méthode reconnue et plus réaliste.</li>
-                            <li><strong>Calcul cumulatif :</strong> Chaque mois additionne l'investissement du mois précédent (effet de capitalisation).</li>
-                        </ol>
-                    </div>
-                    <div class="methodology-section purple">
-                        <h4 class="font-bold mb-2">📈 Données Bitcoin remarquables</h4>
-                        <ul class="list-disc pl-5">
-                            <li>• <strong>Juillet 2010 :</strong> Premier prix documenté à ~0,05 USD.</li>
-                            <li>• <strong>2011 :</strong> Premier franchissement du seuil de 1 USD (février).</li>
-                            <li>• <strong>2013 :</strong> Première grande bull run, atteignant ~750 USD.</li>
-                            <li>• <strong>2017 :</strong> Bull run historique jusqu'à ~19 000 USD.</li>
-                            <li>• <strong>2021 :</strong> Nouveau record à ~69 000 USD.</li>
-                            <li>• <strong>2024-2025 :</strong> ETF Bitcoin approuvés, prix dépassant 100 000 USD.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section orange">
-                        <h4 class="font-bold mb-2">📊 Estimation des prix des cigarettes</h4>
-                        <ul class="list-disc pl-5">
-                            <li>Utilisation des indices officiels d'inflation du tabac par pays.</li>
-                            <li>Prise en compte des augmentations fiscales documentées.</li>
-                            <li>Interpolation linéaire entre les points de données vérifiés.</li>
-                            <li>Prix moyens nationaux (ne tiennent pas compte des variations régionales).</li>
-                            <li>Base de 20 cigarettes par paquet standard.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section red">
-                        <h4 class="font-bold mb-2">⚠️ Limites et avertissements</h4>
-                        <ul class="list-disc pl-5">
-                            <li><strong>Calcul éducatif :</strong> Ce site est à but informatif uniquement, pas un conseil financier.</li>
-                            <li><strong>Simplifications :</strong> Ne considère pas les frais de transaction Bitcoin ni les taxes.</li>
-                            <li><strong>Variations locales :</strong> Les prix des cigarettes varient selon les régions/états.</li>
-                            <li><strong>Hypothèse d'achat :</strong> Suppose que le Bitcoin était facilement accessible et que l'investisseur aurait conservé ses BTC.</li>
-                            <li><strong>Volatilité :</strong> Le Bitcoin reste un actif très volatil avec des risques importants.</li>
-                            <li><strong>Performances passées :</strong> Ne garantissent en aucun cas les résultats futurs.</li>
-                        </ul>
-                    </div>
-                `,
-                footer: `
-                    <p class="font-medium">© 2025 - Projet éducatif à but non lucratif</p>
-                    <p class="mt-2">💪 Il n'est jamais trop tard pour investir dans votre santé</p>
-                    <p class="mt-2">Sources : <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
-                    <p class="mt-2 text-xs">Les données sont fournies à titre informatif. Ce site ne constitue pas un conseil financier ou médical.</p>
-                `,
-                meta: {
-                    title: "Bitcoin vs Cigarettes Calculator - Investir dans BTC au lieu du tabac",
-                    description: "Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Calculateur gratuit sans publicité ni inscription.",
-                    keywords: "bitcoin vs cigarettes, calculateur bitcoin tabac, investissement bitcoin, arrêter de fumer, coût du tabac, santé et finance",
-                    ogTitle: "Bitcoin vs Cigarettes - Et si vous aviez investi autrement ?",
-                    ogDescription: "Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que de fumer. Une approche éducative et santé publique. Gratuit, sans pub ni inscription.",
-                    twitterTitle: "Bitcoin vs Cigarettes - Calculez votre manque à gagner",
-                    twitterDescription: "Découvrez combien vous auriez pu gagner en investissant dans le Bitcoin plutôt que dans les cigarettes. Gratuit et éducatif.",
-                    ogLocale: "fr_FR"
-                }
-            },
-            en: {
-                hook: "₿itcoin or Cigarettes?",
-                title: "What if you had invested in ₿itcoin instead of cigarettes...? ",
-                countryLabel: "In which country do you live?",
-                averagePriceLabel: "On average, what was the price of a pack of 20 cigarettes in your smoking past?",
-                cigsLabel: "On average, how many cigarettes do you smoke per day?",
-                yearsLabel: "For how many years?",
-                calcButton: "Calculate my loss of earnings",
-                resultsTitle: "Calculation details:",
-                cigarettesSmokedText: "Number of cigarettes smoked",
-                spentText: "Money spent on cigarettes",
-                btcText: "Number of ₿itcoin I could have accumulated",
-                currentBtcText: "Current ₿itcoin price",
-                currentValue: "₿itcoin value today",
-                motivation: "Imagine what you could do with that money!",
-                motivationBig: "Stop smoking today for a healthier and richer life.",
-                disclaimer: "⚠️ Past performance does not presume future performance. This site is not investment advice, but it's never too late to invest in your health.",
-                methodologyButton: "Methodology",
-                years: "years",
-                year: "year",
-                countryHelp: "Select your country",
-                averagePriceHelp: "Enter the average price in EUR or USD",
-                cigsHelp: "Enter your daily consumption",
-                yearsHelp: "Select the duration of your smoking (1-15 years)",
-                shareX: "Share on X",
-                shareLinkedIn: "Share on LinkedIn",
-                shareWhatsApp: "Share on WhatsApp",
-                shareFacebook: "Share on Facebook",
-                shareInstagram: "Share on Instagram",
-                methodology: `
-                    <h3>📊 Methodology</h3>
-                    <div class="methodology-section green">
-                        <h4 class="font-bold mb-2">💚 Public Health Message</h4>
-                        <p>This calculator aims to illustrate the financial opportunity cost of smoking, but the most important impact is on your health. Each unsmoked cigarette is an investment in your well-being, life expectancy, and quality of life. Tobacco kills more than 8 million people per year worldwide. <strong>It's never too late to quit.</strong></p>
-                        <div class="mt-3 p-3 bg-gray-100 rounded">
-                            <p class="text-sm"><strong>Resources to quit smoking:</strong></p>
-                            <ul class="text-sm mt-2 list-disc pl-5">
-                                <li>🇺🇸 USA: <a href="https://www.smokefree.gov" target="_blank" rel="noopener noreferrer" class="text-primary">Smokefree.gov</a> - 1-800-QUIT-NOW</li>
-                                <li>🇨🇦 Canada: <a href="https://www.canada.ca/en/health-canada/services/smoking-tobacco.html" target="_blank" rel="noopener noreferrer" class="text-primary">Health Canada</a></li>
-                                <li>🇬🇧 UK: <a href="https://www.nhs.uk/better-health/quit-smoking/" target="_blank" rel="noopener noreferrer" class="text-primary">NHS - Quit Smoking</a></li>
-                                <li>🇫🇷 France: <a href="https://www.tabac-info-service.fr" target="_blank" rel="noopener noreferrer" class="text-primary">Tabac Info Service</a> - 39 89</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="methodology-section blue">
-                        <h4 class="font-bold mb-2">🔍 Data Sources</h4>
-                        <ul class="list-disc pl-5">
-                            <li><strong>Bitcoin:</strong> Historical prices based on CoinGecko, Investing.com, and public archives (July 2010 - October 2025).</li>
-                            <li><strong>USA:</strong> U.S. Bureau of Labor Statistics - Consumer Price Index for Cigarettes.</li>
-                            <li><strong>Canada:</strong> Statistics Canada - Average Retail Price for Cigarettes.</li>
-                            <li><strong>France:</strong> OFDT (French Observatory of Drugs and Addictive Tendencies).</li>
-                            <li><strong>Europe:</strong> Euromonitor International, WHO Global Tobacco Price Database.</li>
-                            <li><strong>Australia:</strong> Australian Government Department of Health.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section green">
-                        <h4 class="font-bold mb-2">🧮 Calculation Method</h4>
-                        <ol class="list-decimal pl-5">
-                            <li><strong>Calculation Period:</strong> From July 2010 (first reliable Bitcoin listing) to October 2025.</li>
-                            <li><strong>Simulated Investment:</strong> Monthly Bitcoin purchase with money spent on cigarettes.</li>
-                            <li><strong>Cigarette Prices:</strong> Official annual average price per country, distributed monthly.</li>
-                            <li><strong>Bitcoin Price:</strong> Real monthly average price based on verified historical data.</li>
-                            <li><strong>DCA (Dollar Cost Averaging):</strong> Simulation of regular monthly purchases, a recognized and more realistic method.</li>
-                            <li><strong>Cumulative Calculation:</strong> Each month adds to the previous month's investment (compounding effect).</li>
-                        </ol>
-                    </div>
-                    <div class="methodology-section purple">
-                        <h4 class="font-bold mb-2">📈 Notable Bitcoin Data</h4>
-                        <ul class="list-disc pl-5">
-                            <li>• <strong>July 2010:</strong> First documented price at ~0.05 USD.</li>
-                            <li>• <strong>2011:</strong> First crossing of the 1 USD threshold (February).</li>
-                            <li>• <strong>2013:</strong> First major bull run, reaching ~750 USD.</li>
-                            <li>• <strong>2017:</strong> Historic bull run up to ~19,000 USD.</li>
-                            <li>• <strong>2021:</strong> New record at ~69,000 USD.</li>
-                            <li>• <strong>2024-2025:</strong> Bitcoin ETFs approved, price exceeding 100,000 USD.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section orange">
-                        <h4 class="font-bold mb-2">📊 Cigarette Price Estimation</h4>
-                        <ul class="list-disc pl-5">
-                            <li>Use of official tobacco inflation indices per country.</li>
-                            <li>Accounting for documented tax increases.</li>
-                            <li>Linear interpolation between verified data points.</li>
-                            <li>National average prices (do not account for regional variations).</li>
-                            <li>Base of 20 cigarettes per standard pack.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section red">
-                        <h4 class="font-bold mb-2">⚠️ Limitations and Warnings</h4>
-                        <ul class="list-disc pl-5">
-                            <li><strong>Educational Calculation:</strong> This site is for informational purposes only, not financial advice.</li>
-                            <li><strong>Simplifications:</strong> Does not consider Bitcoin transaction fees or taxes.</li>
-                            <li><strong>Local Variations:</strong> Cigarette prices vary by regions/states.</li>
-                            <li><strong>Purchase Assumption:</strong> Assumes Bitcoin was easily accessible and the investor would have held their BTC.</li>
-                            <li><strong>Volatility:</strong> Bitcoin remains a highly volatile asset with significant risks.</li>
-                            <li><strong>Past Performance:</strong> Does not guarantee future results in any way.</li>
-                        </ul>
-                    </div>
-                `,
-                footer: `
-                    <p class="font-medium">© 2025 - Non-profit Educational Project</p>
-                    <p class="mt-2">💪 It's never too late to invest in your health</p>
-                    <p class="mt-2">Sources: <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
-                    <p class="mt-2 text-xs">The data is provided for informational purposes. This site does not constitute financial or medical advice.</p>
-                `,
-                meta: {
-                    title: "Bitcoin vs Cigarettes Calculator - Invest in BTC Instead of Tobacco",
-                    description: "Discover how much you could have earned by investing in Bitcoin instead of cigarettes. Free calculator with no ads or registration.",
-                    keywords: "bitcoin vs cigarettes, bitcoin smoking calculator, bitcoin investment, quit smoking, cost of smoking, health and finance",
-                    ogTitle: "Bitcoin vs Cigarettes - What If You Had Invested Differently?",
-                    ogDescription: "Discover how much you could have earned by investing in Bitcoin instead of smoking. An educational and public health approach. Free, no ads, no registration.",
-                    twitterTitle: "Bitcoin vs Cigarettes - Calculate Your Missed Gains",
-                    twitterDescription: "Discover how much you could have earned by investing in Bitcoin instead of cigarettes. Free and educational.",
-                    ogLocale: "en_US"
-                }
-            },
-            es: {
-                hook: "¿₿itcoin o cigarrillos?",
-                title: "¿Y si hubieras invertido en ₿itcoin en lugar de cigarrillos...? ",
-                countryLabel: "¿En qué país vives?",
-                averagePriceLabel: "En promedio, ¿cuál fue el precio de un paquete de 20 cigarrillos en tu pasado como fumador?",
-                cigsLabel: "En promedio, ¿cuántos cigarrillos fumas por día?",
-                yearsLabel: "¿Durante cuántos años?",
-                calcButton: "Calcular mi pérdida de ingresos",
-                resultsTitle: "Detalles del cálculo:",
-                cigarettesSmokedText: "Número de cigarrillos fumados",
-                spentText: "Dinero gastado en cigarrillos",
-                btcText: "Número de ₿itcoins que podrías haber acumulado",
-                currentBtcText: "Precio actual de ₿itcoin",
-                currentValue: "Valor en ₿itcoin hoy",
-                motivation: "¡Imagina lo que podrías hacer con ese dinero!",
-                motivationBig: "Deja de fumar hoy para una vida más saludable y rica.",
-                disclaimer: "⚠️ El rendimiento pasado no presume el futuro. Este sitio no es un consejo de inversión, pero nunca es tarde para invertir en tu salud.",
-                methodologyButton: "Metodología",
-                years: "años",
-                year: "año",
-                countryHelp: "Selecciona tu país",
-                averagePriceHelp: "Ingresa el precio promedio en EUR o USD",
-                cigsHelp: "Ingresa tu consumo diario",
-                yearsHelp: "Selecciona la duración de tu tabaquismo (1-15 años)",
-                shareX: "Compartir en X",
-                shareLinkedIn: "Compartir en LinkedIn",
-                shareWhatsApp: "Compartir sur WhatsApp",
-                shareFacebook: "Compartir sur Facebook",
-                shareInstagram: "Compartir sur Instagram",
-                methodology: `
-                    <h3>📊 Metodología</h3>
-                    <div class="methodology-section green">
-                        <h4 class="font-bold mb-2">💚 Mensaje de salud pública</h4>
-                        <p>Este calculador busca ilustrar el costo de oportunidad financiero del tabaquismo, pero el impacto más importante sigue siendo en su salud. Cada cigarrillo no fumado es una inversión en su bienestar, esperanza de vida y calidad de vida. El tabaco mata a más de 8 millones de personas al año en el mundo. <strong>Nunca es demasiado tarde para dejarlo.</strong></p>
-                        <div class="mt-3 p-3 bg-gray-100 rounded">
-                            <p class="text-sm"><strong>Recursos para dejar de fumar:</strong></p>
-                            <ul class="text-sm mt-2 list-disc pl-5">
-                                <li>🇪🇸 España: <a href="https://www.mscbs.gob.es/campannas/campanas21/tabaco.htm" target="_blank" rel="noopener noreferrer" class="text-primary">Ministerio de Sanidad</a></li>
-                                <li>🇺🇸 USA: <a href="https://www.smokefree.gov" target="_blank" rel="noopener noreferrer" class="text-primary">Smokefree.gov</a> - 1-800-QUIT-NOW</li>
-                                <li>🇨🇦 Canada: <a href="https://www.canada.ca/es/salud-canada/servicios/tabaco-y-tabaco.html" target="_blank" rel="noopener noreferrer" class="text-primary">Salud Canadá</a></li>
-                                <li>🇬🇧 UK: <a href="https://www.nhs.uk/better-health/quit-smoking/" target="_blank" rel="noopener noreferrer" class="text-primary">NHS - Quit Smoking</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="methodology-section blue">
-                        <h4 class="font-bold mb-2">🔍 Fuentes de datos</h4>
-                        <ul class="list-disc pl-5">
-                            <li><strong>Bitcoin:</strong> Precios históricos basados en CoinGecko, Investing.com y archivos públicos (julio 2010 - octubre 2025).</li>
-                            <li><strong>USA:</strong> U.S. Bureau of Labor Statistics - Consumer Price Index for Cigarettes.</li>
-                            <li><strong>Canada:</strong> Statistics Canada - Average Retail Price for Cigarettes.</li>
-                            <li><strong>France:</strong> OFDT (Observatorio Francés de Drogas y Toxicomanías).</li>
-                            <li><strong>Europa:</strong> Euromonitor International, WHO Global Tobacco Price Database.</li>
-                            <li><strong>Australia:</strong> Australian Government Department of Health.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section green">
-                        <h4 class="font-bold mb-2">🧮 Método de cálculo</h4>
-                        <ol class="list-decimal pl-5">
-                            <li><strong>Período de cálculo:</strong> Desde julio 2010 (primera cotización confiable de Bitcoin) hasta octubre 2025.</li>
-                            <li><strong>Inversión simulada:</strong> Compra mensual de Bitcoin con el dinero gastado en cigarrillos.</li>
-                            <li><strong>Precios de cigarrillos:</strong> Precio promedio anual oficial por país, distribuido mensualmente.</li>
-                            <li><strong>Precio de Bitcoin:</strong> Precio promedio mensual real basado en datos históricos verificados.</li>
-                            <li><strong>DCA (Dollar Cost Averaging):</strong> Simulación de compras regulares mensuales, método reconocido y más realista.</li>
-                            <li><strong>Cálculo acumulativo:</strong> Cada mes suma la inversión del mes anterior (efecto de capitalización).</li>
-                        </ol>
-                    </div>
-                    <div class="methodology-section purple">
-                        <h4 class="font-bold mb-2">📈 Datos notables de Bitcoin</h4>
-                        <ul class="list-disc pl-5">
-                            <li>• <strong>Julio 2010:</strong> Primer precio documentado en ~0,05 USD.</li>
-                            <li>• <strong>2011:</strong> Primer cruce del umbral de 1 USD (febrero).</li>
-                            <li>• <strong>2013:</strong> Primera gran bull run, alcanzando ~750 USD.</li>
-                            <li>• <strong>2017:</strong> Bull run histórico hasta ~19 000 USD.</li>
-                            <li>• <strong>2021:</strong> Nuevo récord en ~69 000 USD.</li>
-                            <li>• <strong>2024-2025:</strong> ETF de Bitcoin aprobados, precio superando 100 000 USD.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section orange">
-                        <h4 class="font-bold mb-2">📊 Estimación de precios de cigarrillos</h4>
-                        <ul class="list-disc pl-5">
-                            <li>Uso de índices oficiales de inflación del tabaco por país.</li>
-                            <li>Consideración de aumentos fiscales documentados.</li>
-                            <li>Interpolación lineal entre puntos de datos verificados.</li>
-                            <li>Precios promedio nacionales (no consideran variaciones regionales).</li>
-                            <li>Base de 20 cigarrillos por paquete estándar.</li>
-                        </ul>
-                    </div>
-                    <div class="methodology-section red">
-                        <h4 class="font-bold mb-2">⚠️ Limitaciones y advertencias</h4>
-                        <ul class="list-disc pl-5">
-                            <li><strong>Cálculo educativo:</strong> Este sitio es solo para fines informativos, no es un consejo financiero.</li>
-                            <li><strong>Simplificaciones:</strong> No considera tarifas de transacción de Bitcoin ni impuestos.</li>
-                            <li><strong>Variaciones locales:</strong> Los precios de cigarrillos varían según regiones/estados.</li>
-                            <li><strong>Asunción de compra:</strong> Asume que Bitcoin era fácilmente accesible y que el inversor habría conservado sus BTC.</li>
-                            <li><strong>Volatilidad:</strong> Bitcoin sigue siendo un activo altamente volátil con riesgos significativos.</li>
-                            <li><strong>Rendimientos pasados:</strong> No garantizan de ninguna manera los resultados futuros.</li>
-                        </ul>
-                    </div>
-                `,
-                footer: `
-                    <p class="font-medium">© 2025 - Proyecto educativo sin fines de lucro</p>
-                    <p class="mt-2">💪 Nunca es demasiado tarde para invertir en tu salud</p>
-                    <p class="mt-2">Fuentes: <a href="https://www.coingecko.com" target="_blank" rel="noopener noreferrer">CoinGecko</a>, <a href="https://www.investing.com/crypto/bitcoin/historical-data" target="_blank" rel="noopener noreferrer">Investing.com</a>, <a href="https://www.bls.gov/cpi/" target="_blank" rel="noopener noreferrer">U.S. BLS</a>, <a href="https://www.statcan.gc.ca" target="_blank" rel="noopener noreferrer">Statistics Canada</a>, <a href="https://www.ofdt.fr" target="_blank" rel="noopener noreferrer">OFDT</a>, <a href="https://www.who.int/data/gho" target="_blank" rel="noopener noreferrer">WHO</a>, <a href="https://www.tobaccoatlas.org" target="_blank" rel="noopener noreferrer">Tobacco Atlas</a>.</p>
-                    <p class="mt-2 text-xs">Los datos se proporcionan con fines informativos. Este sitio no constituye consejo financiero o médico.</p>
-                `,
-                meta: {
-                    title: "Calculadora Bitcoin vs Cigarrillos - Invertir en BTC en lugar de tabaco",
-                    description: "Descubre cuánto podrías haber ganado invirtiendo en Bitcoin en lugar de cigarrillos. Calculadora gratuita sin publicidad ni registro.",
-                    keywords: "bitcoin vs cigarrillos, calculadora bitcoin tabaco, inversión bitcoin, dejar de fumar, costo del tabaco, salud y finanzas",
-                    ogTitle: "Bitcoin vs Cigarrillos - ¿Y si hubieras invertido de otra manera?",
-                    ogDescription: "Descubre cuánto podrías haber ganado invirtiendo en Bitcoin en lugar de fumar. Un enfoque educativo y de salud pública. Gratuito, sin anuncios ni registro.",
-                    twitterTitle: "Bitcoin vs Cigarrillos - Calcula tus ganancias perdidas",
-                    twitterDescription: "Descubre cuánto podrías haber ganado invirtiendo en Bitcoin en lugar de cigarrillos. Gratuito y educativo.",
-                    ogLocale: "es_ES"
-                }
-            }
-        };
+<script>
+/* ══════════════════════════════════════════════════════════
+   DONNÉES
+   ══════════════════════════════════════════════════════════ */
+const ALL_LEVELS=[
+  {id:1,theme:'La Mer',emoji:'🌊',color:'#00c8e8',words:[
+    {kana:'かい',romaji:'kai',meaning:'coquillage',emoji:'🐚',boss:false},
+    {kana:'かめ',romaji:'kame',meaning:'tortue',emoji:'🐢',boss:false},
+    {kana:'えび',romaji:'ebi',meaning:'crevette',emoji:'🦐',boss:false},
+    {kana:'たこ',romaji:'tako',meaning:'pieuvre',emoji:'🐙',boss:false},
+    {kana:'いるか',romaji:'iruka',meaning:'dauphin',emoji:'🐬',boss:true},
+  ]},
+  {id:2,theme:'Les Domestiques',emoji:'🐾',color:'#ffaa7a',words:[
+    {kana:'ねこ',romaji:'neko',meaning:'chat',emoji:'🐱',boss:false},
+    {kana:'いぬ',romaji:'inu',meaning:'chien',emoji:'🐶',boss:false},
+    {kana:'うし',romaji:'ushi',meaning:'vache',emoji:'🐄',boss:false},
+    {kana:'うま',romaji:'uma',meaning:'cheval',emoji:'🐴',boss:false},
+    {kana:'きつね',romaji:'kitsune',meaning:'renard',emoji:'🦊',boss:true},
+  ]},
+  {id:3,theme:'La Forêt',emoji:'🌿',color:'#5cb85c',words:[
+    {kana:'くま',romaji:'kuma',meaning:'ours',emoji:'🐻',boss:false},
+    {kana:'しか',romaji:'shika',meaning:'cerf',emoji:'🦌',boss:false},
+    {kana:'さる',romaji:'saru',meaning:'singe',emoji:'🐒',boss:false},
+    {kana:'りす',romaji:'risu',meaning:'écureuil',emoji:'🐿️',boss:false},
+    {kana:'うさぎ',romaji:'usagi',meaning:'lapin',emoji:'🐰',boss:true},
+  ]},
+  {id:4,theme:'La Savane',emoji:'🌍',color:'#e8833a',words:[
+    {kana:'とら',romaji:'tora',meaning:'tigre',emoji:'🐯',boss:false},
+    {kana:'かば',romaji:'kaba',meaning:'hippopo',emoji:'🦛',boss:false},
+    {kana:'へび',romaji:'hebi',meaning:'serpent',emoji:'🐍',boss:false},
+    {kana:'わに',romaji:'wani',meaning:'crocodile',emoji:'🐊',boss:false},
+    {kana:'やもり',romaji:'yamori',meaning:'gecko',emoji:'🦎',boss:true},
+  ]},
+  {id:5,theme:'Ciel & Jardin',emoji:'🌸',color:'#ff85b3',words:[
+    {kana:'とり',romaji:'tori',meaning:'oiseau',emoji:'🐦',boss:false},
+    {kana:'むし',romaji:'mushi',meaning:'insecte',emoji:'🐛',boss:false},
+    {kana:'たか',romaji:'taka',meaning:'faucon',emoji:'🦅',boss:false},
+    {kana:'くも',romaji:'kumo',meaning:'araignée',emoji:'🕷️',boss:false},
+    {kana:'かえる',romaji:'kaeru',meaning:'grenouille',emoji:'🐸',boss:true},
+  ]},
+  {id:6,theme:'Les Fruits de mer',emoji:'🦀',color:'#00aaee',words:[
+    {kana:'いか',romaji:'ika',meaning:'calamar',emoji:'🦑',boss:false},
+    {kana:'かに',romaji:'kani',meaning:'crabe',emoji:'🦀',boss:false},
+    {kana:'のり',romaji:'nori',meaning:'algue',emoji:'🍙',boss:false},
+    {kana:'さけ',romaji:'sake',meaning:'saumon',emoji:'🐟',boss:false},
+    {kana:'さかな',romaji:'sakana',meaning:'poisson',emoji:'🐠',boss:true},
+  ]},
+  {id:7,theme:'Le Riz & les Bases',emoji:'🍚',color:'#f9d000',words:[
+    {kana:'こめ',romaji:'kome',meaning:'riz',emoji:'🌾',boss:false},
+    {kana:'まめ',romaji:'mame',meaning:'haricot',emoji:'🫛',boss:false},
+    {kana:'みそ',romaji:'miso',meaning:'miso',emoji:'🥣',boss:false},
+    {kana:'みず',romaji:'mizu',meaning:'eau',emoji:'💧',boss:false},
+    {kana:'ごはん',romaji:'gohan',meaning:'riz cuit',emoji:'🍚',boss:true},
+  ]},
+  {id:8,theme:'Légumes & Fruits secs',emoji:'🥕',color:'#5cb85c',words:[
+    {kana:'にく',romaji:'niku',meaning:'viande',emoji:'🥩',boss:false},
+    {kana:'いも',romaji:'imo',meaning:'patate',emoji:'🥔',boss:false},
+    {kana:'なす',romaji:'nasu',meaning:'aubergine',emoji:'🍆',boss:false},
+    {kana:'くり',romaji:'kuri',meaning:'châtaigne',emoji:'🌰',boss:false},
+    {kana:'くるみ',romaji:'kurumi',meaning:'noix',emoji:'🥜',boss:true},
+  ]},
+  {id:9,theme:'Les Fruits sucrés',emoji:'🍑',color:'#ff85b3',words:[
+    {kana:'あめ',romaji:'ame',meaning:'bonbon',emoji:'🍭',boss:false},
+    {kana:'かき',romaji:'kaki',meaning:'kaki',emoji:'🍅',boss:false},
+    {kana:'ゆず',romaji:'yuzu',meaning:'yuzu',emoji:'🍋',boss:false},
+    {kana:'もも',romaji:'momo',meaning:'pêche',emoji:'🍑',boss:false},
+    {kana:'すいか',romaji:'suika',meaning:'pastèque',emoji:'🍉',boss:true},
+  ]},
+  {id:10,theme:'Ciel & Saisons',emoji:'🌸',color:'#ffb3d9',words:[
+    {kana:'そら',romaji:'sora',meaning:'ciel',emoji:'☁️',boss:false},
+    {kana:'つき',romaji:'tsuki',meaning:'lune',emoji:'🌙',boss:false},
+    {kana:'ほし',romaji:'hoshi',meaning:'étoile',emoji:'🌟',boss:false},
+    {kana:'ゆき',romaji:'yuki',meaning:'neige',emoji:'❄️',boss:false},
+    {kana:'さくら',romaji:'sakura',meaning:'cerisier',emoji:'🌸',boss:true},
+  ]},
+  {id:11,theme:'Terre & Végétation',emoji:'🌿',color:'#72c472',words:[
+    {kana:'やま',romaji:'yama',meaning:'montagne',emoji:'⛰️',boss:false},
+    {kana:'もり',romaji:'mori',meaning:'forêt',emoji:'🌲',boss:false},
+    {kana:'くさ',romaji:'kusa',meaning:'herbe',emoji:'🌿',boss:false},
+    {kana:'はな',romaji:'hana',meaning:'fleur',emoji:'🌸',boss:false},
+    {kana:'ひかり',romaji:'hikari',meaning:'lumière',emoji:'✨',boss:true},
+  ]},
+  {id:12,theme:'Eau & Vent',emoji:'🌊',color:'#4db8d4',words:[
+    {kana:'うみ',romaji:'umi',meaning:'mer',emoji:'🌊',boss:false},
+    {kana:'かわ',romaji:'kawa',meaning:'rivière',emoji:'🏞️',boss:false},
+    {kana:'あめ',romaji:'ame',meaning:'pluie',emoji:'🌧️',boss:false},
+    {kana:'かぜ',romaji:'kaze',meaning:'vent',emoji:'💨',boss:false},
+    {kana:'あらし',romaji:'arashi',meaning:'tempête',emoji:'⛈️',boss:true},
+  ]},
+  {id:13,theme:'La Maison',emoji:'🏠',color:'#ffaa7a',words:[
+    {kana:'はこ',romaji:'hako',meaning:'boîte',emoji:'📦',boss:false},
+    {kana:'かぎ',romaji:'kagi',meaning:'clé',emoji:'🔑',boss:false},
+    {kana:'かさ',romaji:'kasa',meaning:'parapluie',emoji:'☂️',boss:false},
+    {kana:'ほん',romaji:'hon',meaning:'livre',emoji:'📖',boss:false},
+    {kana:'まくら',romaji:'makura',meaning:'oreiller',emoji:'🛌',boss:true},
+  ]},
+  {id:14,theme:'Les Vêtements',emoji:'👘',color:'#c4a8ff',words:[
+    {kana:'くつ',romaji:'kutsu',meaning:'chaussures',emoji:'👟',boss:false},
+    {kana:'ふく',romaji:'fuku',meaning:'vêtement',emoji:'👕',boss:false},
+    {kana:'たび',romaji:'tabi',meaning:'chaussettes',emoji:'🧦',boss:false},
+    {kana:'えり',romaji:'eri',meaning:'col',emoji:'👔',boss:false},
+    {kana:'きもの',romaji:'kimono',meaning:'kimono',emoji:'👘',boss:true},
+  ]},
+  {id:15,theme:'Le Bureau',emoji:'📝',color:'#7bcfff',words:[
+    {kana:'ぺん',romaji:'pen',meaning:'stylo',emoji:'🖊️',boss:false},
+    {kana:'かみ',romaji:'kami',meaning:'papier',emoji:'📄',boss:false},
+    {kana:'えん',romaji:'en',meaning:'yen',emoji:'💴',boss:false},
+    {kana:'はり',romaji:'hari',meaning:'épingle',emoji:'📌',boss:false},
+    {kana:'かばん',romaji:'kaban',meaning:'sac',emoji:'👜',boss:true},
+  ]},
+  {id:16,theme:'Couleurs A',emoji:'🌈',color:'#ff6b6b',words:[
+    {kana:'あか',romaji:'aka',meaning:'rouge',emoji:'🔴',boss:false},
+    {kana:'あお',romaji:'ao',meaning:'bleu',emoji:'🔵',boss:false},
+    {kana:'しろ',romaji:'shiro',meaning:'blanc',emoji:'⚪',boss:false},
+    {kana:'くろ',romaji:'kuro',meaning:'noir',emoji:'⚫',boss:false},
+    {kana:'みどり',romaji:'midori',meaning:'vert',emoji:'💚',boss:true},
+  ]},
+  {id:17,theme:'Couleurs B',emoji:'🎨',color:'#c77dff',words:[
+    {kana:'むら',romaji:'mura',meaning:'violet',emoji:'💜',boss:false},
+    {kana:'ねず',romaji:'nezu',meaning:'gris souris',emoji:'🐭',boss:false},
+    {kana:'ちゃ',romaji:'cha',meaning:'brun',emoji:'🟤',boss:false},
+    {kana:'もも',romaji:'momo',meaning:'rose',emoji:'🌸',boss:false},
+    {kana:'きいろ',romaji:'kiiro',meaning:'jaune',emoji:'💛',boss:true},
+  ]},
+  {id:18,theme:'Famille A',emoji:'👨‍👩‍👧',color:'#ffaa7a',words:[
+    {kana:'はは',romaji:'haha',meaning:'maman',emoji:'👩',boss:false},
+    {kana:'ちち',romaji:'chichi',meaning:'papa',emoji:'👨',boss:false},
+    {kana:'あに',romaji:'ani',meaning:'grand frère',emoji:'👦',boss:false},
+    {kana:'あね',romaji:'ane',meaning:'grande sœur',emoji:'👧',boss:false},
+    {kana:'かぞく',romaji:'kazoku',meaning:'famille',emoji:'👨‍👩‍👧',boss:true},
+  ]},
+  {id:19,theme:'Famille B',emoji:'👶',color:'#72e8b8',words:[
+    {kana:'おや',romaji:'oya',meaning:'parent',emoji:'👨‍👩',boss:false},
+    {kana:'まご',romaji:'mago',meaning:'petit-enfant',emoji:'👶',boss:false},
+    {kana:'よめ',romaji:'yome',meaning:'belle-fille',emoji:'👰',boss:false},
+    {kana:'おじ',romaji:'oji',meaning:'oncle',emoji:'👨',boss:false},
+    {kana:'むすめ',romaji:'musume',meaning:'fille',emoji:'👧',boss:true},
+  ]},
+  {id:20,theme:'Japon traditionnel A',emoji:'🏯',color:'#e8833a',words:[
+    {kana:'おに',romaji:'oni',meaning:'démon',emoji:'👹',boss:false},
+    {kana:'みや',romaji:'miya',meaning:'sanctuaire',emoji:'⛩️',boss:false},
+    {kana:'まい',romaji:'mai',meaning:'danse',emoji:'💃',boss:false},
+    {kana:'さと',romaji:'sato',meaning:'village',emoji:'🏘️',boss:false},
+    {kana:'とりい',romaji:'torii',meaning:'portail shinto',emoji:'⛩️',boss:true},
+    {kana:'ゆかた',romaji:'yukata',meaning:'yukata',emoji:'👘',boss:true},
+  ]},
+  {id:21,theme:'Japon traditionnel B',emoji:'⚔️',color:'#4db8d4',words:[
+    {kana:'ふえ',romaji:'fue',meaning:'flûte',emoji:'🎵',boss:false},
+    {kana:'たい',romaji:'tai',meaning:'daurade',emoji:'🐟',boss:false},
+    {kana:'こま',romaji:'koma',meaning:'toupie',emoji:'🪀',boss:false},
+    {kana:'はお',romaji:'hao',meaning:'robe trad.',emoji:'👗',boss:false},
+    {kana:'かたな',romaji:'katana',meaning:'sabre',emoji:'⚔️',boss:true},
+  ]},
+];
 
-        let lang = 'fr';
-        let chart = null;
+let currentLevelIdx=0,LEVEL_WORDS=ALL_LEVELS[0].words,pendingLevelIdx=0;
 
-        function updateMetaTags(l) {
-            const m = translations[l].meta;
-            document.title = m.title;
-            document.querySelector('meta[name="description"]').content = m.description;
-            document.querySelector('meta[name="keywords"]').content = m.keywords;
-            document.querySelector('meta[property="og:title"]').content = m.ogTitle;
-            document.querySelector('meta[property="og:description"]').content = m.ogDescription;
-            document.querySelector('meta[property="og:locale"]').content = m.ogLocale;
-            document.querySelector('meta[name="twitter:title"]').content = m.twitterTitle;
-            document.querySelector('meta[name="twitter:description"]').content = m.twitterDescription;
-            document.documentElement.lang = l;
-        }
+/* ── confetti ── */
+(()=>{
+  const c=document.getElementById('confetti');
+  const cols=['#00c8e8','#5cb85c','#e8833a','#c4a8ff','#72e8b8','#ffaa7a'];
+  for(let i=0;i<30;i++){
+    const d=document.createElement('div');d.className='cdot';
+    const sz=Math.random()*6+3;
+    d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${cols[i%cols.length]};--cd:${(Math.random()*5+3).toFixed(1)}s;--cdelay:${(Math.random()*4).toFixed(1)}s;--cop:.3;`;
+    c.appendChild(d);
+  }
+})();
 
-        function applyTranslation(l) {
-            lang = l;
-            const t = translations[l];
-            document.getElementById('hook').textContent = t.hook;
-            document.getElementById('title').textContent = t.title;
-            document.getElementById('countryLabel').textContent = t.countryLabel;
-            document.getElementById('averagePriceLabel').textContent = t.averagePriceLabel;
-            document.getElementById('cigsLabel').textContent = t.cigsLabel;
-            document.getElementById('yearsLabel').textContent = t.yearsLabel;
-            document.getElementById('calcButton').innerHTML = '<i class="fas fa-calculator"></i> ' + t.calcButton;
-            document.getElementById('resultsTitle').textContent = t.resultsTitle;
-            document.getElementById('cigarettesSmokedText').textContent = t.cigarettesSmokedText;
-            document.getElementById('spentText').textContent = t.spentText;
-            document.getElementById('btcText').textContent = t.btcText;
-            document.getElementById('currentBtcText').textContent = t.currentBtcText;
-            document.getElementById('motivation').innerHTML = t.motivation + '<br><span class="motivation-big">' + t.motivationBig + '</span>';
-            document.getElementById('disclaimer').textContent = t.disclaimer;
-            document.getElementById('methodologyButton').innerHTML = '<i class="fas fa-info-circle"></i> ' + t.methodologyButton;
-            document.getElementById('countryHelp').textContent = t.countryHelp;
-            document.getElementById('averagePriceHelp').textContent = t.averagePriceHelp;
-            document.getElementById('cigsHelp').textContent = t.cigsHelp;
-            document.getElementById('yearsHelp').textContent = t.yearsHelp;
-            document.getElementById('shareXButton').innerHTML = '<i class="fab fa-x-twitter"></i> ' + t.shareX;
-            document.getElementById('shareLinkedInButton').innerHTML = '<i class="fab fa-linkedin"></i> ' + t.shareLinkedIn;
-            document.getElementById('methodology').innerHTML = t.methodology;
-            document.getElementById('footer').innerHTML = t.footer;
-            updateCigsDisplay();
-            updateYearsDisplay();
-            updateMetaTags(l);
-        }
+/* ── menu : 3 vignettes visibles ── */
+(()=>{
+  const scroll=document.getElementById('lvl-scroll');
+  ALL_LEVELS.forEach((lvl,i)=>{
+    const card=document.createElement('div');
+    card.className='lvl-card';
+    card.style.cssText=`--lc:${lvl.color};border-color:${lvl.color}55;`;
+    const chips=lvl.words.slice(0,4).map(w=>`<span class="lvl-card-word-chip">${w.kana}</span>`).join('');
+    card.innerHTML=`
+      <div class="lvl-card-left">
+        <div class="lvl-card-emoji">${lvl.emoji}</div>
+        <div class="lvl-card-num" style="color:${lvl.color}">Lv.${lvl.id}</div>
+      </div>
+      <div class="lvl-card-right">
+        <div class="lvl-card-name">${lvl.theme}</div>
+        <div class="lvl-card-words">${chips}</div>
+        <div class="lvl-card-count">${lvl.words.length} mots à découvrir ✨</div>
+      </div>`;
+    card.addEventListener('click',()=>showTuto(i));
+    scroll.appendChild(card);
+  });
 
-        function updateCigsDisplay() {
-            const cigs = parseInt(document.getElementById('cigsPerDay').value) || 10;
-            document.getElementById('cigsDisplay').textContent = cigs;
-        }
+  /* Limiter la hauteur du scroll à ~3 cartes visibles */
+  requestAnimationFrame(()=>{
+    const first=scroll.querySelector('.lvl-card');
+    if(first){
+      const cardH=first.offsetHeight;
+      const gap=9;
+      scroll.style.maxHeight=(cardH*3+gap*2+4)+'px';
+    }
+  });
+})();
 
-        function updateYearsDisplay() {
-            const years = parseInt(document.getElementById('yearsSmoking').value) || 5;
-            const t = translations[lang];
-            document.getElementById('yearsDisplay').textContent = `${years} ${years === 1 ? t.year : t.years}`;
-        }
+function showTuto(idx){
+  pendingLevelIdx=idx;
+  document.getElementById('menu-overlay').classList.add('hidden');
+  document.getElementById('tuto-overlay').classList.remove('hidden');
+}
+document.getElementById('tuto-start-btn').addEventListener('click',()=>{
+  document.getElementById('tuto-overlay').classList.add('hidden');
+  startGame(pendingLevelIdx);
+});
 
-        function toggleAveragePrice() {
-            const country = document.getElementById('country').value;
-            document.getElementById('averagePriceField').style.display = country === 'Other' ? 'block' : 'none';
-        }
+/* ── son ── */
+let audioCtx=null,muted=false;
+function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+function playTone(freq,type,dur,vol=0.18,delay=0){if(muted)return;try{const ctx=getCtx(),osc=ctx.createOscillator(),g=ctx.createGain();osc.connect(g);g.connect(ctx.destination);osc.type=type;osc.frequency.value=freq;const t=ctx.currentTime+delay;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);osc.start(t);osc.stop(t+dur);}catch(e){}}
+const soundDrop   =()=>playTone(260,'sine',.07,.12);
+const soundWord   =()=>[523,659,784,1047].forEach((f,i)=>playTone(f,'sine',.18,.18,i*.07));
+const soundCombo  =()=>{[523,659,784,1047,1319,1568].forEach((f,i)=>playTone(f,'sine',.22,.20,i*.055));setTimeout(()=>playTone(1568,'square',.28,.12),400);};
+const soundNewWord=()=>[440,554,659].forEach((f,i)=>playTone(f,'triangle',.18,.13,i*.08));
+const soundGameOver=()=>[440,370,311,261].forEach((f,i)=>playTone(f,'sawtooth',.20,.15,i*.13));
+const soundLevelUp =()=>[523,659,784,1047,784,1047,1319].forEach((f,i)=>playTone(f,'sine',.20,.20,i*.08));
 
-        function toggleMethodology() {
-            const methodology = document.getElementById('methodology');
-            methodology.style.display = methodology.style.display === 'none' ? 'block' : 'none';
-        }
+/* ── haptique ── */
+function haptic(type='drop'){
+  if(!navigator.vibrate)return;
+  if(type==='drop')   navigator.vibrate(18);
+  else if(type==='word')  navigator.vibrate([30,10,30]);
+  else if(type==='combo') navigator.vibrate([40,10,40,10,60]);
+  else if(type==='over')  navigator.vibrate([80,20,80]);
+}
 
-        function formatCurrency(value, currency = 'USD') {
-            const locale = currency === 'EUR' ? 'fr-FR' : 'en-US';
-            const symbol = currency === 'EUR' ? '€' : '$';
-            const formatter = new Intl.NumberFormat(locale, {
-                style: 'currency',
-                currency: currency,
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
-            let formatted = formatter.format(value);
-            // Ajouter un espace avant le symbole pour EUR
-            if (currency === 'EUR') {
-                formatted = formatted.replace('€', ' €');
-            }
-            // Remplacer l'espace insécable par un espace standard
-            formatted = formatted.replace(/\u00A0/g, ' ');
-            // Gérer les millions
-            if (value >= 1000000) {
-                return `<span class="million">${(value / 1000000).toFixed(3).replace('.', ',')} M ${symbol}</span>`;
-            }
-            return formatted;
-        }
+/* ── screen shake + teinte ── */
+function screenShake(isCombo=false){
+  const sh=document.getElementById('shell');
+  sh.classList.remove('shake','shake-combo');
+  void sh.offsetWidth;
+  sh.classList.add(isCombo?'shake-combo':'shake');
+  setTimeout(()=>sh.classList.remove('shake','shake-combo'),600);
+  if(isCombo){
+    const t=document.getElementById('screen-tint');
+    t.className='';void t.offsetWidth;
+    t.className='tint-combo';
+    setTimeout(()=>t.className='',600);
+  }
+}
 
-        async function getCurrentPrices() {
-            try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,eur');
-                const data = await response.json();
-                return {
-                    usd: data.bitcoin.usd,
-                    eur: data.bitcoin.eur,
-                    usdToEur: data.bitcoin.eur / data.bitcoin.usd
-                };
-            } catch (error) {
-                console.error('Error fetching prices:', error);
-                return { usd: 108289.6, eur: 108289.6 * 0.858, usdToEur: 0.858 }; // Fallback
-            }
-        }
+/* ── flash fond de cuve ── */
+function boardFlash(isCombo=false){
+  const f=document.getElementById('board-flash');
+  f.className='';void f.offsetWidth;
+  f.className=isCombo?'flash-combo':'flash-word';
+  setTimeout(()=>f.className='',700);
+}
 
-        async function calculate() {
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('result').style.display = 'none';
-            document.getElementById('error').style.display = 'none';
+const KANA_BASE='https://raw.githubusercontent.com/emmanuel971-source/hirakataquizz/main/';
+const kanaCache={};
+function playKanaSound(kana){if(muted)return;try{if(!kanaCache[kana])kanaCache[kana]=new Audio(KANA_BASE+encodeURIComponent(kana)+'.mp3');const a=kanaCache[kana].cloneNode();a.volume=.7;a.play().catch(()=>{});}catch(e){}}
 
-            const prices = await getCurrentPrices();
-            btcMonthlyPrices[2025][10] = prices.usd; // Actualise le prix actuel pour octobre 2025
+const ENCS=[{jp:'すごい！',fr:'Incroyable !'},{jp:'やった！',fr:'On l\'a eu !'},{jp:'完璧！',fr:'Parfait !'},{jp:'天才！',fr:'Génie !'},{jp:'最高！',fr:'Excellent !'}];
+const COMBO_ENCS=[{jp:'コンボ！すごい！',fr:'Combo incroyable !'},{jp:'連続！天才！',fr:'Enchaînement de génie !'},{jp:'最高のコンボ！',fr:'Combo parfait !'},{jp:'パーフェクト！',fr:'Parfait !'}];
+let encTimer=null;
+function showEncToast(isCombo){const pool=isCombo?COMBO_ENCS:ENCS;const enc=pool[Math.floor(Math.random()*pool.length)];const t=document.getElementById('enc-toast');t.querySelector('.enc-jp').textContent=enc.jp;t.querySelector('.enc-fr').textContent=enc.fr;t.className='';void t.offsetWidth;t.className='show';clearTimeout(encTimer);encTimer=setTimeout(()=>t.className='',2300);}
+if(window.speechSynthesis)window.speechSynthesis.getVoices();
+function speakWord(kana,isCombo){if(muted||!window.speechSynthesis)return;window.speechSynthesis.cancel();const voices=window.speechSynthesis.getVoices();const jv=voices.find(v=>v.lang&&v.lang.startsWith('ja'))||null;const u=new SpeechSynthesisUtterance(kana);u.lang='ja-JP';u.rate=.85;u.pitch=isCombo?1.25:1.05;u.volume=.9;if(jv)u.voice=jv;window.speechSynthesis.speak(u);if(isCombo){const enc=COMBO_ENCS[Math.floor(Math.random()*COMBO_ENCS.length)];const u2=new SpeechSynthesisUtterance(enc.jp);u2.lang='ja-JP';u2.rate=1.05;u2.pitch=1.35;u2.volume=.85;if(jv)u2.voice=jv;window.speechSynthesis.speak(u2);showEncToast(true);}}
 
-            const country = document.getElementById('country').value;
-            const cigarettesPerDay = parseInt(document.getElementById('cigsPerDay').value) || 10;
-            const yearsSmoking = parseInt(document.getElementById('yearsSmoking').value) || 5;
+const KANA_COLORS={
+  'あ':'#FFD6A5','い':'#CAFFBF','う':'#A0C4FF','え':'#FFB3C6','お':'#BDE0FE',
+  'か':'#FDFFB6','き':'#B9FBC0','く':'#A2D2FF','け':'#FFAFCC','こ':'#CDB4DB',
+  'さ':'#FFC8DD','し':'#CBFFA9','す':'#ADE8F4','せ':'#FFE5A0','そ':'#C8E6C9',
+  'た':'#FFD7BA','ち':'#B5EAD7','つ':'#B8D8FF','て':'#FFDDD2','と':'#D4F0C0',
+  'な':'#FFC6FF','に':'#A0FFD6','ぬ':'#BAD7F2','ね':'#FFCFD2','の':'#E2F0CB',
+  'は':'#FFF1A8','ひ':'#B5F5EC','ふ':'#C3DDFD','へ':'#FFD6D6','ほ':'#D5EAFF',
+  'ま':'#FFE2B7','み':'#C3FAC3','む':'#BFDBFE','め':'#FFBBD2','も':'#D8F3DC',
+  'や':'#FFEAA7','ゆ':'#A8F0E8','よ':'#C6E2FF',
+  'ら':'#FFD3B6','り':'#BAFFD8','る':'#B6CCFE','れ':'#FFD6E0','ろ':'#D9F3EE',
+  'わ':'#FFF3CD','を':'#FFD0D0','ん':'#E8CBFF',
+  'が':'#F0FFB0','ぎ':'#B0FFC0','ぐ':'#B0D8FF','げ':'#FFB0C8','ご':'#C0B0E8',
+  'ざ':'#FFB0D0','じ':'#C0FFA0','ず':'#A0E0F4','ぜ':'#FFD8A0','ぞ':'#B0E0C0',
+  'だ':'#FFD0B0','ぢ':'#A8E8D0','づ':'#B0D0FF','で':'#FFD0C0','ど':'#C8F0B0',
+  'ば':'#FFE8A8','び':'#A8F0E8','ぶ':'#B8D8FF','べ':'#FFB8C8','ぼ':'#C8D8FF',
+  'ぱ':'#FFD0D8','ぴ':'#D0FFD0','ぷ':'#C8ECFF','ぺ':'#FFD0E8','ぽ':'#D8E8FF',
+};
+const DEFAULT_KANA_BG='#F0F0F0';
+function kanaBg(char){return KANA_COLORS[char]||DEFAULT_KANA_BG;}
 
-            if (cigarettesPerDay < 1 || cigarettesPerDay > 60 || yearsSmoking < 1 || yearsSmoking > 15) {
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('loader').style.display = 'none';
-                return;
-            }
+const COLS=8;let ROWS=12,board=[],active=null,nextChar='';
+let score=0,streak=0,lastWordTime=0;
+let activeWords=[],wordIntroIdx=0,foundRound=new Set(),kanaPool=[];
+let gameRunning=false,dropTimer=null,DROP_SPEED=1400;
+const DROP_MIN=600,DROP_STEP=25;
+let isLastCycle=false;
 
-            const isEU = ['France', 'Germany', 'Spain', 'Italy'].includes(country);
-            const currency = isEU ? 'EUR' : 'USD';
-            const usdToEur = prices.usdToEur;
+function updateWordRowColors(){
+  if(!isLastCycle){
+    activeWords.forEach(w=>{const r=document.getElementById('wr-'+w.kana);if(r)r.classList.remove('validated','pending','last-one');});
+    return;
+  }
+  const pendingCount=activeWords.filter(w=>!foundRound.has(w.kana)).length;
+  activeWords.forEach(w=>{
+    const row=document.getElementById('wr-'+w.kana);if(!row)return;
+    row.classList.remove('validated','pending','last-one');
+    if(foundRound.has(w.kana)){row.classList.add('validated');}
+    else{row.classList.add('pending');if(pendingCount===1)row.classList.add('last-one');}
+  });
+}
 
-            let averagePrice = null;
-            if (country === 'Other') {
-                averagePrice = parseFloat(document.getElementById('averagePrice').value) || 5;
-            }
+function increaseSpeed(){DROP_SPEED=Math.max(DROP_MIN,DROP_SPEED-DROP_STEP);if(active&&gameRunning)startTimer();}
+let resolvingWords=false;
+function safeSpawn(){resolvingWords=false;if(!gameRunning)return;spawn();}
 
-            const currentYear = 2025;
-            const currentMonth = 10; // October 2025
-            const startYear = Math.max(2010, currentYear - yearsSmoking);
+function calcRows(){
+  const panH=document.getElementById('word-panel').offsetHeight||0;
+  const topH=0; /* pas de side bar, board prend toute la hauteur game-area */
+  const avail=window.innerHeight-panH-topH;
+  const cellW=Math.floor(window.innerWidth/COLS);
+  ROWS=Math.max(8,Math.floor(avail/cellW));
+}
 
-            let totalSpent = 0;
-            let totalBTC = 0;
-            let monthCount = 0;
-            let totalCigarettes = 0;
-            const yearlyData = { years: [], spent: [], btcValue: [] };
+function rebuildPool(){const introduced=LEVEL_WORDS.slice(0,wordIntroIdx);kanaPool=introduced.flatMap(w=>[...w.kana]);const unique=[...new Set(kanaPool)];const activeChars=new Set(activeWords.flatMap(w=>[...w.kana]));kanaPool=unique.flatMap(ch=>activeChars.has(ch)?[ch,ch]:[ch]);}
+let lastKana='';
+function rndKana(){if(!kanaPool.length)return'あ';const pool=kanaPool.length>1?kanaPool.filter(k=>k!==lastKana):kanaPool;const k=pool[Math.floor(Math.random()*pool.length)];lastKana=k;return k;}
+function initBoard(){board=Array.from({length:ROWS},()=>Array.from({length:COLS},()=>({filled:false,char:''})));}
+function buildDOM(){
+  const el=document.getElementById('board');
+  /* garder les éléments non-cell (HUD, flash, popups…) */
+  const nonCells=[...el.children].filter(c=>!c.dataset.r);
+  /* vider les cells uniquement */
+  [...el.children].filter(c=>c.dataset.r).forEach(c=>c.remove());
+  el.style.gridTemplateRows=`repeat(${ROWS},1fr)`;
+  /* insérer les cells AVANT les overlays */
+  const firstOverlay=el.querySelector('#board-flash')||el.firstChild;
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    const d=document.createElement('div');d.className='cell empty';d.dataset.r=r;d.dataset.c=c;
+    el.insertBefore(d,firstOverlay);
+  }
+}
+function rebuildDOMKeepContent(){const old=board.length;const ob=board.map(row=>row.map(c=>({...c})));calcRows();const nb=Array.from({length:ROWS},()=>Array.from({length:COLS},()=>({filled:false,char:''})));const copy=Math.min(ROWS,old);for(let r=0;r<copy;r++)nb[ROWS-1-r]=ob[old-1-r].map(c=>({...c}));board=nb;buildDOM();}
+const gc=(r,c)=>document.querySelector(`#board [data-r="${r}"][data-c="${c}"]`);
 
-            for (let year = startYear; year <= currentYear; year++) {
-                const startMonth = (year === startYear) ? 7 : 1; // Start from July 2010
-                const endMonth = (year === currentYear) ? currentMonth : 12;
+function spawn(){active={char:nextChar||rndKana(),x:Math.floor(COLS/2),y:0};playKanaSound(active.char);nextChar=rndKana();const nk=document.getElementById('next-kana');nk.textContent=nextChar;nk.className='';void nk.offsetWidth;nk.className='pop';nk.style.background=kanaBg(nextChar);nk.style.color='#1a1040';if(board[0][active.x].filled){endGame();return;}render();startTimer();}
+function ok(x,y){return x>=0&&x<COLS&&y>=0&&y<ROWS&&!board[y][x].filled;}
+function startTimer(){clearInterval(dropTimer);dropTimer=setInterval(tick,DROP_SPEED);}
+function tick(){if(!gameRunning||resolvingWords||!active)return;ok(active.x,active.y+1)?(active.y++,render()):lock();}
+function lock(){if(!active||resolvingWords)return;clearInterval(dropTimer);resolvingWords=true;board[active.y][active.x]={filled:true,char:active.char};const pr=active.y,pc=active.x;const el=gc(pr,pc);if(el){el.className='cell filled land';el.textContent=active.char;el.style.background=kanaBg(active.char);setTimeout(()=>el.classList.remove('land'),450);}active=null;soundDrop();haptic('drop');render();checkWords(pr,pc);}
+function hardDrop(){if(!active||!gameRunning||resolvingWords)return;while(ok(active.x,active.y+1))active.y++;screenShake(false);haptic('drop');render();lock();}
 
-                let yearlySpent = 0;
-                let yearlyBTC = 0;
+function checkWords(pr,pc){const found=scanRowCol(pr,pc);if(!found.length){safeSpawn();return;}processCascade(found,false);}
+function scanRowCol(r,c){const found=[];scanLine(Array.from({length:COLS},(_,cc)=>({r,c:cc})),found);scanLine(Array.from({length:ROWS},(_,rr)=>({r:rr,c})),found);return found;}
+function scanFullBoard(){const found=[];for(let r=0;r<ROWS;r++)scanLine(Array.from({length:COLS},(_,c)=>({r,c})),found);for(let c=0;c<COLS;c++)scanLine(Array.from({length:ROWS},(_,r)=>({r,c})),found);return found;}
+function scanLine(cells,found){const line=cells.map(({r,c})=>board[r][c].filled?board[r][c].char:'\x00').join('');activeWords.forEach(w=>{let i=line.indexOf(w.kana);while(i!==-1){const key=cells.slice(i,i+w.kana.length).map(cc=>`${cc.r},${cc.c}`).join('|');if(!found.some(f=>f.key===key)){found.push({word:w,cells:Array.from({length:w.kana.length},(_,j)=>cells[i+j]),key});}i=line.indexOf(w.kana,i+1);}});}
 
-                for (let month = startMonth; month <= endMonth; month++) {
-                    let cigarettePrice = averagePrice || cigarettePriceData[country]?.[year];
-                    if (!cigarettePrice) continue;
+function processCascade(found,isCascade){
+  const isCombo=found.length>=2;
+  const cellSet=new Set();found.forEach(f=>f.cells.forEach(cell=>cellSet.add(`${cell.r},${cell.c}`)));
+  const flashEls=[];
+  cellSet.forEach(key=>{const[r,c]=key.split(',').map(Number);const el=gc(r,c);if(el){el.classList.add(isCombo?'combo-flash':'flash');flashEls.push(el);}});
 
-                    const btcPrice = btcMonthlyPrices[year]?.[month];
-                    if (!btcPrice) continue;
+  /* burst canvas allégé */
+  if(flashEls.length){
+    const el=flashEls[Math.floor(flashEls.length/2)];
+    const rect=el.getBoundingClientRect();
+    const isBoss=found.some(f=>f.word.boss);
+    burst(rect.left+rect.width/2,rect.top+rect.height/2,
+      isBoss?14:isCombo?10:7,
+      isBoss?'boss':isCombo?'combo':'normal');
+  }
 
-                    const packsPerMonth = (cigarettesPerDay * 30) / 20;
-                    const monthlySpent = packsPerMonth * cigarettePrice;
-                    const btcBought = monthlySpent / btcPrice;
+  /* flash fond cuve */
+  boardFlash(isCombo||isCascade);
 
-                    totalSpent += monthlySpent;
-                    totalBTC += btcBought;
-                    totalCigarettes += cigarettesPerDay * 30;
-                    yearlySpent += monthlySpent;
-                    yearlyBTC += btcBought;
-                    monthCount++;
-                }
+  let pts=0;found.forEach(f=>{pts+=f.word.kana.length*100*(f.word.mult||1);f.word.mult=(f.word.mult||1)+1;foundRound.add(f.word.kana);});
+  const now=Date.now();if(now-lastWordTime<4000)streak++;else streak=1;lastWordTime=now;
+  if(streak>1)pts=Math.round(pts*(1+streak*.08));
+  score+=pts;increaseSpeed();
 
-                if (yearlySpent > 0) {
-                    yearlyData.years.push(year);
-                    yearlyData.spent.push(totalSpent);
-                    yearlyData.btcValue.push(totalBTC * prices.usd);
-                }
-            }
+  if(isCascade){soundCombo();screenShake(true);haptic('combo');}
+  else{isCombo?(soundCombo(),screenShake(true),haptic('combo')):(soundWord(),haptic('word'));}
 
-            if (monthCount === 0 || isNaN(totalSpent) || isNaN(totalBTC)) {
-                console.error('Erreur de calcul: aucune donnée valide', { totalSpent, totalBTC, monthCount });
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('loader').style.display = 'none';
-                return;
-            }
+  showPopup(found[0].word,pts,isCombo||isCascade);
+  setTimeout(()=>speakWord(found[0].word.kana,isCombo||isCascade),850);
+  const barDone=new Set();found.forEach(f=>{if(!barDone.has(f.word.kana)){flashBar(f.word.kana,isCombo||isCascade);barDone.add(f.word.kana);}});
+  updateMults();updateScore();updateStreak();
+  updateWordRowColors();
 
-            let currentBtcPrice = prices.usd;
-            let currentValue = totalBTC * currentBtcPrice;
+  setTimeout(()=>{
+    cellSet.forEach(key=>{const[r,c]=key.split(',').map(Number);board[r][c]={filled:false,char:''};const el=gc(r,c);if(el){el.className='cell empty';el.textContent='';el.style.background='';}});
+    gravity();render();
+    const cf=scanFullBoard();if(cf.length){setTimeout(()=>processCascade(cf,true),300);return;}
+    const allDone=activeWords.every(w=>foundRound.has(w.kana));
+    if(allDone){if(wordIntroIdx>=LEVEL_WORDS.length)setTimeout(levelDone,400);else introNext();}else safeSpawn();
+  },820);
+}
 
-            // Convert to EUR if EU country
-            let displayBtcPrice = currentBtcPrice;
-            if (currency === 'EUR') {
-                totalSpent *= usdToEur;
-                currentValue *= usdToEur;
-                displayBtcPrice *= usdToEur;
-            }
+function gravity(){for(let c=0;c<COLS;c++){const ch=[];for(let r=ROWS-1;r>=0;r--)if(board[r][c].filled)ch.push(board[r][c].char);for(let r=ROWS-1;r>=0;r--)board[r][c]=ch.length?{filled:true,char:ch.shift()}:{filled:false,char:''};}}
 
-            document.getElementById('totalCigarettes').textContent = totalCigarettes.toLocaleString();
-            document.getElementById('totalSpent').innerHTML = formatCurrency(totalSpent, currency);
-            document.getElementById('totalBtc').innerHTML = totalBTC.toFixed(6) + ' BTC';
-            document.getElementById('currentBtcPrice').innerHTML = formatCurrency(displayBtcPrice, currency);
-            document.getElementById('currentValue').innerHTML = formatCurrency(currentValue, currency);
+function introNext(){
+  if(wordIntroIdx>=LEVEL_WORDS.length)return;
+  const w=LEVEL_WORDS[wordIntroIdx++];
+  w.mult=1;activeWords.push(w);foundRound=new Set();
+  if(wordIntroIdx>=LEVEL_WORDS.length)isLastCycle=true;
+  rebuildPool();soundNewWord();renderPanel();
+}
 
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('result').style.display = 'block';
+function ghostY(){if(!active)return -1;let g=active.y;while(g+1<ROWS&&!board[g+1][active.x].filled)g++;return g;}
+function render(){
+  const gy=ghostY();
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    const el=gc(r,c);
+    if(!el||el.classList.contains('flash')||el.classList.contains('combo-flash')||el.classList.contains('land'))continue;
+    if(active&&r===active.y&&c===active.x){el.className='cell active';el.textContent=active.char;el.style.background=kanaBg(active.char);}
+    else if(active&&r===gy&&c===active.x&&gy!==active.y){el.className='cell ghost';el.textContent=active.char;el.style.background='';}
+    else if(board[r][c].filled){el.className='cell filled';el.textContent=board[r][c].char;el.style.background=kanaBg(board[r][c].char);}
+    else{el.className='cell empty';el.textContent='';el.style.background='';}
+  }
+}
 
-            if (chart) chart.destroy();
-            const ctx = document.getElementById('evolutionChart').getContext('2d');
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: yearlyData.years,
-                    datasets: [
-                        { label: translations[lang].spentText, data: yearlyData.spent, borderColor: '#dc3545', fill: false },
-                        { label: translations[lang].currentValue, data: yearlyData.btcValue, borderColor: '#198754', fill: false }
-                    ]
-                },
-                options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            });
-        }
+function updateScore(){
+  const el=document.getElementById('hud-score-val');
+  el.textContent=score.toLocaleString();
+  el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');
+}
+function updateStreak(){const el=document.getElementById('streak');if(streak>=2){el.style.display='block';el.textContent='🔥'.repeat(Math.min(streak,5))+' ×'+streak;}else el.style.display='none';}
 
-        function shareOnX() {
-            const currentValue = document.getElementById('currentValue').innerText;
-            const text = encodeURIComponent(`Et si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
-Quel manque à gagner : ${currentValue} ! 
-#StopSmoking #Bitcoin 
-https://smokingbitcoin.pages.dev/`);
-            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
-        }
+function renderPanel(){
+  const p=document.getElementById('word-panel');p.innerHTML='';
+  activeWords.forEach(w=>{
+    const row=document.createElement('div');
+    row.className='word-row'+(w.boss?' boss':'');row.id='wr-'+w.kana;
+    row.innerHTML=`<div class="wr-emoji">${w.emoji}</div><div class="wr-info"><span class="wr-kana">${w.kana}</span><span class="wr-romaji">${w.romaji}</span><span class="wr-meaning">${w.meaning}</span></div><div class="wr-mult" id="wm-${w.kana}">×${w.mult||1}</div>`;
+    p.appendChild(row);
+  });
+  updateWordRowColors();
+  requestAnimationFrame(()=>{rebuildDOMKeepContent();render();setTimeout(()=>safeSpawn(),350);});
+}
 
-        function shareOnLinkedIn() {
-            const siteUrl = "https://smokingbitcoin.pages.dev/";
-            const currentValue = document.getElementById("currentValue").innerText || "";
-            
-            const message = `Et si j'avais investi dans le Bitcoin plutôt que dans les cigarettes... 
-Quel manque à gagner : ${currentValue} !
-Découvrez le calcul ici 👉 ${siteUrl}
-#StopSmoking #Bitcoin #Health #Finance`;
+function updateMults(){activeWords.forEach(w=>{const el=document.getElementById('wm-'+w.kana);if(!el)return;el.textContent='×'+w.mult;el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');});}
+function flashBar(kana,isCombo){const row=document.getElementById('wr-'+kana);if(!row)return;row.classList.remove('bar-flash','bar-combo');void row.offsetWidth;row.classList.add(isCombo?'bar-combo':'bar-flash');setTimeout(()=>row.classList.remove('bar-flash','bar-combo'),650);}
 
-            // Copie du message complet dans le presse-papier
-            navigator.clipboard.writeText(message)
-              .then(() => {
-                alert("✅ Message copié dans le presse-papier. Il ne reste plus qu’à le coller dans LinkedIn !");
-                // Ouvre la fenêtre de partage LinkedIn
-                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
-              })
-              .catch(err => {
-                console.error("Erreur de copie :", err);
-                // En cas d’échec, on ouvre quand même la page LinkedIn
-                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}`, "_blank");
-              });
-        }
+let popTimer=null;
+function showPopup(word,pts,isCombo){
+  const p=document.getElementById('word-popup');
+  p.querySelector('.wp-emoji').textContent=word.emoji;p.querySelector('.wp-kana').textContent=word.kana;
+  p.querySelector('.wp-romaji').textContent=word.romaji;p.querySelector('.wp-meaning').textContent=word.meaning;
+  p.querySelector('.wp-pts').textContent=(isCombo?'🌸 COMBO ! ':'')+(streak>1?'🔥×'+streak+' ':'')+'+'+pts+' pts';
+  p.className=isCombo?'combo show':'show';void p.offsetWidth;
+  if(isCombo){const b=document.getElementById('combo-banner');const maxM=Math.max(...activeWords.map(w=>w.mult||1));b.textContent='🌸 COMBO ×'+maxM;b.className='show';void b.offsetWidth;setTimeout(()=>b.className='',1700);}
+  clearTimeout(popTimer);popTimer=setTimeout(()=>p.className='',2100);
+}
 
-        // Initialisation
-        document.getElementById('cigsPerDay').addEventListener('input', updateCigsDisplay);
-        document.getElementById('yearsSmoking').addEventListener('input', updateYearsDisplay);
-        applyTranslation('fr');
+function showOverlay({title,sub,words=[],btn1,act1,btn2=null,act2=null}){
+  clearInterval(dropTimer);gameRunning=false;
+  document.getElementById('ov-title').innerHTML=title;
+  document.getElementById('ov-sub').innerHTML=sub;
+  const ow=document.getElementById('ov-words');ow.innerHTML='';
+  words.forEach(w=>{const d=document.createElement('div');d.className='ov-word';d.innerHTML=`<span class="ow-emoji">${w.emoji}</span><span class="ow-kana">${w.kana}</span><div class="ow-sub">${w.romaji} · ${w.meaning}</div>`;ow.appendChild(d);});
+  const b1=document.getElementById('ov-btn');b1.textContent=btn1;b1.onclick=act1;
+  const b2=document.getElementById('ov-btn2');
+  if(btn2){b2.textContent=btn2;b2.onclick=act2;b2.style.display='';}else b2.style.display='none';
+  document.getElementById('ov-lvlsel').onclick=showMenu;
+  document.getElementById('board-overlay').classList.remove('hidden');
+}
+function hideOverlay(){document.getElementById('board-overlay').classList.add('hidden');}
+function showMenu(){clearInterval(dropTimer);gameRunning=false;resolvingWords=false;hideOverlay();document.getElementById('tuto-overlay').classList.add('hidden');document.getElementById('menu-overlay').classList.remove('hidden');}
 
-        // Détection de la langue du navigateur
-        const browserLang = navigator.language.slice(0,2);
-        if (['fr', 'en', 'es'].includes(browserLang)) {
-            applyTranslation(browserLang);
-        }
-    </script>
+function startGame(levelIdx){
+  currentLevelIdx=(levelIdx!==undefined)?levelIdx:0;
+  LEVEL_WORDS=ALL_LEVELS[currentLevelIdx].words.map(w=>({...w}));
+  const lvlData=ALL_LEVELS[currentLevelIdx];
+  score=0;streak=0;DROP_SPEED=1400;
+  document.getElementById('streak').style.display='none';updateScore();
+  activeWords=[];wordIntroIdx=0;foundRound=new Set();LEVEL_WORDS.forEach(w=>w.mult=1);
+  isLastCycle=false;
+  document.getElementById('word-panel').innerHTML='';resolvingWords=false;
+  calcRows();buildDOM();initBoard();
+  document.getElementById('menu-overlay').classList.add('hidden');
+  document.getElementById('tuto-overlay').classList.add('hidden');
+  hideOverlay();gameRunning=true;
+
+  /* thème couleur niveau */
+  const lv=currentLevelIdx+1;
+  const root=document.documentElement.style;
+  root.setProperty('--bg-top',`var(--lv${lv}-top,var(--lv1-top))`);
+  root.setProperty('--bg-mid',`var(--lv${lv}-mid,var(--lv1-mid))`);
+  root.setProperty('--bg-bot',`var(--lv${lv}-bot,var(--lv1-bot))`);
+
+  /* HUD niveau */
+  const hLvl=document.getElementById('hud-level');
+  if(hLvl)hLvl.innerHTML=`<span class="hud-level-emoji">${lvlData.emoji}</span><span class="hud-level-num" style="color:${lvlData.color}">Lv.${lvlData.id}</span>`;
+
+  const w=LEVEL_WORDS[wordIntroIdx++];w.mult=1;activeWords.push(w);
+  rebuildPool();renderPanel();nextChar=rndKana();
+  document.getElementById('next-kana').textContent=nextChar;
+  document.getElementById('next-kana').style.background=kanaBg(nextChar);
+}
+
+function endGame(){clearInterval(dropTimer);gameRunning=false;resolvingWords=false;soundGameOver();haptic('over');const lvlData=ALL_LEVELS[currentLevelIdx];showOverlay({title:'💔 Partie terminée !',sub:`${lvlData.emoji} ${lvlData.theme}<br>Score : <strong style="color:var(--neon-violet)">${score.toLocaleString()}</strong>`,btn1:'Réessayer 🔄',act1:()=>startGame(currentLevelIdx),btn2:currentLevelIdx>0?'← Niveau précédent':null,act2:currentLevelIdx>0?()=>startGame(currentLevelIdx-1):null});}
+function levelDone(){clearInterval(dropTimer);gameRunning=false;resolvingWords=false;soundLevelUp();haptic('combo');const lvlData=ALL_LEVELS[currentLevelIdx];const isLast=currentLevelIdx>=ALL_LEVELS.length-1;const nextLvl=ALL_LEVELS[currentLevelIdx+1];showOverlay({title:`🎉 クリア！ Niveau ${lvlData.id}`,sub:`<span style="font-size:24px">${lvlData.emoji}</span><br><strong style="color:var(--neon-violet)">${lvlData.theme}</strong> maîtrisé !<br>Score : <strong style="color:var(--neon-violet)">${score.toLocaleString()}</strong>`,words:LEVEL_WORDS,btn1:isLast?'🏆 Rejouer depuis le début':`Niveau ${lvlData.id+1} → ${nextLvl?nextLvl.theme:''}`,act1:isLast?()=>startGame(0):()=>startGame(currentLevelIdx+1),btn2:'Rejouer ce niveau 🔄',act2:()=>startGame(currentLevelIdx)});}
+
+/* ── Touch controls ── */
+let txStart=0,tyStart=0,ttStart=0,lpTimer=null;
+const LP_MS=380;
+document.addEventListener('touchstart',e=>{
+  getCtx();
+  const t=e.touches[0];txStart=t.clientX;tyStart=t.clientY;ttStart=Date.now();
+  clearTimeout(lpTimer);
+  lpTimer=setTimeout(()=>{if(gameRunning&&!resolvingWords&&active){navigator.vibrate&&navigator.vibrate(25);hardDrop();lpTimer=null;}},LP_MS);
+},{passive:true});
+document.addEventListener('touchend',e=>{
+  clearTimeout(lpTimer);lpTimer=null;
+  if(!gameRunning||resolvingWords||!active)return;
+  const t=e.changedTouches[0];
+  const dx=t.clientX-txStart,dy=t.clientY-tyStart,dt=Date.now()-ttStart;
+  const adx=Math.abs(dx),ady=Math.abs(dy);
+  if(dt<LP_MS&&adx<12&&ady<12)return;
+  if(ady>adx&&dy>50){hardDrop();return;}
+  if(adx>ady&&adx>10){
+    const cellW=Math.floor(window.innerWidth/COLS);
+    const steps=Math.max(1,Math.round(adx/cellW));
+    const dir=dx>0?1:-1;
+    for(let i=0;i<steps;i++){if(ok(active.x+dir,active.y))active.x+=dir;else break;}
+    render();
+  }
+},{passive:true});
+document.addEventListener('touchmove',e=>{
+  const t=e.touches[0];
+  if(Math.abs(t.clientX-txStart)>10||Math.abs(t.clientY-tyStart)>10){clearTimeout(lpTimer);lpTimer=null;}
+},{passive:true});
+
+window.addEventListener('resize',()=>{if(!gameRunning)return;rebuildDOMKeepContent();if(active)render();});
+calcRows();buildDOM();
+
+/* ══════════════════════════════════════
+   BURST CANVAS — allégé mobile
+   ══════════════════════════════════════ */
+const BURST_CANVAS=document.createElement('canvas');
+BURST_CANVAS.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:999;';
+document.body.appendChild(BURST_CANVAS);
+const BURST_CTX=BURST_CANVAS.getContext('2d');
+function resizeBurst(){BURST_CANVAS.width=window.innerWidth;BURST_CANVAS.height=window.innerHeight;}
+resizeBurst();window.addEventListener('resize',resizeBurst);
+
+const BURST_COLORS={
+  normal:['#ff6b6b','#ffbe0b','#6bcb77','#4d96ff','#c77dff','#ffffff'],
+  combo: ['#ff0066','#ff6b35','#ffbe0b','#ffffff','#ff3fab'],
+  boss:  ['#ff0066','#c77dff','#4d96ff','#ffffff','#ffbe0b'],
+  logo:  ['#ff6b6b','#ffbe0b','#6bcb77','#4d96ff','#c77dff','#ff3fab'],
+};
+let burstParticles=[];
+function burst(x,y,count=8,mode='normal'){
+  const cols=BURST_COLORS[mode]||BURST_COLORS.normal;
+  const isCombo=mode==='combo'||mode==='boss';
+  for(let i=0;i<count;i++){
+    const angle=(Math.PI*2/count)*i+(Math.random()-.5)*.5;
+    const speed=(isCombo?4:2.8)+Math.random()*(isCombo?4:2.5);
+    const size=(isCombo?3:2)+Math.random()*(isCombo?4:3);
+    const isStar=Math.random()>(isCombo?.5:.75);
+    burstParticles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed-(isCombo?1.5:.8),size,color:cols[Math.floor(Math.random()*cols.length)],alpha:1,life:0,maxLife:35+Math.random()*(isCombo?30:18),isStar,rot:Math.random()*Math.PI*2,rotSpeed:(Math.random()-.5)*.18});
+  }
+  if(!burstAnimRunning)burstLoop();
+}
+let burstAnimRunning=false;
+function burstLoop(){
+  burstAnimRunning=true;
+  BURST_CTX.clearRect(0,0,BURST_CANVAS.width,BURST_CANVAS.height);
+  burstParticles=burstParticles.filter(p=>p.alpha>.01);
+  for(const p of burstParticles){
+    p.life++;p.x+=p.vx;p.y+=p.vy;p.vy+=.16;p.alpha=Math.max(0,1-p.life/p.maxLife);p.rot+=p.rotSpeed;
+    BURST_CTX.save();BURST_CTX.globalAlpha=p.alpha;BURST_CTX.translate(p.x,p.y);BURST_CTX.rotate(p.rot);
+    BURST_CTX.fillStyle=p.color;BURST_CTX.shadowColor=p.color;BURST_CTX.shadowBlur=4;
+    if(p.isStar){
+      const r1=p.size,r2=p.size*.4;BURST_CTX.beginPath();
+      for(let i=0;i<8;i++){const a=(i/8)*Math.PI*2;const r=i%2===0?r1:r2;i===0?BURST_CTX.moveTo(Math.cos(a)*r,Math.sin(a)*r):BURST_CTX.lineTo(Math.cos(a)*r,Math.sin(a)*r);}
+      BURST_CTX.closePath();BURST_CTX.fill();
+    }else{BURST_CTX.beginPath();BURST_CTX.arc(0,0,p.size,0,Math.PI*2);BURST_CTX.fill();}
+    BURST_CTX.restore();
+  }
+  if(burstParticles.length>0){requestAnimationFrame(burstLoop);}
+  else{burstAnimRunning=false;BURST_CTX.clearRect(0,0,BURST_CANVAS.width,BURST_CANVAS.height);}
+}
+
+document.addEventListener('click',e=>{const logo=e.target.closest('.logo-wrap');if(logo)burst(e.clientX,e.clientY,20,'logo');});
+</script>
 </body>
 </html>
-
-
-
-
