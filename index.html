@@ -1018,8 +1018,14 @@ function processCascade(found,isCascade){
   const cellSet=new Set();found.forEach(f=>f.cells.forEach(cell=>cellSet.add(`${cell.r},${cell.c}`)));
   const flashEls=[];
   cellSet.forEach(key=>{const[r,c]=key.split(',').map(Number);const el=gc(r,c);if(el){el.classList.add(isCombo?'combo-flash':'flash');flashEls.push(el);}});
-  /* sparkles sur chaque kana qui disparaît */
-  flashEls.forEach(el=>spawnCellSparkles(el,isCombo));
+
+  /* une seule explosion au centre géométrique du mot */
+  if(flashEls.length){
+    const rects=flashEls.map(el=>el.getBoundingClientRect());
+    const cx=rects.reduce((s,r)=>s+r.left+r.width/2,0)/rects.length;
+    const cy=rects.reduce((s,r)=>s+r.top+r.height/2,0)/rects.length;
+    spawnExplosion(cx, cy, isCombo||isCascade);
+  }
 
   /* burst canvas allégé */
   if(flashEls.length){
@@ -1107,57 +1113,43 @@ function updateMults(){activeWords.forEach(w=>{const el=document.getElementById(
 function flashBar(kana,isCombo){const row=document.getElementById('wr-'+kana);if(!row)return;row.classList.remove('bar-flash','bar-combo');void row.offsetWidth;row.classList.add(isCombo?'bar-combo':'bar-flash');setTimeout(()=>row.classList.remove('bar-flash','bar-combo'),650);}
 
 /* ══════════════════════════════════════
-   SPARKLES — SVG minuscules, sans text-shadow (perf GPU)
+   EXPLOSION — une seule gerbe au centre du mot
+   Emojis étoiles vrais, trajectoires longues
    ══════════════════════════════════════ */
-const SPARKLE_COLORS=['#ff6b6b','#ffbe0b','#6bcb77','#4d96ff','#c77dff','#ff3fab','#00cfff'];
 
-/* SVG étoile 4 branches minuscule */
-function _svgStar(col,sz){
-  return `<svg width="${sz}" height="${sz}" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" style="display:block"><polygon points="5,0 6,4 10,5 6,6 5,10 4,6 0,5 4,4" fill="${col}"/></svg>`;
-}
+/* Animation : part du centre, file loin, s'évanouit */
+/* On utilise une <div> positionnée fixed avec un emoji qui vole */
 
-function spawnCellSparkles(cellEl, isCombo){
-  if(!cellEl)return;
-  const rect=cellEl.getBoundingClientRect();
-  const cx=rect.left+rect.width/2;
-  const cy=rect.top+rect.height/2;
-  const count=isCombo?5:3; /* moins = plus fluide */
-  for(let i=0;i<count;i++){
-    const s=document.createElement('div');
-    s.className='cell-sparkle';
-    const angle=(Math.PI*2/count)*i+(Math.random()-.5)*.7;
-    const dist=(isCombo?30:20)+Math.random()*14;
-    const tx=(Math.cos(angle)*dist).toFixed(1)+'px';
-    const ty=(Math.sin(angle)*dist).toFixed(1)+'px';
-    const sz=isCombo?8:7; /* visible mais léger */
-    const col=SPARKLE_COLORS[Math.floor(Math.random()*SPARKLE_COLORS.length)];
-    s.innerHTML=_svgStar(col,sz);
-    s.style.cssText=`left:${cx}px;top:${cy}px;--tx:${tx};--ty:${ty};--sparkle-opacity:.9;`
-      +`animation-duration:${(.55+Math.random()*.2).toFixed(2)}s;`
-      +`animation-delay:${(i*.03).toFixed(2)}s;`;
+function spawnExplosion(cx, cy, isCombo){
+  const count = isCombo ? 12 : 8;
+  const emojis = ['⭐','✨','⭐','✨','💫','⭐','✨','💫'];
+  for(let i = 0; i < count; i++){
+    const s = document.createElement('div');
+    /* position de départ = centre du mot, coordonnées viewport */
+    const angle = (Math.PI * 2 / count) * i + (Math.random() - .5) * .5;
+    const dist  = (isCombo ? 90 : 65) + Math.random() * 50;
+    const tx = (Math.cos(angle) * dist).toFixed(1) + 'px';
+    const ty = (Math.sin(angle) * dist).toFixed(1) + 'px';
+    const dur  = (.55 + Math.random() * .3).toFixed(2);
+    const delay= (i * .025).toFixed(2);
+    const fontSize = (isCombo ? 16 : 13) + Math.floor(Math.random() * 5);
+    s.textContent = emojis[i % emojis.length];
+    s.style.cssText =
+      `position:fixed;left:${cx}px;top:${cy}px;`+
+      `font-size:${fontSize}px;line-height:1;`+
+      `pointer-events:none;z-index:500;`+
+      `transform:translate(-50%,-50%);`+
+      `--tx:${tx};--ty:${ty};--sparkle-opacity:1;`+
+      `animation:sparkleFloat ${dur}s ease-out ${delay}s both;`+
+      `will-change:transform,opacity;`;
     document.body.appendChild(s);
-    setTimeout(()=>s.remove(),800);
+    setTimeout(() => s.remove(), (parseFloat(dur) + parseFloat(delay)) * 1000 + 100);
   }
 }
 
-function spawnPopupSparkles(cx,cy,isCombo){
-  const count=isCombo?8:5;
-  for(let i=0;i<count;i++){
-    const s=document.createElement('div');
-    s.className='cell-sparkle';
-    const angle=(Math.PI*2/count)*i+(Math.random()-.5)*.4;
-    const dist=(isCombo?55:38)+Math.random()*22;
-    const tx=(Math.cos(angle)*dist).toFixed(1)+'px';
-    const ty=(Math.sin(angle)*dist).toFixed(1)+'px';
-    const sz=isCombo?9:7;
-    const col=SPARKLE_COLORS[Math.floor(Math.random()*SPARKLE_COLORS.length)];
-    s.innerHTML=_svgStar(col,sz);
-    s.style.cssText=`left:${cx}px;top:${cy}px;--tx:${tx};--ty:${ty};--sparkle-opacity:1;`
-      +`animation-duration:${(.65+Math.random()*.25).toFixed(2)}s;`
-      +`animation-delay:${(i*.035).toFixed(2)}s;`;
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),1000);
-  }
+function spawnPopupSparkles(cx, cy, isCombo){
+  /* réutilise la même explosion pour le popup */
+  spawnExplosion(cx, cy, isCombo);
 }
 
 /* ══════════════════════════════════════
