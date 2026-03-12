@@ -887,14 +887,8 @@ const soundNewWord=()=>[440,554,659].forEach((f,i)=>playTone(f,'triangle',.18,.1
 const soundGameOver=()=>[440,370,311,261].forEach((f,i)=>playTone(f,'sawtooth',.20,.15,i*.13));
 const soundLevelUp =()=>[523,659,784,1047,784,1047,1319].forEach((f,i)=>playTone(f,'sine',.20,.20,i*.08));
 
-/* ── haptique ── */
-function haptic(type='drop'){
-  if(!navigator.vibrate)return;
-  if(type==='drop')   navigator.vibrate(18);
-  else if(type==='word')  navigator.vibrate([30,10,30]);
-  else if(type==='combo') navigator.vibrate([40,10,40,10,60]);
-  else if(type==='over')  navigator.vibrate([80,20,80]);
-}
+/* ── haptique désactivé ── */
+function haptic(){}
 
 /* ── screen shake + teinte ── */
 function screenShake(isCombo=false){
@@ -1041,10 +1035,14 @@ function processCascade(found,isCascade){
   if(streak>1)pts=Math.round(pts*(1+streak*.08));
   score+=pts;increaseSpeed();
 
-  if(isCascade){soundCombo();screenShake(true);haptic('combo');}
-  else{isCombo?(soundCombo(),screenShake(true),haptic('combo')):(soundWord(),haptic('word'));}
+  if(isCascade){soundCombo();screenShake(true);}
+  else{isCombo?(soundCombo(),screenShake(true)):(soundWord());}
 
-  showPopup(found[0].word,pts,isCombo||isCascade);
+  /* file séquentielle — chaque mot a sa propre popup */
+  found.forEach((f,i)=>{
+    const scale=isCombo&&i>0?1.08:1; /* légèrement plus grand pour le 2e */
+    queuePopup(f.word, isCombo||isCascade, scale);
+  });
   setTimeout(()=>speakWord(found[0].word.kana,isCombo||isCascade),850);
   const barDone=new Set();found.forEach(f=>{if(!barDone.has(f.word.kana)){flashBar(f.word.kana,isCombo||isCascade);barDone.add(f.word.kana);}});
   updateMults();updateScore();updateStreak();
@@ -1105,100 +1103,113 @@ function updateMults(){activeWords.forEach(w=>{const el=document.getElementById(
 function flashBar(kana,isCombo){const row=document.getElementById('wr-'+kana);if(!row)return;row.classList.remove('bar-flash','bar-combo');void row.offsetWidth;row.classList.add(isCombo?'bar-combo':'bar-flash');setTimeout(()=>row.classList.remove('bar-flash','bar-combo'),650);}
 
 /* ══════════════════════════════════════
-   SPARKLES — mix ✦ losanges et ● ronds
+   SPARKLES — SVG minuscules, sans text-shadow (perf GPU)
    ══════════════════════════════════════ */
-const SPARKLE_SHAPES=['✦','✦','●','●','✦','●'];
-const SPARKLE_COLORS=['#ff6b6b','#ffbe0b','#6bcb77','#4d96ff','#c77dff','#ff3fab','#00cfff','#fff700'];
+const SPARKLE_COLORS=['#ff6b6b','#ffbe0b','#6bcb77','#4d96ff','#c77dff','#ff3fab','#00cfff'];
+
+/* SVG étoile 4 branches minuscule */
+function _svgStar(col,sz){
+  return `<svg width="${sz}" height="${sz}" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" style="display:block"><polygon points="5,0 6,4 10,5 6,6 5,10 4,6 0,5 4,4" fill="${col}"/></svg>`;
+}
 
 function spawnCellSparkles(cellEl, isCombo){
   if(!cellEl)return;
   const rect=cellEl.getBoundingClientRect();
   const cx=rect.left+rect.width/2;
   const cy=rect.top+rect.height/2;
-  const count=6;
+  const count=isCombo?5:3; /* moins = plus fluide */
   for(let i=0;i<count;i++){
-    const s=document.createElement('span');
+    const s=document.createElement('div');
     s.className='cell-sparkle';
-    const angle=(Math.PI*2/count)*i + (Math.random()-.5)*.6;
-    const dist=(isCombo?38:26)+Math.random()*18;
+    const angle=(Math.PI*2/count)*i+(Math.random()-.5)*.7;
+    const dist=(isCombo?30:20)+Math.random()*14;
     const tx=(Math.cos(angle)*dist).toFixed(1)+'px';
     const ty=(Math.sin(angle)*dist).toFixed(1)+'px';
-    const sz=isCombo?(10+Math.random()*8):(7+Math.random()*6);
+    const sz=isCombo?5:4; /* minuscule */
     const col=SPARKLE_COLORS[Math.floor(Math.random()*SPARKLE_COLORS.length)];
-    const shape=SPARKLE_SHAPES[i%SPARKLE_SHAPES.length];
-    s.textContent=shape;
-    s.style.cssText=`
-      left:${cx}px; top:${cy}px;
-      font-size:${sz.toFixed(0)}px;
-      color:${col};
-      text-shadow:0 0 6px ${col};
-      --tx:${tx}; --ty:${ty};
-      --sparkle-opacity:${isCombo?.95:.8};
-      animation-duration:${(.6+Math.random()*.25).toFixed(2)}s;
-      animation-delay:${(Math.random()*.08).toFixed(2)}s;
-    `;
+    s.innerHTML=_svgStar(col,sz);
+    s.style.cssText=`left:${cx}px;top:${cy}px;--tx:${tx};--ty:${ty};--sparkle-opacity:.9;`
+      +`animation-duration:${(.55+Math.random()*.2).toFixed(2)}s;`
+      +`animation-delay:${(i*.03).toFixed(2)}s;`;
     document.body.appendChild(s);
-    setTimeout(()=>s.remove(), 900);
+    setTimeout(()=>s.remove(),800);
   }
 }
 
-function spawnPopupSparkles(popupEl, isCombo){
-  const rect=popupEl.getBoundingClientRect();
-  const cx=rect.left+rect.width/2;
-  const cy=rect.top+rect.height/2;
-  const count=isCombo?10:7;
+function spawnPopupSparkles(cx,cy,isCombo){
+  const count=isCombo?8:5;
   for(let i=0;i<count;i++){
-    const s=document.createElement('span');
+    const s=document.createElement('div');
     s.className='cell-sparkle';
-    const angle=(Math.PI*2/count)*i+(Math.random()-.5)*.5;
-    const dist=(isCombo?70:50)+Math.random()*30;
+    const angle=(Math.PI*2/count)*i+(Math.random()-.5)*.4;
+    const dist=(isCombo?55:38)+Math.random()*22;
     const tx=(Math.cos(angle)*dist).toFixed(1)+'px';
     const ty=(Math.sin(angle)*dist).toFixed(1)+'px';
-    const sz=isCombo?(14+Math.random()*10):(10+Math.random()*8);
+    const sz=isCombo?6:5;
     const col=SPARKLE_COLORS[Math.floor(Math.random()*SPARKLE_COLORS.length)];
-    const shape=SPARKLE_SHAPES[i%SPARKLE_SHAPES.length];
-    s.textContent=shape;
-    s.style.cssText=`
-      left:${cx}px; top:${cy}px;
-      font-size:${sz.toFixed(0)}px;
-      color:${col};
-      text-shadow:0 0 8px ${col};
-      --tx:${tx}; --ty:${ty};
-      --sparkle-opacity:${isCombo?1:.9};
-      animation-duration:${(.7+Math.random()*.3).toFixed(2)}s;
-      animation-delay:${(i*.04).toFixed(2)}s;
-    `;
+    s.innerHTML=_svgStar(col,sz);
+    s.style.cssText=`left:${cx}px;top:${cy}px;--tx:${tx};--ty:${ty};--sparkle-opacity:1;`
+      +`animation-duration:${(.65+Math.random()*.25).toFixed(2)}s;`
+      +`animation-delay:${(i*.035).toFixed(2)}s;`;
     document.body.appendChild(s);
-    setTimeout(()=>s.remove(), 1100);
+    setTimeout(()=>s.remove(),1000);
   }
 }
 
+/* ══════════════════════════════════════
+   FILE POPUP — séquentielle pour les combos multi-mots
+   ══════════════════════════════════════ */
+let _popQueue=[];
+let _popBusy=false;
 let popTimer=null;
-function showPopup(word,pts,isCombo){
+
+function queuePopup(word,isCombo,scale=1){
+  _popQueue.push({word,isCombo,scale});
+  if(!_popBusy)_drainPopup();
+}
+
+function _drainPopup(){
+  if(!_popQueue.length){_popBusy=false;return;}
+  _popBusy=true;
+  const {word,isCombo,scale}=_popQueue.shift();
+  _showOnePopup(word,isCombo,scale,()=>{
+    /* enchaîne après 120ms pour effet "chain" */
+    setTimeout(_drainPopup,120);
+  });
+}
+
+function _showOnePopup(word,isCombo,scale,onDone){
   const p=document.getElementById('word-popup');
+  clearTimeout(popTimer);
+  p.className=''; /* reset immédiat */
+
   p.querySelector('.wp-emoji').textContent=word.emoji;
   p.querySelector('.wp-kana').textContent=word.kana;
   p.querySelector('.wp-meaning').textContent=word.meaning;
-  /* reset animations en retirant/reajoutant les classes */
-  const emoji=p.querySelector('.wp-emoji');
-  const kana=p.querySelector('.wp-kana');
-  const meaning=p.querySelector('.wp-meaning');
-  [emoji,kana,meaning].forEach(el=>{el.style.animation='none';void el.offsetWidth;el.style.animation='';});
-  p.className=isCombo?'combo show':'show';
-  void p.offsetWidth;
-  /* sparkles autour du popup */
-  spawnPopupSparkles(p,isCombo);
-  if(isCombo){
-    const b=document.getElementById('combo-banner');
-    const maxM=Math.max(...activeWords.map(w=>w.mult||1));
-    b.textContent='🌸 COMBO ×'+maxM;
-    b.className='show';void b.offsetWidth;
-    setTimeout(()=>b.className='',1700);
-  }
-  clearTimeout(popTimer);
-  popTimer=setTimeout(()=>{ p.className=''; },2000);
-}
 
+  /* reset animations */
+  ['.wp-emoji','.wp-kana','.wp-meaning'].forEach(sel=>{
+    const el=p.querySelector(sel);
+    el.style.animation='none'; void el.offsetWidth; el.style.animation='';
+  });
+
+  /* scale légèrement plus grand pour le 2e mot d'un combo */
+  p.style.transform=`translate(-50%,-50%) scale(${scale})`;
+
+  p.className=isCombo?'combo show':'show';
+
+  /* sparkles depuis le centre du popup */
+  requestAnimationFrame(()=>{
+    const r=p.getBoundingClientRect();
+    spawnPopupSparkles(r.left+r.width/2, r.top+r.height/2, isCombo);
+  });
+
+  popTimer=setTimeout(()=>{
+    p.className='';
+    p.style.transform='';
+    onDone();
+  }, 800);
+}
 function showOverlay({title,sub,words=[],btn1,act1,btn2=null,act2=null}){
   clearInterval(dropTimer);gameRunning=false;
   document.getElementById('ov-title').innerHTML=title;
@@ -1276,7 +1287,7 @@ document.addEventListener('touchstart',e=>{
   getCtx();
   const t=e.touches[0];txStart=t.clientX;tyStart=t.clientY;ttStart=Date.now();
   clearTimeout(lpTimer);
-  lpTimer=setTimeout(()=>{if(gameRunning&&!resolvingWords&&active){navigator.vibrate&&navigator.vibrate(25);hardDrop();lpTimer=null;}},LP_MS);
+  lpTimer=setTimeout(()=>{if(gameRunning&&!resolvingWords&&active){hardDrop();lpTimer=null;}},LP_MS);
 },{passive:true});
 document.addEventListener('touchend',e=>{
   clearTimeout(lpTimer);lpTimer=null;
