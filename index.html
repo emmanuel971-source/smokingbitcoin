@@ -241,22 +241,16 @@ body::before{
   100%{transform:scaleY(1)   scaleX(1)}
 }
 
-/* ── Kana flash : pop-bounce élastique puis disparition — sans brightness ── */
-.cell.flash      { animation:cellPopVanish .52s cubic-bezier(.36,.07,.19,.97) forwards !important; z-index:10; }
-.cell.combo-flash{ animation:cellPopVanishCombo .52s cubic-bezier(.36,.07,.19,.97) forwards !important; z-index:10; }
-@keyframes cellPopVanish{
-  0%  { transform:scale(1);    opacity:1; }
-  18% { transform:scale(1.38); opacity:1; }   /* pop */
-  42% { transform:scale(.88);  opacity:.95; } /* bounce retour */
-  62% { transform:scale(1.08); opacity:.8; }  /* mini rebond */
-  100%{ transform:scale(.35) rotate(12deg); opacity:0; } /* sortie */
+/* ── Kana flash : disparition discrète, on laisse les sparkles faire le show ── */
+.cell.flash      { animation:cellFade .45s ease-out forwards !important; z-index:10; }
+.cell.combo-flash{ animation:cellFadeCombo .45s ease-out forwards !important; z-index:10; }
+@keyframes cellFade{
+  0%  { opacity:1; transform:scale(1); }
+  100%{ opacity:0; transform:scale(.5) rotate(8deg); }
 }
-@keyframes cellPopVanishCombo{
-  0%  { transform:scale(1) rotate(0deg);    opacity:1; }
-  15% { transform:scale(1.45) rotate(-6deg); opacity:1; }
-  38% { transform:scale(.85) rotate(4deg);   opacity:.95; }
-  58% { transform:scale(1.12) rotate(-2deg); opacity:.85; }
-  100%{ transform:scale(.28) rotate(18deg);  opacity:0; }
+@keyframes cellFadeCombo{
+  0%  { opacity:1; transform:scale(1) rotate(0deg); }
+  100%{ opacity:0; transform:scale(.4) rotate(14deg); }
 }
 
 /* ── Sparkles sur kanas ── */
@@ -291,7 +285,7 @@ body::before{
 
 /* Emoji — animation comboPulseWiggle */
 .wp-emoji{
-  font-size:72px; line-height:1; display:block;
+  font-size:88px; line-height:1; display:block;
   animation:comboPulseWiggle .6s ease-out .05s both;
 }
 /* Kana — animation comboPop */
@@ -319,10 +313,10 @@ body::before{
 .wp-pts   { display:none; }
 
 /* ── Popup : animation d'entrée puis sortie ── */
-#word-popup.show{ animation:popupLifetime 2.0s ease forwards; }
+#word-popup.show{ animation:popupLifetime var(--popup-dur,1.6s) ease forwards; }
 @keyframes popupLifetime{
   0%  { opacity:1; }
-  72% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  70% { opacity:1; transform:translate(-50%,-50%) scale(1); }
   100%{ opacity:0; transform:translate(-50%,-60%) scale(.88); }
 }
 
@@ -1048,10 +1042,18 @@ function processCascade(found,isCascade){
   if(isCascade){soundCombo();screenShake(true);}
   else{isCombo?(soundCombo(),screenShake(true)):(soundWord());}
 
-  /* file séquentielle — chaque mot a sa propre popup */
-  found.forEach((f,i)=>{
-    const scale=isCombo&&i>0?1.08:1; /* légèrement plus grand pour le 2e */
-    queuePopup(f.word, isCombo||isCascade, scale);
+  /* file séquentielle — déduplique les mots identiques, délai après l'explosion */
+  const seenKana=new Set();
+  const uniqueFound=found.filter(f=>{
+    if(seenKana.has(f.word.kana))return false;
+    seenKana.add(f.word.kana);return true;
+  });
+  const isMulti=uniqueFound.length>=2;
+  uniqueFound.forEach((f,i)=>{
+    const scale=isMulti&&i>0?1.1:1;
+    /* délai : 400ms pour le 1er (laisse voir l'explosion), +900ms pour chaque suivant */
+    setTimeout(()=>queuePopup(f.word, isCombo||isCascade, scale, i===uniqueFound.length-1),
+      400 + i*900);
   });
   setTimeout(()=>speakWord(found[0].word.kana,isCombo||isCascade),850);
   const barDone=new Set();found.forEach(f=>{if(!barDone.has(f.word.kana)){flashBar(f.word.kana,isCombo||isCascade);barDone.add(f.word.kana);}});
@@ -1127,12 +1129,12 @@ function spawnExplosion(cx, cy, isCombo){
     const s = document.createElement('div');
     /* position de départ = centre du mot, coordonnées viewport */
     const angle = (Math.PI * 2 / count) * i + (Math.random() - .5) * .5;
-    const dist  = (isCombo ? 90 : 65) + Math.random() * 50;
+    const dist  = (isCombo ? 68 : 49) + Math.random() * 38;
     const tx = (Math.cos(angle) * dist).toFixed(1) + 'px';
     const ty = (Math.sin(angle) * dist).toFixed(1) + 'px';
     const dur  = (.55 + Math.random() * .3).toFixed(2);
     const delay= (i * .025).toFixed(2);
-    const fontSize = (isCombo ? 16 : 13) + Math.floor(Math.random() * 5);
+    const fontSize = (isCombo ? 12 : 10) + Math.floor(Math.random() * 4);
     s.textContent = emojis[i % emojis.length];
     s.style.cssText =
       `position:fixed;left:${cx}px;top:${cy}px;`+
@@ -1159,29 +1161,33 @@ let _popQueue=[];
 let _popBusy=false;
 let popTimer=null;
 
-function queuePopup(word,isCombo,scale=1){
-  _popQueue.push({word,isCombo,scale});
+function queuePopup(word,isCombo,scale=1,isLast=true){
+  _popQueue.push({word,isCombo,scale,isLast});
   if(!_popBusy)_drainPopup();
 }
 
 function _drainPopup(){
   if(!_popQueue.length){_popBusy=false;return;}
   _popBusy=true;
-  const {word,isCombo,scale}=_popQueue.shift();
-  _showOnePopup(word,isCombo,scale,()=>{
-    /* enchaîne après 120ms pour effet "chain" */
-    setTimeout(_drainPopup,120);
+  const {word,isCombo,scale,isLast}=_popQueue.shift();
+  _showOnePopup(word,isCombo,scale,isLast,()=>{
+    setTimeout(_drainPopup,80);
   });
 }
 
-function _showOnePopup(word,isCombo,scale,onDone){
+function _showOnePopup(word,isCombo,scale,isLast,onDone){
   const p=document.getElementById('word-popup');
   clearTimeout(popTimer);
-  p.className=''; /* reset immédiat */
+  p.className='';
 
   p.querySelector('.wp-emoji').textContent=word.emoji;
   p.querySelector('.wp-kana').textContent=word.kana;
   p.querySelector('.wp-meaning').textContent=word.meaning;
+
+  /* couleur kana : couleur thème du niveau courant */
+  const lvColor=ALL_LEVELS[currentLevelIdx]?.color||'var(--neon-gold)';
+  p.querySelector('.wp-kana').style.color=lvColor;
+  p.querySelector('.wp-kana').style.textShadow=`0 0 20px ${lvColor}88, 0 2px 0 rgba(0,0,0,.15)`;
 
   /* reset animations */
   ['.wp-emoji','.wp-kana','.wp-meaning'].forEach(sel=>{
@@ -1189,22 +1195,19 @@ function _showOnePopup(word,isCombo,scale,onDone){
     el.style.animation='none'; void el.offsetWidth; el.style.animation='';
   });
 
-  /* scale légèrement plus grand pour le 2e mot d'un combo */
   p.style.transform=`translate(-50%,-50%) scale(${scale})`;
-
   p.className=isCombo?'combo show':'show';
 
-  /* sparkles depuis le centre du popup */
-  requestAnimationFrame(()=>{
-    const r=p.getBoundingClientRect();
-    spawnPopupSparkles(r.left+r.width/2, r.top+r.height/2, isCombo);
-  });
+  /* durée : 1600ms pour un mot seul ou le dernier d'un combo
+             1000ms pour le premier d'un combo multi (laisse place au suivant) */
+  const dur = (!isLast) ? 1000 : 1600;
+  p.style.setProperty('--popup-dur', dur+'ms');
 
   popTimer=setTimeout(()=>{
     p.className='';
     p.style.transform='';
     onDone();
-  }, 800);
+  }, dur);
 }
 function showOverlay({title,sub,words=[],btn1,act1,btn2=null,act2=null}){
   clearInterval(dropTimer);gameRunning=false;
@@ -1260,6 +1263,15 @@ function startGame(levelIdx){
   root.setProperty('--bg-top',`var(--lv${lv}-top,var(--lv1-top))`);
   root.setProperty('--bg-mid',`var(--lv${lv}-mid,var(--lv1-mid))`);
   root.setProperty('--bg-bot',`var(--lv${lv}-bot,var(--lv1-bot))`);
+
+  /* fond du board : dérivé de la couleur thème, jamais blanc ni jaune */
+  const boardBgMap={
+    1:'#daf4f7',2:'#e8f0ff',3:'#daf7e8',4:'#f7ead8',5:'#f0daf7',
+    6:'#daeef7',7:'#e8f7da',8:'#daf7e4',9:'#f7daea',10:'#daf7f0',
+    11:'#dae8f7',12:'#daf7dc',13:'#f7e8da',14:'#ecdaf7',15:'#daeef7',
+    16:'#f7dada',17:'#ecdaf7',18:'#f7e8da',19:'#daf7ec',20:'#f7edd8',21:'#daeef7'
+  };
+  root.setProperty('--board-bg', boardBgMap[lv]||'#daf4f7');;
 
   /* HUD niveau */
   const hLvlEmoji=document.querySelector('#hud-level-box .hud-level-emoji');
