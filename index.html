@@ -285,27 +285,29 @@ body::before{
 
 /* Emoji — animation comboPulseWiggle */
 .wp-emoji{
-  font-size:88px; line-height:1; display:block;
+  font-size:114px; line-height:1; display:block;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,.3));
   animation:comboPulseWiggle .6s ease-out .05s both;
 }
 /* Kana — animation comboPop */
 .wp-kana{
   font-family:'Noto Sans JP',sans-serif;
   font-weight:900;
-  font-size:52px;
+  font-size:68px;
   color:var(--neon-gold);
-  text-shadow:0 0 20px rgba(232,160,0,.7), 0 2px 0 rgba(0,0,0,.15);
+  text-shadow:0 0 24px rgba(232,160,0,.7), 0 3px 0 rgba(0,0,0,.2);
   display:block; line-height:1;
   animation:comboPop .4s cubic-bezier(.68,-.55,.265,1.55) both;
 }
 #word-popup.combo .wp-kana{
   color:var(--neon-pink);
-  text-shadow:0 0 20px rgba(255,0,102,.7), 0 2px 0 rgba(0,0,0,.15);
+  text-shadow:0 0 24px rgba(255,0,102,.7), 0 3px 0 rgba(0,0,0,.2);
 }
 /* Traduction — apparition décalée */
 .wp-meaning{
   font-family:'Nunito',sans-serif; font-weight:900;
-  font-size:22px; color:var(--text-mid);
+  font-size:28px; color:var(--text-mid);
+  text-shadow:0 2px 4px rgba(0,0,0,.2);
   animation:comboPop .35s cubic-bezier(.68,-.55,.265,1.55) .18s both;
 }
 /* Éléments retirés */
@@ -342,8 +344,11 @@ body::before{
 
 #enc-toast{position:absolute;left:50%;bottom:30%;transform:translateX(-50%);text-align:center;pointer-events:none;z-index:45;display:none;white-space:nowrap;}
 #enc-toast.show{display:block;animation:encRise 2.2s ease forwards;}
-.enc-jp{font-family:'Fredoka One',cursive;font-size:clamp(26px,8vw,36px);color:var(--neon-gold);text-shadow:0 0 16px rgba(232,160,0,.6);display:block;}
-.enc-fr{font-size:14px;color:var(--text-mid);letter-spacing:1.5px;display:block;margin-top:2px;font-family:'Nunito',sans-serif;font-weight:700;}
+.enc-jp{font-family:'Fredoka One',cursive;font-size:clamp(34px,10vw,48px);color:var(--neon-gold);
+  text-shadow:0 0 20px rgba(232,160,0,.7), 0 3px 6px rgba(0,0,0,.35);display:block;}
+.enc-fr{font-size:clamp(16px,4.5vw,21px);color:var(--text-mid);letter-spacing:1.5px;display:block;margin-top:3px;
+  font-family:'Nunito',sans-serif;font-weight:900;
+  text-shadow:0 2px 4px rgba(0,0,0,.25);}
 @keyframes encRise{0%{opacity:0;transform:translateX(-50%) translateY(0) scale(.7)}12%{opacity:1;transform:translateX(-50%) translateY(-8px) scale(1.08)}65%{opacity:1;transform:translateX(-50%) translateY(-18px) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-70px) scale(.9)}}
 
 /* ── shake amplifié + teinte combo ── */
@@ -878,7 +883,27 @@ document.getElementById('tuto-start-btn').addEventListener('click',()=>{
 let audioCtx=null,muted=false;
 function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
 function playTone(freq,type,dur,vol=0.18,delay=0){if(muted)return;try{const ctx=getCtx(),osc=ctx.createOscillator(),g=ctx.createGain();osc.connect(g);g.connect(ctx.destination);osc.type=type;osc.frequency.value=freq;const t=ctx.currentTime+delay;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);osc.start(t);osc.stop(t+dur);}catch(e){}}
-const soundDrop   =()=>playTone(260,'sine',.07,.12);
+/* Son drop : percussion courte avec attaque franche */
+function soundDrop(){
+  try{
+    const ctx=getCtx();
+    const t=ctx.currentTime;
+    /* composante grave : punch */
+    const osc1=ctx.createOscillator(),g1=ctx.createGain();
+    osc1.connect(g1);g1.connect(ctx.destination);
+    osc1.type='sine';osc1.frequency.setValueAtTime(180,t);
+    osc1.frequency.exponentialRampToValueAtTime(60,t+.08);
+    g1.gain.setValueAtTime(.45,t);g1.gain.exponentialRampToValueAtTime(.001,t+.12);
+    osc1.start(t);osc1.stop(t+.13);
+    /* composante claquement : bruit bref */
+    const buf=ctx.createBuffer(1,ctx.sampleRate*.04,ctx.sampleRate);
+    const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
+    const src=ctx.createBufferSource(),g2=ctx.createGain();
+    src.buffer=buf;src.connect(g2);g2.connect(ctx.destination);
+    g2.gain.setValueAtTime(.18,t);g2.gain.exponentialRampToValueAtTime(.001,t+.04);
+    src.start(t);
+  }catch(e){}
+}
 const soundWord   =()=>[523,659,784,1047].forEach((f,i)=>playTone(f,'sine',.18,.18,i*.07));
 const soundCombo  =()=>{[523,659,784,1047,1319,1568].forEach((f,i)=>playTone(f,'sine',.22,.20,i*.055));setTimeout(()=>playTone(1568,'square',.28,.12),400);};
 const soundNewWord=()=>[440,554,659].forEach((f,i)=>playTone(f,'triangle',.18,.13,i*.08));
@@ -924,7 +949,7 @@ function speakWord(kana,isCombo){if(muted||!window.speechSynthesis)return;window
 
 const KANA_COLORS={
   'あ':'#FFD6A5','い':'#CAFFBF','う':'#A0C4FF','え':'#FFB3C6','お':'#BDE0FE',
-  'か':'#FDFFB6','き':'#B9FBC0','く':'#A2D2FF','け':'#FFAFCC','こ':'#CDB4DB',
+  'か':'#FDFFB6','き':'#B9FBC0','く':'#A2D2FF','け':'#FFAFCC','こ':'#E8C4F0',
   'さ':'#FFC8DD','し':'#CBFFA9','す':'#ADE8F4','せ':'#FFE5A0','そ':'#C8E6C9',
   'た':'#FFD7BA','ち':'#B5EAD7','つ':'#B8D8FF','て':'#FFDDD2','と':'#D4F0C0',
   'な':'#FFC6FF','に':'#A0FFD6','ぬ':'#BAD7F2','ね':'#FFCFD2','の':'#E2F0CB',
@@ -933,7 +958,7 @@ const KANA_COLORS={
   'や':'#FFEAA7','ゆ':'#A8F0E8','よ':'#C6E2FF',
   'ら':'#FFD3B6','り':'#BAFFD8','る':'#B6CCFE','れ':'#FFD6E0','ろ':'#D9F3EE',
   'わ':'#FFF3CD','を':'#FFD0D0','ん':'#E8CBFF',
-  'が':'#F0FFB0','ぎ':'#B0FFC0','ぐ':'#B0D8FF','げ':'#FFB0C8','ご':'#C0B0E8',
+  'が':'#F0FFB0','ぎ':'#B0FFC0','ぐ':'#B0D8FF','げ':'#FFB0C8','ご':'#A8EDCC',
   'ざ':'#FFB0D0','じ':'#C0FFA0','ず':'#A0E0F4','ぜ':'#FFD8A0','ぞ':'#B0E0C0',
   'だ':'#FFD0B0','ぢ':'#A8E8D0','づ':'#B0D0FF','で':'#FFD0C0','ど':'#C8F0B0',
   'ば':'#FFE8A8','び':'#A8F0E8','ぶ':'#B8D8FF','べ':'#FFB8C8','ぼ':'#C8D8FF',
@@ -1264,14 +1289,23 @@ function startGame(levelIdx){
   root.setProperty('--bg-mid',`var(--lv${lv}-mid,var(--lv1-mid))`);
   root.setProperty('--bg-bot',`var(--lv${lv}-bot,var(--lv1-bot))`);
 
-  /* fond du board : dérivé de la couleur thème, jamais blanc ni jaune */
-  const boardBgMap={
-    1:'#daf4f7',2:'#e8f0ff',3:'#daf7e8',4:'#f7ead8',5:'#f0daf7',
-    6:'#daeef7',7:'#e8f7da',8:'#daf7e4',9:'#f7daea',10:'#daf7f0',
-    11:'#dae8f7',12:'#daf7dc',13:'#f7e8da',14:'#ecdaf7',15:'#daeef7',
-    16:'#f7dada',17:'#ecdaf7',18:'#f7e8da',19:'#daf7ec',20:'#f7edd8',21:'#daeef7'
+  /* fond du board : 4 familles selon dominante chromatique des kanas
+     bleu-vert (aqua), vert-sauge, lilas-rose, pêche-corail
+     jamais blanc ni jaune pour que les sparkles dorées ressortent */
+  const boardBgFamilies={
+    aqua :'#cff1f7', /* niveaux à dominante cyan/bleu  : 1,6,11,15,21 */
+    sage  :'#cff4de', /* niveaux à dominante vert       : 3,8,12,19    */
+    lilac :'#e4d4f4', /* niveaux à dominante violet/rose: 5,14,17      */
+    peach :'#f7e4d0', /* niveaux à dominante orange/rouge: 4,9,13,16,18,20 */
+    coral :'#f7d4e4', /* niveaux mixtes chauds          : 2,7,10       */
   };
-  root.setProperty('--board-bg', boardBgMap[lv]||'#daf4f7');;
+  const boardBgByLevel=[
+    'aqua','coral','sage','peach','lilac',
+    'aqua','coral','sage','coral','coral',
+    'aqua','sage','peach','lilac','aqua',
+    'peach','lilac','peach','sage','peach','aqua'
+  ];
+  root.setProperty('--board-bg', boardBgFamilies[boardBgByLevel[currentLevelIdx]]||boardBgFamilies.aqua);;
 
   /* HUD niveau */
   const hLvlEmoji=document.querySelector('#hud-level-box .hud-level-emoji');
