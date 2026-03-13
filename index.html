@@ -270,18 +270,27 @@ body::before{
 }
 
 /* ══════════════════════════════════════
-   POPUP MOT — nouveau design : emoji + kana + traduction uniquement
-   Animation comboPop / comboPulseWiggle
+   POPUP MOT — card translucide, fond flouté
    ══════════════════════════════════════ */
 #word-popup{
   position:absolute;
   left:50%; top:50%;
   transform:translate(-50%,-50%);
   text-align:center;
-  z-index:40;pointer-events:none;display:none;
-  overflow:visible; /* sparkles peuvent déborder */
+  z-index:40; pointer-events:none; display:none;
+  overflow:visible;
+  /* card translucide */
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-radius:28px;
+  padding:16px 28px 18px;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.18),
+    0 2px 0 rgba(255,255,255,.7) inset;
+  border:1.5px solid rgba(255,255,255,.6);
 }
-#word-popup.show{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+#word-popup.show{ display:flex; flex-direction:column; align-items:center; gap:6px; }
 
 /* Emoji — animation comboPulseWiggle */
 .wp-emoji{
@@ -881,26 +890,39 @@ document.getElementById('tuto-start-btn').addEventListener('click',()=>{
 
 /* ── son ── */
 let audioCtx=null,muted=false;
+
+async function ensureCtx(){
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended'||audioCtx.state==='interrupted'){
+    await audioCtx.resume();
+  }
+  return audioCtx;
+}
+/* version sync pour les sons non-drop (pas besoin du même soin) */
 function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
 function playTone(freq,type,dur,vol=0.18,delay=0){if(muted)return;try{const ctx=getCtx(),osc=ctx.createOscillator(),g=ctx.createGain();osc.connect(g);g.connect(ctx.destination);osc.type=type;osc.frequency.value=freq;const t=ctx.currentTime+delay;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);osc.start(t);osc.stop(t+dur);}catch(e){}}
-/* Son drop : percussion courte avec attaque franche */
-function soundDrop(){
+
+/* Son drop : async → attend que le contexte soit vraiment actif */
+async function soundDrop(){
+  if(muted)return;
   try{
-    const ctx=getCtx();
+    const ctx=await ensureCtx();
     const t=ctx.currentTime;
     /* composante grave : punch */
     const osc1=ctx.createOscillator(),g1=ctx.createGain();
     osc1.connect(g1);g1.connect(ctx.destination);
-    osc1.type='sine';osc1.frequency.setValueAtTime(180,t);
-    osc1.frequency.exponentialRampToValueAtTime(60,t+.08);
-    g1.gain.setValueAtTime(.45,t);g1.gain.exponentialRampToValueAtTime(.001,t+.12);
-    osc1.start(t);osc1.stop(t+.13);
+    osc1.type='sine';
+    osc1.frequency.setValueAtTime(200,t);
+    osc1.frequency.exponentialRampToValueAtTime(65,t+.09);
+    g1.gain.setValueAtTime(.5,t);
+    g1.gain.exponentialRampToValueAtTime(.001,t+.14);
+    osc1.start(t);osc1.stop(t+.15);
     /* composante claquement : bruit bref */
-    const buf=ctx.createBuffer(1,ctx.sampleRate*.04,ctx.sampleRate);
+    const buf=ctx.createBuffer(1,Math.ceil(ctx.sampleRate*.045),ctx.sampleRate);
     const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
     const src=ctx.createBufferSource(),g2=ctx.createGain();
     src.buffer=buf;src.connect(g2);g2.connect(ctx.destination);
-    g2.gain.setValueAtTime(.18,t);g2.gain.exponentialRampToValueAtTime(.001,t+.04);
+    g2.gain.setValueAtTime(.22,t);g2.gain.exponentialRampToValueAtTime(.001,t+.045);
     src.start(t);
   }catch(e){}
 }
@@ -1024,7 +1046,20 @@ function spawn(){active={char:nextChar||rndKana(),x:Math.floor(COLS/2),y:0};play
 function ok(x,y){return x>=0&&x<COLS&&y>=0&&y<ROWS&&!board[y][x].filled;}
 function startTimer(){clearInterval(dropTimer);dropTimer=setInterval(tick,DROP_SPEED);}
 function tick(){if(!gameRunning||resolvingWords||!active)return;ok(active.x,active.y+1)?(active.y++,render()):lock();}
-function lock(){if(!active||resolvingWords)return;clearInterval(dropTimer);resolvingWords=true;board[active.y][active.x]={filled:true,char:active.char};const pr=active.y,pc=active.x;const el=gc(pr,pc);if(el){el.className='cell filled land';el.textContent=active.char;el.style.background=kanaBg(active.char);setTimeout(()=>el.classList.remove('land'),450);}active=null;soundDrop();haptic('drop');render();checkWords(pr,pc);}
+function lock(){
+  if(!active||resolvingWords)return;
+  clearInterval(dropTimer);resolvingWords=true;
+  board[active.y][active.x]={filled:true,char:active.char};
+  const pr=active.y,pc=active.x;
+  const el=gc(pr,pc);
+  if(el){el.className='cell filled land';el.textContent=active.char;el.style.background=kanaBg(active.char);setTimeout(()=>el.classList.remove('land'),450);}
+  active=null;
+  /* son drop EN PREMIER — async pour garantir que le contexte est prêt */
+  soundDrop();
+  render();
+  /* léger délai pour que le son parte avant que checkWords déclenche d'autres sons */
+  setTimeout(()=>checkWords(pr,pc),35);
+}
 function hardDrop(){if(!active||!gameRunning||resolvingWords)return;while(ok(active.x,active.y+1))active.y++;screenShake(false);haptic('drop');render();lock();}
 
 function checkWords(pr,pc){const found=scanRowCol(pr,pc);if(!found.length){safeSpawn();return;}processCascade(found,false);}
