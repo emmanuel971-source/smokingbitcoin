@@ -1,1418 +1,342 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>かなDROP ✨</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&family=Noto+Sans+JP:wght@400;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --bg-top:   #d4f4ff;
-  --bg-mid:   #d8f7ef;
-  --bg-bot:   #fdf6d8;
-  --rose:     #ff5fa0;
-  --peach:    #ff8c42;
-  --lemon:    #f9d000;
-  --mint:     #2ed8a0;
-  --sky:      #00aaee;
-  --lavender: #a855f7;
-  --coral:    #ff4d6d;
-  --lime:     #7bc900;
-  --teal:     #00c8c8;
-  --text-dark:#1a3050;
-  --text-mid: #2a6080;
-  --text-dim: #5090a8;
-  --cell-bg:  #eafbff;
-  --cell-bdr: #9ae8ff;
-  --board-bg: #f0fbff;
-  --surface:  #e8f9f4;
-  --border:   #72d9c8;
-  --neon-pink:  #ff0066;
-  --neon-violet:#0066ff;
-  --neon-cyan:  #00b8ff;
-  --neon-gold:  #e8a000;
-  --lv1-top:#d4f4ff; --lv1-mid:#c8f7ef; --lv1-bot:#d4fff0;
-  --lv2-top:#fff3d4; --lv2-mid:#ffe8c0; --lv2-bot:#fdffd4;
-  --lv3-top:#d8ffd4; --lv3-mid:#e8ffd0; --lv3-bot:#fdffd4;
-  --lv4-top:#fff0d4; --lv4-mid:#ffe8cc; --lv4-bot:#fff8d4;
-  --lv5-top:#ffd4f0; --lv5-mid:#f0d4ff; --lv5-bot:#fff9d4;
-  --lv6-top:#d4eeff; --lv6-mid:#c8f4ff; --lv6-bot:#d4fff8;
-  --lv7-top:#fffbd4; --lv7-mid:#fff5c0; --lv7-bot:#fdffd4;
-  --lv8-top:#d8ffd4; --lv8-mid:#e8ffd0; --lv8-bot:#fdffd4;
-  --lv9-top:#ffd4e8; --lv9-mid:#ffe8d0; --lv9-bot:#fff9d4;
-  --lv10-top:#d4ffe8; --lv10-mid:#d4fff7; --lv10-bot:#f0ffd4;
-  --lv11-top:#d4eeff; --lv11-mid:#e8f4ff; --lv11-bot:#fff8d4;
-  --lv12-top:#d4ffd8; --lv12-mid:#f0ffd4; --lv12-bot:#fff7d4;
-  --lv13-top:#ffe8d4; --lv13-mid:#fff0e0; --lv13-bot:#fffbd4;
-  --lv14-top:#ead4ff; --lv14-mid:#ffd4f0; --lv14-bot:#fff4ff;
-  --lv15-top:#d4eeff; --lv15-mid:#d4f8ff; --lv15-bot:#f0f8ff;
-  --lv16-top:#ffd4d4; --lv16-mid:#ffe0d4; --lv16-bot:#fff4d4;
-  --lv17-top:#ead4ff; --lv17-mid:#ffd4f8; --lv17-bot:#fff9ff;
-  --lv18-top:#ffe8d4; --lv18-mid:#fff0e0; --lv18-bot:#fffbd4;
-  --lv19-top:#d4ffe8; --lv19-mid:#d4fff7; --lv19-bot:#f0fff8;
-  --lv20-top:#ffe8d0; --lv20-mid:#ffd4b0; --lv20-bot:#fff8e8;
-  --lv21-top:#d4eeff; --lv21-mid:#c8f4ff; --lv21-bot:#e8f8ff;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: transparent; }
+#app {
+  width: 100%;
+  min-height: 520px;
+  background: #0a0a1a;
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  position: relative;
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{
-  width:100%;height:100%;
-  background:linear-gradient(160deg,var(--bg-top) 0%,var(--bg-mid) 50%,var(--bg-bot) 100%);
-  color:var(--text-dark);
-  font-family:'Nunito','Noto Sans JP',sans-serif;
-  overflow:hidden;touch-action:none;
+canvas {
+  display: block;
+  width: 100%;
+  touch-action: none;
 }
-body::before{
-  content:'';position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 55% 40% at 10% 20%,rgba(0,170,238,.22) 0%,transparent 60%),
-    radial-gradient(ellipse 50% 35% at 90% 80%,rgba(46,216,160,.22) 0%,transparent 60%),
-    radial-gradient(ellipse 40% 30% at 50% 55%,rgba(249,208,0,.14) 0%,transparent 65%);
-  pointer-events:none;z-index:0;
-  animation:blobDrift 8s ease-in-out infinite alternate;
-}
-@keyframes blobDrift{from{opacity:.7}to{opacity:1}}
-#confetti{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.cdot{position:absolute;border-radius:50%;opacity:0;animation:cdotFloat var(--cd) ease-in-out var(--cdelay) infinite;}
-@keyframes cdotFloat{0%{opacity:0;transform:translateY(0) scale(.5)}30%{opacity:var(--cop)}70%{opacity:var(--cop)}100%{opacity:0;transform:translateY(-40px) scale(1)}}
-
-#shell{
-  position:relative;z-index:1;
-  display:flex;flex-direction:column;
-  height:100dvh;max-width:480px;margin:0 auto;overflow:hidden;
-}
-#middle{flex:1;display:flex;min-height:0;overflow:hidden;}
-
-#board-col{flex:3;display:flex;flex-direction:column;min-height:0;position:relative;overflow:hidden;}
-#board{
-  flex:1;display:grid;grid-template-columns:repeat(8,1fr);
-  background:var(--board-bg);
-  border-left:2px solid rgba(100,200,220,.25);
-  border-right:2px solid rgba(100,200,220,.25);
-  border-top:2px solid rgba(100,200,220,.25);
-  overflow:hidden;
-}
-
-.cell{
-  display:flex;align-items:center;justify-content:center;
-  font-size:clamp(16px,5.8vw,28px);font-weight:900;
-  font-family:'Noto Sans JP',sans-serif;
-  border:1px solid rgba(100,200,220,.12);
-  user-select:none;position:relative;background:transparent;
-  border-radius:4px;
-}
-.cell.empty{color:transparent;}
-.cell.filled{
-  border:none;border-radius:6px;color:#1a1040;
-  font-size:clamp(17px,6vw,29px);
-  box-shadow:0 2px 0 rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.7);
-}
-.cell.active{
-  border:2.5px solid rgba(0,0,0,.18)!important;border-radius:8px;color:#1a1040;
-  box-shadow:0 3px 0 rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.7);
-  animation:activePulse .65s ease infinite alternate;
-}
-@keyframes activePulse{from{transform:scale(1);filter:brightness(1)}to{transform:scale(1.06);filter:brightness(1.08)}}
-.cell.ghost{background:rgba(0,0,0,.04);border:1.5px dashed rgba(0,0,0,.15)!important;color:rgba(0,0,0,.2);border-radius:6px;}
-.cell.land{animation:landBounce .32s cubic-bezier(.36,.07,.19,.97) forwards;}
-@keyframes landBounce{0%{transform:scaleY(1.35) scaleX(.78)}35%{transform:scaleY(.82) scaleX(1.12)}65%{transform:scaleY(1.06) scaleX(.96)}100%{transform:scaleY(1) scaleX(1)}}
-.cell.flash{animation:cellFlash .65s ease forwards !important;}
-.cell.combo-flash{animation:comboFlash .65s ease forwards !important;}
-@keyframes cellFlash{0%{background:#f9d000!important;color:#1a1040;transform:scale(1.18);z-index:10}40%{background:#2ed8a0!important;color:#1a1040}100%{opacity:0;transform:scale(.6) rotate(12deg)}}
-@keyframes comboFlash{0%{background:#ff5fa0!important;color:#fff;transform:scale(1.22) rotate(-4deg);z-index:10}30%{background:#f9d000!important;color:#1a1040;transform:scale(1.08) rotate(3deg)}100%{opacity:0;transform:scale(.5) rotate(18deg)}}
-
-.particle{position:absolute;border-radius:50%;pointer-events:none;z-index:30;animation:particleFly var(--dur) ease-out forwards;}
-@keyframes particleFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}}
-
-#side-panel{
-  flex:1;display:flex;flex-direction:column;
-  background:var(--surface);
-  border-left:2px solid var(--border);border-right:3px solid var(--border);border-top:3px solid var(--border);
-  padding:10px 4px 8px;gap:12px;align-items:center;overflow:hidden;
-}
-.side-label{font-family:'Fredoka One','Nunito',sans-serif;font-size:clamp(12px,3.5vw,16px);color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;text-align:center;font-weight:700;}
-#next-kana{
-  width:88%;aspect-ratio:1;max-width:68px;border-radius:16px;
-  background:white;border:3px solid var(--border);
-  box-shadow:0 4px 12px rgba(0,170,238,.15),inset 0 1px 0 rgba(255,255,255,.9);
-  display:flex;align-items:center;justify-content:center;
-  font-size:clamp(22px,7.5vw,36px);font-weight:900;font-family:'Noto Sans JP',sans-serif;color:var(--text-dark);
-}
-#next-kana.pop{animation:nextPop .28s ease forwards;}
-@keyframes nextPop{0%{transform:scale(.65) rotate(-12deg);opacity:.4}65%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
-#score-val{font-family:'Fredoka One',cursive;font-size:clamp(18px,5.5vw,26px);color:var(--neon-violet);text-shadow:0 0 8px rgba(0,102,255,.2);line-height:1;text-align:center;word-break:break-all;}
-#score-val.bump{animation:scoreBump .38s ease;}
-@keyframes scoreBump{0%{transform:scale(1)}40%{transform:scale(1.45);color:var(--neon-pink);text-shadow:0 0 14px rgba(255,0,102,.5)}100%{transform:scale(1)}}
-.side-block{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;}
-#level-badge{font-family:'Fredoka One',sans-serif;font-size:clamp(12px,3.2vw,15px);text-align:center;line-height:1.3;}
-#level-badge .badge-emoji{font-size:clamp(30px,9vw,44px);display:block;line-height:1.1;}
-#level-badge .badge-num{display:block;}
-
-#word-panel{
-  background:var(--surface);border-top:3px solid var(--border);
-  flex-shrink:0;padding:8px 8px 10px;
-  display:flex;flex-direction:column;gap:6px;
-  max-height:42dvh;overflow-y:auto;
-  padding-top:10px;
-  will-change:transform;
-  -webkit-transform:translateZ(0);
-  transform:translateZ(0);
-}
-.word-row{
-  display:flex;align-items:center;gap:8px;
-  background:white;border:2px solid var(--border);border-radius:16px;padding:7px 10px;
-  animation:rowSlideIn .45s cubic-bezier(.34,1.56,.64,1) forwards;
-  position:relative;overflow:hidden;
-  box-shadow:0 3px 10px rgba(0,150,255,.1);
-  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-}
-@keyframes rowSlideIn{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
-.word-row.boss{border-color:rgba(255,77,109,.5);background:rgba(255,245,248,1);}
-
-/* ══════════════════════════════════════════════════
-   DERNIER CYCLE — états VALIDÉ et EN ATTENTE
-   ══════════════════════════════════════════════════ */
-
-/* MOT VALIDÉ ce cycle → fond vert clair */
-.word-row.validated {
-  background: #e8faf0 !important;
-  border-color: #52c97a !important;
-  box-shadow: 0 3px 12px rgba(46,200,110,.18) !important;
-}
-.word-row.validated .wr-kana  { color: #1a7a3a; }
-.word-row.validated .wr-romaji{ color: #2a9a50; }
-.word-row.validated .wr-mult  { color: #2ed880; }
-
-/* Lueur balayante sur les mots validés */
-.word-row.validated::before {
-  content: '';
+#status {
   position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  background: linear-gradient(90deg, transparent 0%, rgba(82,201,122,.35) 50%, transparent 100%);
-  background-size: 200% 100%;
-  animation: validatedGlow 2.2s ease-in-out infinite;
+  top: 14px;
+  left: 0; right: 0;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--font-sans);
   pointer-events: none;
-  z-index: 0;
 }
-@keyframes validatedGlow {
-  0%   { background-position: -100% 0; opacity: 0; }
-  20%  { opacity: 1; }
-  80%  { opacity: 1; }
-  100% { background-position: 200% 0; opacity: 0; }
+#controls {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: space-between;
 }
-
-/* MOT EN ATTENTE (non validé) → fond rose */
-.word-row.pending {
-  background: #fff0f5 !important;
-  border-color: #ff85b3 !important;
-  box-shadow: 0 3px 14px rgba(255,80,140,.22) !important;
+#btn-draw {
+  flex: 1;
+  height: 48px;
+  border-radius: var(--border-radius-md);
+  border: 1.5px solid rgba(255, 60, 120, 0.6);
+  background: rgba(255, 60, 120, 0.12);
+  color: #ff6ba8;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.1s;
 }
-.word-row.pending .wr-kana  { color: #cc1050; }
-.word-row.pending .wr-romaji{ color: #e83070; }
-.word-row.pending .wr-mult  { color: #ff5fa0; }
-
-/* Pulsation rose UNIQUEMENT quand c'est le dernier mot restant */
-.word-row.pending.last-one {
-  animation: pendingPulse 0.85s ease-in-out infinite !important;
+#btn-draw.active {
+  background: rgba(255, 60, 120, 0.35);
+  border-color: #ff3c78;
+  color: #fff;
 }
-@keyframes pendingPulse {
-  0%,100% { background: #fff0f5 !important; border-color: #ff85b3 !important; transform: scale(1);     box-shadow: 0 3px 14px rgba(255,80,140,.22) !important; }
-  50%      { background: #ffd6e8 !important; border-color: #ff2d78 !important; transform: scale(1.018); box-shadow: 0 5px 22px rgba(255,45,120,.45) !important; }
+#btn-clear {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--border-radius-md);
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.5);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
 }
-
-/* Boss reste lisible dans les deux états */
-.word-row.boss.pending { border-color: #ff3d6d !important; }
-.word-row.boss.validated { border-color: #52c97a !important; }
-
-.wr-emoji{font-size:clamp(24px,7vw,30px);flex-shrink:0;line-height:1;}
-.wr-info{flex:1;min-width:0;display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+#dot {
+  position: absolute;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #ff3c78;
+  box-shadow: 0 0 8px 3px rgba(255,60,120,0.7);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: background 0.1s;
 }
-.wr-kana{font-size:clamp(18px,6vw,24px);font-weight:900;color:var(--text-dark);line-height:1;font-family:'Noto Sans JP',sans-serif;}
-.wr-romaji{font-size:clamp(14px,4vw,18px);color:var(--sky);font-weight:900;font-family:'Fredoka One',sans-serif;}
-.wr-meaning{font-size:clamp(13px,3.5vw,16px);color:var(--text-mid);font-family:'Nunito',sans-serif;font-weight:700;}
-.wr-mult{font-family:'Fredoka One',cursive;font-size:clamp(16px,5vw,21px);color:var(--mint);text-shadow:0 0 5px rgba(46,216,160,.4);min-width:32px;text-align:right;flex-shrink:0;}
-.word-row.boss .wr-mult{color:var(--coral);}
-.wr-mult.bump{animation:multBump .32s cubic-bezier(.34,1.56,.64,1);}
-@keyframes multBump{0%{transform:scale(1)}50%{transform:scale(1.7) rotate(-5deg)}100%{transform:scale(1)}}
-.word-row::after{content:'';position:absolute;inset:0;opacity:0;pointer-events:none;border-radius:14px;}
-.word-row.bar-flash::after{background:linear-gradient(90deg,transparent,rgba(46,216,160,.45),transparent);animation:barSweep .5s ease forwards;}
-.word-row.bar-combo::after{background:linear-gradient(90deg,transparent,rgba(249,208,0,.5),transparent);animation:barSweep .5s ease forwards;}
-@keyframes barSweep{from{opacity:1;transform:translateX(-110%)}to{opacity:0;transform:translateX(110%)}}
-
-#word-popup{
-  position:absolute;left:10px;right:10px;top:50%;transform:translateY(-50%);
-  background:white;border:3px solid var(--lemon);border-radius:24px;padding:14px 16px;
-  text-align:center;z-index:40;pointer-events:none;display:none;
-  box-shadow:0 8px 32px rgba(255,165,0,.3),0 2px 8px rgba(0,0,0,.1);
+#dot.drawing {
+  background: #fff;
+  box-shadow: 0 0 12px 5px rgba(255,60,120,1);
 }
-#word-popup.show{display:block;animation:popupIn 2.1s ease forwards;}
-#word-popup.combo{border-color:var(--rose);box-shadow:0 8px 32px rgba(255,0,102,.2);}
-.wp-emoji{font-size:48px;display:block;line-height:1.1;}
-.wp-kana{font-family:'Fredoka One',cursive;font-size:36px;color:var(--neon-gold);text-shadow:0 0 12px rgba(232,160,0,.5);display:block;line-height:1;}
-#word-popup.combo .wp-kana{color:var(--neon-pink);text-shadow:0 0 12px rgba(255,0,102,.5);}
-.wp-romaji{font-size:16px;color:var(--teal);letter-spacing:2px;margin:3px 0;font-family:'Fredoka One',sans-serif;font-weight:700;text-transform:uppercase;}
-.wp-meaning{font-size:18px;color:var(--text-mid);font-family:'Nunito',sans-serif;font-weight:700;}
-.wp-pts{font-family:'Fredoka One',cursive;font-size:24px;color:var(--neon-violet);margin-top:4px;text-shadow:0 0 10px rgba(0,102,255,.3);}
-@keyframes popupIn{0%{opacity:0;transform:translateY(-50%) scale(.72) rotate(-2deg)}10%{opacity:1;transform:translateY(-50%) scale(1.05) rotate(1deg)}75%{opacity:1;transform:translateY(-50%) scale(1) rotate(0deg)}100%{opacity:0;transform:translateY(-50%) scale(.92)}}
-
-#combo-banner{position:absolute;left:50%;top:16%;transform:translateX(-50%);font-family:'Fredoka One',cursive;font-size:clamp(30px,8vw,42px);color:var(--neon-pink);text-shadow:0 0 20px rgba(255,0,102,.7),0 2px 4px rgba(0,0,0,.15);pointer-events:none;z-index:41;white-space:nowrap;display:none;}
-#combo-banner.show{display:block;animation:comboBannerAnim 1.8s ease forwards;}
-@keyframes comboBannerAnim{0%{opacity:0;transform:translateX(-50%) scale(.6) rotate(-6deg)}15%{opacity:1;transform:translateX(-50%) scale(1.2) rotate(2deg)}55%{opacity:1;transform:translateX(-50%) scale(1) rotate(0deg)}100%{opacity:0;transform:translateX(-50%) scale(.9) translateY(-60px)}}
-
-#streak{position:absolute;right:5px;top:6px;font-family:'Fredoka One',cursive;font-size:clamp(15px,4.2vw,20px);color:var(--neon-gold);text-shadow:0 0 8px rgba(232,160,0,.7);z-index:35;display:none;}
-
-#enc-toast{position:absolute;left:50%;bottom:28%;transform:translateX(-50%);text-align:center;pointer-events:none;z-index:45;display:none;white-space:nowrap;}
-#enc-toast.show{display:block;animation:encRise 2.2s ease forwards;}
-.enc-jp{font-family:'Fredoka One',cursive;font-size:clamp(28px,8vw,38px);color:var(--neon-gold);text-shadow:0 0 16px rgba(232,160,0,.6);display:block;}
-.enc-fr{font-size:15px;color:var(--text-mid);letter-spacing:1.5px;display:block;margin-top:2px;font-family:'Nunito',sans-serif;font-weight:700;}
-@keyframes encRise{0%{opacity:0;transform:translateX(-50%) translateY(0) scale(.7)}12%{opacity:1;transform:translateX(-50%) translateY(-8px) scale(1.08)}65%{opacity:1;transform:translateX(-50%) translateY(-18px) scale(1)}100%{opacity:0;transform:translateX(-50%) translateY(-70px) scale(.9)}}
-
-@keyframes screenShake{0%,100%{transform:translate(0,0)}20%{transform:translate(-4px,3px)}40%{transform:translate(4px,-3px)}60%{transform:translate(-3px,2px)}80%{transform:translate(3px,-2px)}}
-#shell.shake{animation:screenShake .35s ease forwards;}
-#shell.shake-combo{animation:screenShake .5s ease forwards;}
-
-/* ═══ MENU ═══ */
-#menu-overlay{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;background:linear-gradient(160deg,var(--bg-top) 0%,var(--bg-mid) 50%,var(--bg-bot) 100%);overflow:hidden;max-width:480px;margin:0 auto;}
-#menu-overlay.hidden{display:none;}
-.menu-header{flex-shrink:0;width:100%;text-align:center;padding:clamp(10px,3dvh,22px) 16px clamp(4px,1.5dvh,10px);}
-.logo-wrap{display:flex;flex-direction:column;align-items:center;animation:floatPulse 3s ease-in-out infinite;cursor:default;position:relative;}
-@keyframes floatPulse{0%,100%{transform:translateY(0) scale(1) rotate(-4deg)}50%{transform:translateY(-6px) scale(1.02) rotate(-4deg)}}
-.logo-card{position:relative;padding:0 20px;display:flex;flex-direction:column;align-items:center;gap:4px;overflow:visible;}
-.kana-group{position:relative;display:inline-block;line-height:1;}
-.kana-main{font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(64px,18vw,96px);letter-spacing:-2px;line-height:1;display:block;background:linear-gradient(135deg,#ff6b35,#ffbe0b,#6bcb77,#4d96ff,#c77dff,#ff6b6b,#ffbe0b,#ff6b35);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:kanaRainbow 3s linear infinite;position:relative;z-index:2;filter:drop-shadow(2px 4px 0 #1a0050);}
-@keyframes kanaRainbow{0%{background-position:0% 50%}100%{background-position:300% 50%}}
-.kana-outline-w{position:absolute;inset:0;font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(64px,18vw,96px);letter-spacing:-2px;line-height:1;-webkit-text-fill-color:transparent;-webkit-text-stroke:14px #ffffff;z-index:1;pointer-events:none;}
-.kana-outline-d{position:absolute;inset:0;font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:clamp(64px,18vw,96px);letter-spacing:-2px;line-height:1;-webkit-text-fill-color:transparent;-webkit-text-stroke:20px #1a0050;z-index:0;pointer-events:none;}
-.drop-group{position:relative;display:inline-block;line-height:1;margin-top:-2px;}
-.drop-main{font-family:"Black Han Sans",sans-serif;font-weight:900;font-size:clamp(42px,12vw,64px);letter-spacing:4px;display:block;background:linear-gradient(180deg,#fff700 0%,#ffb300 30%,#ff6b6b 65%,#cc0000 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:2;filter:drop-shadow(2px 3px 0 #1a0050);animation:shimmerDrop 2.2s ease-in-out infinite;}
-@keyframes shimmerDrop{0%,100%{filter:drop-shadow(2px 3px 0 #1a0050) brightness(1)}50%{filter:drop-shadow(2px 3px 0 #1a0050) brightness(1.3) drop-shadow(0 0 12px rgba(255,120,120,.6))}}
-.drop-outline-w{position:absolute;inset:0;font-family:"Black Han Sans",sans-serif;font-weight:900;font-size:clamp(42px,12vw,64px);letter-spacing:4px;-webkit-text-fill-color:transparent;-webkit-text-stroke:12px #ffffff;z-index:1;pointer-events:none;}
-.drop-outline-d{position:absolute;inset:0;font-family:"Black Han Sans",sans-serif;font-weight:900;font-size:clamp(42px,12vw,64px);letter-spacing:4px;-webkit-text-fill-color:transparent;-webkit-text-stroke:18px #1a0050;z-index:0;pointer-events:none;}
-.logo-droplet{position:absolute;animation:dropBounce 2.4s ease-in-out infinite;}
-.ld1{top:-18px;left:14px;animation-delay:0s}.ld2{top:-12px;right:24px;animation-delay:.5s}.ld3{bottom:-16px;left:32px;animation-delay:1s}.ld4{bottom:-10px;right:18px;animation-delay:1.5s}.ld5{top:24px;left:-14px;animation-delay:.8s}
-@keyframes dropBounce{0%,100%{transform:translateY(0) scale(1);opacity:1}50%{transform:translateY(5px) scale(.88);opacity:.8}}
-.logo-bubble{position:absolute;border-radius:50%;border:3px solid #fff;animation:bubblePop 2s ease-in-out infinite;}
-.lb1{width:18px;height:18px;background:radial-gradient(circle at 30% 30%,#ffb3e6,#ff3fab);top:-10px;right:-10px;animation-delay:0s;box-shadow:0 2px 8px #ff3fab88;}
-.lb2{width:13px;height:13px;background:radial-gradient(circle at 30% 30%,#b3eeff,#00cfff);bottom:-8px;left:-8px;animation-delay:.7s;box-shadow:0 2px 6px #00cfffaa;}
-.lb3{width:10px;height:10px;background:radial-gradient(circle at 30% 30%,#fffeb3,#ffbe0b);top:8px;left:-11px;animation-delay:1.4s;box-shadow:0 2px 6px #ffbe0baa;}
-@keyframes bubblePop{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
-.menu-sub{font-family:'Nunito',sans-serif;font-size:clamp(14px,3.8vw,18px);color:var(--text-mid);margin-top:8px;letter-spacing:1px;font-weight:700;}
-.menu-wave{display:inline-block;animation:waveIt .9s ease-in-out infinite alternate;}
-@keyframes waveIt{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
-.menu-section-lbl{font-family:'Fredoka One',cursive;font-size:clamp(18px,5vw,23px);color:var(--sky);text-align:center;flex-shrink:0;padding:0 16px 8px;}
-#lvl-scroll{flex:1;overflow-y:auto;overflow-x:hidden;width:100%;padding:0 16px 16px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch;}
-#lvl-scroll::-webkit-scrollbar{display:none;}
-.lvl-card{flex-shrink:0;width:100%;border-radius:24px;padding:18px 20px;cursor:pointer;border:2.5px solid transparent;background:white;box-shadow:0 6px 20px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);display:flex;align-items:center;gap:16px;transition:transform .18s,box-shadow .18s;position:relative;overflow:hidden;}
-.lvl-card::before{content:'';position:absolute;inset:0;background:var(--lc);opacity:.08;border-radius:22px;pointer-events:none;}
-.lvl-card:active{transform:scale(.97);box-shadow:0 2px 8px rgba(0,0,0,.06);}
-.lvl-card-left{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}
-.lvl-card-emoji{font-size:clamp(42px,12vw,56px);line-height:1;}
-.lvl-card-num{font-family:'Fredoka One',cursive;font-size:clamp(15px,4.2vw,20px);}
-.lvl-card-right{flex:1;min-width:0;}
-.lvl-card-name{font-family:'Nunito',sans-serif;font-size:clamp(20px,6vw,27px);color:var(--text-dark);line-height:1.2;font-weight:900;}
-.lvl-card-words{margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;}
-.lvl-card-word-chip{font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:clamp(13px,3.8vw,16px);background:var(--cell-bg);border:1.5px solid var(--cell-bdr);border-radius:50px;padding:3px 10px;color:var(--text-mid);}
-.lvl-card-count{font-family:'Nunito',sans-serif;font-size:clamp(12px,3vw,14px);color:var(--text-dim);margin-top:6px;font-weight:700;}
-.menu-scroll-hint{flex-shrink:0;text-align:center;padding:5px 0 8px;font-family:'Nunito',sans-serif;font-size:clamp(13px,3.2vw,16px);color:var(--text-dim);letter-spacing:1px;animation:hintPulse 1.6s ease-in-out infinite;font-weight:700;}
-@keyframes hintPulse{0%,100%{opacity:.4;transform:translateY(0)}50%{opacity:.9;transform:translateY(3px)}}
-
-/* ═══ TUTO ═══ */
-#tuto-overlay{position:fixed;inset:0;z-index:210;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--bg-top),var(--bg-mid),var(--bg-bot));padding:20px 22px;gap:0;max-width:480px;margin:0 auto;}
-#tuto-overlay.hidden{display:none;}
-.tuto-title{font-family:'Fredoka One',cursive;font-size:clamp(26px,8vw,34px);color:var(--sky);text-align:center;margin-bottom:5px;}
-.tuto-sub{font-family:'Nunito',sans-serif;font-size:clamp(15px,4vw,18px);color:var(--text-mid);text-align:center;margin-bottom:18px;font-weight:700;}
-.tuto-steps{display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;}
-.tuto-step{background:white;border-radius:20px;border:2px solid var(--border);padding:14px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(0,0,0,.07);animation:tutoStepIn .5s cubic-bezier(.34,1.56,.64,1) both;}
-.tuto-step:nth-child(1){animation-delay:.1s}.tuto-step:nth-child(2){animation-delay:.25s}.tuto-step:nth-child(3){animation-delay:.4s}
-@keyframes tutoStepIn{from{opacity:0;transform:translateX(-20px) scale(.92)}to{opacity:1;transform:none}}
-.tuto-anim{width:52px;flex-shrink:0;text-align:center;}
-.hand-swipe{font-size:32px;display:inline-block;animation:handSwipe 1.2s ease-in-out infinite;}
-@keyframes handSwipe{0%{transform:translateX(-10px);opacity:.5}50%{transform:translateX(10px);opacity:1}100%{transform:translateX(-10px);opacity:.5}}
-.hand-drop{font-size:32px;display:inline-block;animation:handDrop 1.1s ease-in-out infinite;}
-@keyframes handDrop{0%{transform:translateY(-8px);opacity:.5}50%{transform:translateY(8px);opacity:1}100%{transform:translateY(-8px);opacity:.5}}
-.hand-hold{font-size:32px;display:inline-block;animation:handHold 1.3s ease-in-out infinite;}
-@keyframes handHold{0%,40%{transform:scale(1)}20%{transform:scale(1.25)}60%,100%{transform:scale(.9) translateY(6px)}}
-.tuto-step-text{flex:1;}
-.tuto-step-title{font-family:'Nunito',sans-serif;font-size:clamp(16px,4.8vw,20px);color:var(--text-dark);font-weight:900;}
-.tuto-step-desc{font-family:'Nunito',sans-serif;font-size:clamp(13px,3.5vw,15px);color:var(--text-mid);margin-top:2px;line-height:1.4;font-weight:700;}
-.tuto-btn{font-family:'Fredoka One',sans-serif;font-size:clamp(20px,5.5vw,25px);background:linear-gradient(135deg,var(--sky),var(--mint));color:#fff;border:none;border-radius:50px;padding:14px 44px;cursor:pointer;box-shadow:0 4px 18px rgba(0,170,238,.4);margin-top:20px;transition:transform .15s;letter-spacing:.5px;animation:tutoStepIn .5s .55s cubic-bezier(.34,1.56,.64,1) both;}
-.tuto-btn:active{transform:scale(.95);}
-
-/* ═══ PUZZLE TRIGGER PULSE ═══ */
-.cell.puzzle-trigger{
-  animation: triggerPulse 1.1s ease-in-out infinite !important;
-  z-index:5;
+#info-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10,10,26,0.92);
+  color: #fff;
+  font-family: var(--font-sans);
+  text-align: center;
+  padding: 24px;
+  gap: 16px;
+  z-index: 10;
 }
-@keyframes triggerPulse{
-  0%,100%{box-shadow:0 0 0 2px #f9d000, 0 0 8px 3px rgba(249,208,0,.5);filter:brightness(1.1);}
-  50%{box-shadow:0 0 0 4px #ff8c00, 0 0 16px 6px rgba(255,140,0,.6);filter:brightness(1.3);}
+#info-overlay p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+#info-overlay h3 { font-size: 18px; font-weight: 500; }
+#btn-start {
+  padding: 12px 28px;
+  border-radius: var(--border-radius-md);
+  border: 1.5px solid #ff3c78;
+  background: rgba(255,60,120,0.15);
+  color: #ff6ba8;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  margin-top: 8px;
 }
-#puzzle-overlay{position:fixed;inset:0;z-index:200;background:linear-gradient(160deg,#d4f4ff 0%,#d8f7ef 50%,#fdf6d8 100%);display:flex;flex-direction:column;align-items:center;padding:20px 16px;overflow-y:auto;gap:14px;}
-#puzzle-overlay.hidden{display:none !important;}
-
-/* ═══ GAME OVERLAY ═══ */
-#board-overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(240,250,255,.95);backdrop-filter:blur(12px);z-index:100;gap:11px;padding:22px 16px;max-width:480px;margin:0 auto;overflow-y:auto;}
-#board-overlay.hidden{display:none;}
-.ov-title{font-family:'Fredoka One',cursive;font-size:clamp(28px,8.5vw,40px);color:var(--sky);text-align:center;line-height:1.2;}
-.ov-sub{font-size:clamp(14px,3.8vw,18px);color:var(--text-mid);text-align:center;line-height:2;max-width:280px;font-family:'Nunito',sans-serif;font-weight:700;}
-.ov-words{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-width:300px;}
-.ov-word{background:white;border:2px solid var(--border);border-radius:16px;padding:7px 12px;text-align:center;animation:ovWordPop .4s cubic-bezier(.34,1.56,.64,1) both;box-shadow:0 3px 10px rgba(0,0,0,.07);}
-.ov-word:nth-child(1){animation-delay:.05s}.ov-word:nth-child(2){animation-delay:.1s}.ov-word:nth-child(3){animation-delay:.15s}.ov-word:nth-child(4){animation-delay:.2s}
-@keyframes ovWordPop{from{opacity:0;transform:scale(.6) rotate(-6deg)}to{opacity:1;transform:none}}
-.ov-word .ow-emoji{font-size:26px;display:block;}
-.ov-word .ow-kana{font-family:'Fredoka One',sans-serif;font-size:17px;color:var(--sky);display:block;font-weight:700;}
-.ov-word .ow-sub{font-size:12px;color:var(--text-dim);}
-.btn{font-family:'Fredoka One',sans-serif;font-size:clamp(19px,5.2vw,24px);background:linear-gradient(135deg,var(--sky),var(--mint));color:#fff;border:none;border-radius:50px;padding:14px 36px;cursor:pointer;box-shadow:0 4px 18px rgba(0,170,238,.35);width:100%;max-width:280px;transition:all .15s;letter-spacing:.5px;}
-.btn:active{transform:scale(.95);}
-.btn.secondary{background:white;color:var(--text-mid);border:2px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:clamp(14px,3.8vw,18px);padding:10px 24px;}
+#mode-toggle {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--border-radius-md);
+  padding: 4px 10px;
+  cursor: pointer;
+  z-index: 5;
+  font-family: var(--font-sans);
+}
 </style>
-</head>
-<body>
-<div id="confetti"></div>
 
-<!-- ═══ MENU ═══ -->
-<div id="menu-overlay">
-  <div class="menu-header">
-    <div class="logo-wrap">
-      <div class="logo-card">
-        <div class="logo-droplet ld1"><svg width="16" height="21" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#ff6b6b" stroke="#fff" stroke-width="3"/></svg></div>
-        <div class="logo-droplet ld2"><svg width="14" height="19" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#4d96ff" stroke="#fff" stroke-width="3"/></svg></div>
-        <div class="logo-droplet ld3"><svg width="14" height="19" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#6bcb77" stroke="#fff" stroke-width="3"/></svg></div>
-        <div class="logo-droplet ld4"><svg width="12" height="17" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#ffbe0b" stroke="#fff" stroke-width="3"/></svg></div>
-        <div class="logo-droplet ld5"><svg width="11" height="16" viewBox="0 0 16 22"><path d="M8 0C8 0 16 10 16 14A8 8 0 0 1 0 14C0 10 8 0 8 0Z" fill="#c77dff" stroke="#fff" stroke-width="3"/></svg></div>
-        <div class="logo-bubble lb1"></div>
-        <div class="logo-bubble lb2"></div>
-        <div class="logo-bubble lb3"></div>
-        <div class="kana-group">
-          <span class="kana-outline-d">かな</span>
-          <span class="kana-outline-w">かな</span>
-          <span class="kana-main">かな</span>
-        </div>
-        <div class="drop-group">
-          <span class="drop-outline-d">DROP!</span>
-          <span class="drop-outline-w">DROP!</span>
-          <span class="drop-main">DROP!</span>
-        </div>
-      </div>
-    </div>
-    <div class="menu-sub"><span class="menu-wave">🌊</span> Apprends les kana en jouant !</div>
-  </div>
-  <div class="menu-section-lbl">✨ Choisis ton clan</div>
-  <div id="lvl-scroll"></div>
-  <div class="menu-scroll-hint">↕ Fais défiler pour voir tous les niveaux</div>
-</div>
+<div id="app">
+  <canvas id="c"></canvas>
+  <div id="dot"></div>
+  <div id="status">En attente du gyroscope…</div>
+  <button id="mode-toggle">Mode souris</button>
 
-<!-- ═══ TUTO ═══ -->
-<div id="tuto-overlay" class="hidden">
-  <div class="tuto-title">Comment jouer ? 🎮</div>
-  <div class="tuto-sub">C'est super simple, promis !</div>
-  <div class="tuto-steps">
-    <div class="tuto-step">
-      <div class="tuto-anim"><span class="hand-swipe">👆</span></div>
-      <div class="tuto-step-text">
-        <div class="tuto-step-title">Déplace le kana</div>
-        <div class="tuto-step-desc">Swipe à gauche ou droite pour choisir la colonne</div>
-      </div>
-    </div>
-    <div class="tuto-step">
-      <div class="tuto-anim"><span class="hand-drop">👇</span></div>
-      <div class="tuto-step-text">
-        <div class="tuto-step-title">Fais-le tomber vite !</div>
-        <div class="tuto-step-desc">Swipe vers le bas ou appui long pour chute rapide</div>
-      </div>
-    </div>
-    <div class="tuto-step">
-      <div class="tuto-anim"><span class="hand-hold">🤏</span></div>
-      <div class="tuto-step-text">
-        <div class="tuto-step-title">Forme les mots !</div>
-        <div class="tuto-step-desc">Place les kanas pour écrire les mots du panneau en bas</div>
-      </div>
-    </div>
+  <div id="controls">
+    <button id="btn-draw">☞ Maintenir pour tracer</button>
+    <button id="btn-clear"><i class="ti ti-trash" aria-hidden="true"></i></button>
   </div>
-  <button class="tuto-btn" id="tuto-start-btn">C'est parti ! 🚀</button>
-</div>
 
-<!-- ═══ PUZZLE SN SELECT ═══ -->
-<div id="puzzle-overlay" class="hidden">
-  <div style="font-family:'Fredoka One',cursive;font-size:22px;color:#00aaee;text-align:center;">⚡ Mode Puzzle</div>
-  <div id="puzzle-level-name" style="font-size:14px;color:#5090a8;text-align:center;margin-top:-8px;"></div>
-  <div style="font-size:12px;color:#5090a8;text-align:center;background:#fff;border:2px solid #b8e0f8;border-radius:12px;padding:8px 14px;max-width:340px;">
-    Le plateau démarre pré-rempli avec des chaînes en cascade.<br>Pose le bon kana pour déclencher la réaction !
+  <div id="info-overlay">
+    <h3>✦ Laser Kana POC</h3>
+    <p>Oriente ton téléphone comme un sabre laser.<br>Le point rouge suit l'inclinaison du téléphone.<br>Maintiens le bouton pour tracer.</p>
+    <p style="font-size:12px; color:rgba(255,255,255,0.35)">Sur mobile, l'accès au gyroscope peut nécessiter une autorisation.</p>
+    <button id="btn-start">Démarrer</button>
   </div>
-  <div id="sn-cards" style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;"></div>
-  <button id="puzzle-back-btn" style="font-family:'Fredoka One',cursive;font-size:15px;padding:9px 22px;border:2px solid #b8e0f8;border-radius:12px;background:#fff;color:#5090a8;cursor:pointer;margin-top:4px;">← Retour</button>
-</div>
-
-<!-- ═══ JEU ═══ -->
-<div id="shell">
-  <div id="middle">
-    <div id="board-col">
-      <div id="board"></div>
-      <div id="word-popup">
-        <span class="wp-emoji"></span><span class="wp-kana"></span>
-        <div class="wp-romaji"></div><div class="wp-meaning"></div><div class="wp-pts"></div>
-      </div>
-      <div id="combo-banner"></div>
-      <div id="enc-toast"><span class="enc-jp"></span><span class="enc-fr"></span></div>
-      <div id="streak"></div>
-      <div id="board-overlay" class="hidden">
-        <div class="ov-title" id="ov-title"></div>
-        <div class="ov-sub"   id="ov-sub"></div>
-        <div class="ov-words" id="ov-words"></div>
-        <button class="btn"           id="ov-btn"></button>
-        <button class="btn secondary" id="ov-btn2" style="display:none"></button>
-        <button class="btn secondary" id="ov-lvlsel" style="margin-top:4px">📋 Changer de niveau</button>
-      </div>
-    </div>
-    <div id="side-panel">
-      <div class="side-block"><div class="side-label">NEXT</div><div id="next-kana">？</div></div>
-      <div class="side-block"><div class="side-label">SCORE</div><div id="score-val">0</div></div>
-      <div class="side-block"><div id="level-badge">Lv.1<br>🐬</div></div>
-    </div>
-  </div>
-  <div id="word-panel"></div>
 </div>
 
 <script>
-const ALL_LEVELS=[
-  {id:1,theme:'La Mer',clan:'',emoji:'🌊',color:'#00c8e8',words:[
-    {kana:'かい',romaji:'kai',meaning:'coquillage',emoji:'🐚',boss:false},
-    {kana:'かめ',romaji:'kame',meaning:'tortue',emoji:'🐢',boss:false},
-    {kana:'えび',romaji:'ebi',meaning:'crevette',emoji:'🦐',boss:false},
-    {kana:'たこ',romaji:'tako',meaning:'pieuvre',emoji:'🐙',boss:false},
-    {kana:'いるか',romaji:'iruka',meaning:'dauphin',emoji:'🐬',boss:true},
-  ]},
-  {id:2,theme:'Les Domestiques',clan:'',emoji:'🐾',color:'#ffaa7a',words:[
-    {kana:'ねこ',romaji:'neko',meaning:'chat',emoji:'🐱',boss:false},
-    {kana:'いぬ',romaji:'inu',meaning:'chien',emoji:'🐶',boss:false},
-    {kana:'うし',romaji:'ushi',meaning:'vache',emoji:'🐄',boss:false},
-    {kana:'うま',romaji:'uma',meaning:'cheval',emoji:'🐴',boss:false},
-    {kana:'きつね',romaji:'kitsune',meaning:'renard',emoji:'🦊',boss:true},
-  ]},
-  {id:3,theme:'La Forêt',clan:'',emoji:'🌿',color:'#5cb85c',words:[
-    {kana:'くま',romaji:'kuma',meaning:'ours',emoji:'🐻',boss:false},
-    {kana:'しか',romaji:'shika',meaning:'cerf',emoji:'🦌',boss:false},
-    {kana:'さる',romaji:'saru',meaning:'singe',emoji:'🐒',boss:false},
-    {kana:'りす',romaji:'risu',meaning:'écureuil',emoji:'🐿️',boss:false},
-    {kana:'うさぎ',romaji:'usagi',meaning:'lapin',emoji:'🐰',boss:true},
-  ]},
-  {id:4,theme:'La Savane',clan:'',emoji:'🌍',color:'#e8833a',words:[
-    {kana:'とら',romaji:'tora',meaning:'tigre',emoji:'🐯',boss:false},
-    {kana:'かば',romaji:'kaba',meaning:'hippopo',emoji:'🦛',boss:false},
-    {kana:'へび',romaji:'hebi',meaning:'serpent',emoji:'🐍',boss:false},
-    {kana:'わに',romaji:'wani',meaning:'crocodile',emoji:'🐊',boss:false},
-    {kana:'やもり',romaji:'yamori',meaning:'gecko',emoji:'🦎',boss:true},
-  ]},
-  {id:5,theme:'Ciel & Jardin',clan:'',emoji:'🌸',color:'#ff85b3',words:[
-    {kana:'とり',romaji:'tori',meaning:'oiseau',emoji:'🐦',boss:false},
-    {kana:'むし',romaji:'mushi',meaning:'insecte',emoji:'🐛',boss:false},
-    {kana:'たか',romaji:'taka',meaning:'faucon',emoji:'🦅',boss:false},
-    {kana:'くも',romaji:'kumo',meaning:'araignée',emoji:'🕷️',boss:false},
-    {kana:'かえる',romaji:'kaeru',meaning:'grenouille',emoji:'🐸',boss:true},
-  ]},
-  {id:6,theme:'Les Fruits de mer',clan:'',emoji:'🦀',color:'#00aaee',words:[
-    {kana:'いか',romaji:'ika',meaning:'calamar',emoji:'🦑',boss:false},
-    {kana:'かに',romaji:'kani',meaning:'crabe',emoji:'🦀',boss:false},
-    {kana:'のり',romaji:'nori',meaning:'algue',emoji:'🍙',boss:false},
-    {kana:'さけ',romaji:'sake',meaning:'saumon',emoji:'🐟',boss:false},
-    {kana:'さかな',romaji:'sakana',meaning:'poisson',emoji:'🐠',boss:true},
-  ]},
-  {id:7,theme:'Le Riz & les Bases',clan:'',emoji:'🍚',color:'#f9d000',words:[
-    {kana:'こめ',romaji:'kome',meaning:'riz',emoji:'🌾',boss:false},
-    {kana:'まめ',romaji:'mame',meaning:'haricot',emoji:'🫛',boss:false},
-    {kana:'みそ',romaji:'miso',meaning:'miso',emoji:'🥣',boss:false},
-    {kana:'みず',romaji:'mizu',meaning:'eau',emoji:'💧',boss:false},
-    {kana:'ごはん',romaji:'gohan',meaning:'riz cuit',emoji:'🍚',boss:true},
-  ]},
-  {id:8,theme:'Légumes & Fruits secs',clan:'',emoji:'🥕',color:'#5cb85c',words:[
-    {kana:'にく',romaji:'niku',meaning:'viande',emoji:'🥩',boss:false},
-    {kana:'いも',romaji:'imo',meaning:'patate',emoji:'🥔',boss:false},
-    {kana:'なす',romaji:'nasu',meaning:'aubergine',emoji:'🍆',boss:false},
-    {kana:'くり',romaji:'kuri',meaning:'châtaigne',emoji:'🌰',boss:false},
-    {kana:'くるみ',romaji:'kurumi',meaning:'noix',emoji:'🥜',boss:true},
-  ]},
-  {id:9,theme:'Les Fruits sucrés',clan:'',emoji:'🍑',color:'#ff85b3',words:[
-    {kana:'あめ',romaji:'ame',meaning:'bonbon',emoji:'🍭',boss:false},
-    {kana:'かき',romaji:'kaki',meaning:'kaki',emoji:'🍅',boss:false},
-    {kana:'ゆず',romaji:'yuzu',meaning:'yuzu',emoji:'🍋',boss:false},
-    {kana:'もも',romaji:'momo',meaning:'pêche',emoji:'🍑',boss:false},
-    {kana:'すいか',romaji:'suika',meaning:'pastèque',emoji:'🍉',boss:true},
-  ]},
-  {id:10,theme:'Ciel & Saisons',clan:'',emoji:'🌸',color:'#ffb3d9',words:[
-    {kana:'そら',romaji:'sora',meaning:'ciel',emoji:'☁️',boss:false},
-    {kana:'つき',romaji:'tsuki',meaning:'lune',emoji:'🌙',boss:false},
-    {kana:'ほし',romaji:'hoshi',meaning:'étoile',emoji:'🌟',boss:false},
-    {kana:'ゆき',romaji:'yuki',meaning:'neige',emoji:'❄️',boss:false},
-    {kana:'さくら',romaji:'sakura',meaning:'cerisier',emoji:'🌸',boss:true},
-  ]},
-  {id:11,theme:'Terre & Végétation',clan:'',emoji:'🌿',color:'#72c472',words:[
-    {kana:'やま',romaji:'yama',meaning:'montagne',emoji:'⛰️',boss:false},
-    {kana:'もり',romaji:'mori',meaning:'forêt',emoji:'🌲',boss:false},
-    {kana:'くさ',romaji:'kusa',meaning:'herbe',emoji:'🌿',boss:false},
-    {kana:'はな',romaji:'hana',meaning:'fleur',emoji:'🌸',boss:false},
-    {kana:'ひかり',romaji:'hikari',meaning:'lumière',emoji:'✨',boss:true},
-  ]},
-  {id:12,theme:'Eau & Vent',clan:'',emoji:'🌊',color:'#4db8d4',words:[
-    {kana:'うみ',romaji:'umi',meaning:'mer',emoji:'🌊',boss:false},
-    {kana:'かわ',romaji:'kawa',meaning:'rivière',emoji:'🏞️',boss:false},
-    {kana:'あめ',romaji:'ame',meaning:'pluie',emoji:'🌧️',boss:false},
-    {kana:'かぜ',romaji:'kaze',meaning:'vent',emoji:'💨',boss:false},
-    {kana:'あらし',romaji:'arashi',meaning:'tempête',emoji:'⛈️',boss:true},
-  ]},
-  {id:13,theme:'La Maison',clan:'',emoji:'🏠',color:'#ffaa7a',words:[
-    {kana:'はこ',romaji:'hako',meaning:'boîte',emoji:'📦',boss:false},
-    {kana:'かぎ',romaji:'kagi',meaning:'clé',emoji:'🔑',boss:false},
-    {kana:'かさ',romaji:'kasa',meaning:'parapluie',emoji:'☂️',boss:false},
-    {kana:'ほん',romaji:'hon',meaning:'livre',emoji:'📖',boss:false},
-    {kana:'まくら',romaji:'makura',meaning:'oreiller',emoji:'🛌',boss:true},
-  ]},
-  {id:14,theme:'Les Vêtements',clan:'',emoji:'👘',color:'#c4a8ff',words:[
-    {kana:'くつ',romaji:'kutsu',meaning:'chaussures',emoji:'👟',boss:false},
-    {kana:'ふく',romaji:'fuku',meaning:'vêtement',emoji:'👕',boss:false},
-    {kana:'たび',romaji:'tabi',meaning:'chaussettes',emoji:'🧦',boss:false},
-    {kana:'えり',romaji:'eri',meaning:'col',emoji:'👔',boss:false},
-    {kana:'きもの',romaji:'kimono',meaning:'kimono',emoji:'👘',boss:true},
-  ]},
-  {id:15,theme:'Le Bureau',clan:'',emoji:'📝',color:'#7bcfff',words:[
-    {kana:'ぺん',romaji:'pen',meaning:'stylo',emoji:'🖊️',boss:false},
-    {kana:'かみ',romaji:'kami',meaning:'papier',emoji:'📄',boss:false},
-    {kana:'えん',romaji:'en',meaning:'yen',emoji:'💴',boss:false},
-    {kana:'はり',romaji:'hari',meaning:'épingle',emoji:'📌',boss:false},
-    {kana:'かばん',romaji:'kaban',meaning:'sac',emoji:'👜',boss:true},
-  ]},
-  {id:16,theme:'Couleurs A',clan:'',emoji:'🌈',color:'#ff6b6b',words:[
-    {kana:'あか',romaji:'aka',meaning:'rouge',emoji:'🔴',boss:false},
-    {kana:'あお',romaji:'ao',meaning:'bleu',emoji:'🔵',boss:false},
-    {kana:'しろ',romaji:'shiro',meaning:'blanc',emoji:'⚪',boss:false},
-    {kana:'くろ',romaji:'kuro',meaning:'noir',emoji:'⚫',boss:false},
-    {kana:'みどり',romaji:'midori',meaning:'vert',emoji:'💚',boss:true},
-  ]},
-  {id:17,theme:'Couleurs B',clan:'',emoji:'🎨',color:'#c77dff',words:[
-    {kana:'むら',romaji:'mura',meaning:'violet',emoji:'💜',boss:false},
-    {kana:'ねず',romaji:'nezu',meaning:'gris souris',emoji:'🐭',boss:false},
-    {kana:'ちゃ',romaji:'cha',meaning:'brun',emoji:'🟤',boss:false},
-    {kana:'もも',romaji:'momo',meaning:'rose',emoji:'🌸',boss:false},
-    {kana:'きいろ',romaji:'kiiro',meaning:'jaune',emoji:'💛',boss:true},
-  ]},
-  {id:18,theme:'Famille A',clan:'',emoji:'👨‍👩‍👧',color:'#ffaa7a',words:[
-    {kana:'はは',romaji:'haha',meaning:'maman',emoji:'👩',boss:false},
-    {kana:'ちち',romaji:'chichi',meaning:'papa',emoji:'👨',boss:false},
-    {kana:'あに',romaji:'ani',meaning:'grand frère',emoji:'👦',boss:false},
-    {kana:'あね',romaji:'ane',meaning:'grande sœur',emoji:'👧',boss:false},
-    {kana:'かぞく',romaji:'kazoku',meaning:'famille',emoji:'👨‍👩‍👧',boss:true},
-  ]},
-  {id:19,theme:'Famille B',clan:'',emoji:'👶',color:'#72e8b8',words:[
-    {kana:'おや',romaji:'oya',meaning:'parent',emoji:'👨‍👩',boss:false},
-    {kana:'まご',romaji:'mago',meaning:'petit-enfant',emoji:'👶',boss:false},
-    {kana:'よめ',romaji:'yome',meaning:'belle-fille',emoji:'👰',boss:false},
-    {kana:'おじ',romaji:'oji',meaning:'oncle',emoji:'👨',boss:false},
-    {kana:'むすめ',romaji:'musume',meaning:'fille',emoji:'👧',boss:true},
-  ]},
-  {id:20,theme:'Japon traditionnel A',clan:'',emoji:'🏯',color:'#e8833a',words:[
-    {kana:'おに',romaji:'oni',meaning:'démon',emoji:'👹',boss:false},
-    {kana:'みや',romaji:'miya',meaning:'sanctuaire',emoji:'⛩️',boss:false},
-    {kana:'まい',romaji:'mai',meaning:'danse',emoji:'💃',boss:false},
-    {kana:'さと',romaji:'sato',meaning:'village',emoji:'🏘️',boss:false},
-    {kana:'とりい',romaji:'torii',meaning:'portail shinto',emoji:'⛩️',boss:true},
-    {kana:'ゆかた',romaji:'yukata',meaning:'yukata',emoji:'👘',boss:true},
-  ]},
-  {id:21,theme:'Japon traditionnel B',clan:'',emoji:'⚔️',color:'#4db8d4',words:[
-    {kana:'ふえ',romaji:'fue',meaning:'flûte',emoji:'🎵',boss:false},
-    {kana:'たい',romaji:'tai',meaning:'daurade',emoji:'🐟',boss:false},
-    {kana:'こま',romaji:'koma',meaning:'toupie',emoji:'🪀',boss:false},
-    {kana:'はお',romaji:'hao',meaning:'robe trad.',emoji:'👗',boss:false},
-    {kana:'かたな',romaji:'katana',meaning:'sabre',emoji:'⚔️',boss:true},
-  ]},
-];
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const dot = document.getElementById('dot');
+const status = document.getElementById('status');
+const btnDraw = document.getElementById('btn-draw');
+const btnClear = document.getElementById('btn-clear');
+const overlay = document.getElementById('info-overlay');
+const btnStart = document.getElementById('btn-start');
+const modeToggle = document.getElementById('mode-toggle');
+const appEl = document.getElementById('app');
 
-let currentLevelIdx=0,LEVEL_WORDS=ALL_LEVELS[0].words,pendingLevelIdx=0;
-
-/* ── confetti ── */
-(()=>{
-  const c=document.getElementById('confetti');
-  const cols=['#00c8e8','#5cb85c','#e8833a','#c4a8ff','#72e8b8','#ffaa7a'];
-  for(let i=0;i<40;i++){
-    const d=document.createElement('div');d.className='cdot';
-    const sz=Math.random()*6+3;
-    d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${cols[i%cols.length]};--cd:${(Math.random()*5+3).toFixed(1)}s;--cdelay:${(Math.random()*4).toFixed(1)}s;--cop:.35;`;
-    c.appendChild(d);
-  }
-})();
-
-/* ── menu ── */
-(()=>{
-  const scroll=document.getElementById('lvl-scroll');
-  ALL_LEVELS.forEach((lvl,i)=>{
-    const card=document.createElement('div');
-    card.className='lvl-card';
-    card.style.cssText=`--lc:${lvl.color};border-color:${lvl.color}55;`;
-    const chips=lvl.words.slice(0,4).map(w=>`<span class="lvl-card-word-chip">${w.kana}</span>`).join('');
-    card.innerHTML=`
-      <div class="lvl-card-left">
-        <div class="lvl-card-emoji">${lvl.emoji}</div>
-        <div class="lvl-card-num" style="color:${lvl.color}">Lv.${lvl.id}</div>
-      </div>
-      <div class="lvl-card-right">
-        <div class="lvl-card-name">${lvl.theme}</div>
-        <div class="lvl-card-words">${chips}</div>
-        <div style="display:flex;gap:6px;margin-top:6px;align-items:center">
-          <div class="lvl-card-count" style="flex:1">${lvl.words.length} mots ✨</div>
-          <div class="puzzle-btn" style="font-family:'Fredoka One',cursive;font-size:13px;padding:5px 13px;background:linear-gradient(135deg,#f9d000,#ff8c42);color:#fff;border-radius:12px;cursor:pointer;white-space:nowrap;flex-shrink:0;box-shadow:0 2px 8px rgba(249,208,0,.4);">⚡ Puzzle</div>
-        </div>
-      </div>`;
-    card.addEventListener('click',()=>showTuto(i));
-    scroll.appendChild(card);
-    card.querySelector('.puzzle-btn').addEventListener('click',e=>{e.stopPropagation();showPuzzleSelect(i);});
-  });
-})();
-
-function showTuto(idx){
-  pendingLevelIdx=idx;
-  document.getElementById('menu-overlay').classList.add('hidden');
-  document.getElementById('tuto-overlay').classList.remove('hidden');
+let W, H;
+function resize() {
+  W = appEl.clientWidth;
+  H = Math.max(420, appEl.clientHeight - 72);
+  canvas.width = W;
+  canvas.height = H;
+  canvas.style.height = H + 'px';
+  redrawStrokes();
 }
-document.getElementById('tuto-start-btn').addEventListener('click',()=>{
-  document.getElementById('tuto-overlay').classList.add('hidden');
-  startGame(pendingLevelIdx);
-});
 
-document.getElementById('puzzle-back-btn').addEventListener('click',()=>{
-  document.getElementById('puzzle-overlay').classList.add('hidden');
-  document.getElementById('menu-overlay').classList.remove('hidden');
-});
+let drawing = false;
+let strokes = [];
+let currentStroke = [];
 
-/* ── sound ── */
-let audioCtx=null,muted=false;
-function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
-function playTone(freq,type,dur,vol=0.18,delay=0){if(muted)return;try{const ctx=getCtx(),osc=ctx.createOscillator(),g=ctx.createGain();osc.connect(g);g.connect(ctx.destination);osc.type=type;osc.frequency.value=freq;const t=ctx.currentTime+delay;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);osc.start(t);osc.stop(t+dur);}catch(e){}}
-const soundDrop=()=>playTone(260,'sine',.07,.12);
-const soundWord=()=>[523,659,784,1047].forEach((f,i)=>playTone(f,'sine',.18,.18,i*.07));
-const soundCombo=()=>{[523,659,784,1047,1319,1568].forEach((f,i)=>playTone(f,'sine',.22,.20,i*.055));setTimeout(()=>playTone(1568,'square',.28,.12),400);};
-const soundNewWord=()=>[440,554,659].forEach((f,i)=>playTone(f,'triangle',.18,.13,i*.08));
-const soundGameOver=()=>[440,370,311,261].forEach((f,i)=>playTone(f,'sawtooth',.20,.15,i*.13));
-const soundLevelUp=()=>[523,659,784,1047,784,1047,1319].forEach((f,i)=>playTone(f,'sine',.20,.20,i*.08));
-function screenShake(c=false){const sh=document.getElementById('shell');sh.classList.remove('shake','shake-combo');void sh.offsetWidth;sh.classList.add(c?'shake-combo':'shake');setTimeout(()=>sh.classList.remove('shake','shake-combo'),500);}
+let posX = 0.5, posY = 0.35;
+let targetX = 0.5, targetY = 0.35;
 
-const KANA_BASE='https://raw.githubusercontent.com/emmanuel971-source/hirakataquizz/main/';
-const kanaCache={};
-function playKanaSound(kana){if(muted)return;try{if(!kanaCache[kana])kanaCache[kana]=new Audio(KANA_BASE+encodeURIComponent(kana)+'.mp3');const a=kanaCache[kana].cloneNode();a.volume=.7;a.play().catch(()=>{});}catch(e){}}
+let mouseMode = false;
+let gyroAvailable = false;
 
-const ENCS=[{jp:'すごい！',fr:'Incroyable !'},{jp:'やった！',fr:'On l\'a eu !'},{jp:'完璧！',fr:'Parfait !'},{jp:'天才！',fr:'Génie !'},{jp:'最高！',fr:'Excellent !'}];
-const COMBO_ENCS=[{jp:'コンボ！すごい！',fr:'Combo incroyable !'},{jp:'連続！天才！',fr:'Enchaînement de génie !'},{jp:'最高のコンボ！',fr:'Combo parfait !'},{jp:'パーフェクト！',fr:'Parfait !'}];
-let encTimer=null;
-function showEncToast(isCombo){const pool=isCombo?COMBO_ENCS:ENCS;const enc=pool[Math.floor(Math.random()*pool.length)];const t=document.getElementById('enc-toast');t.querySelector('.enc-jp').textContent=enc.jp;t.querySelector('.enc-fr').textContent=enc.fr;t.className='';void t.offsetWidth;t.className='show';clearTimeout(encTimer);encTimer=setTimeout(()=>t.className='',2300);}
-if(window.speechSynthesis)window.speechSynthesis.getVoices();
-function speakWord(kana,isCombo){if(muted||!window.speechSynthesis)return;window.speechSynthesis.cancel();const voices=window.speechSynthesis.getVoices();const jv=voices.find(v=>v.lang&&v.lang.startsWith('ja'))||null;const u=new SpeechSynthesisUtterance(kana);u.lang='ja-JP';u.rate=.85;u.pitch=isCombo?1.25:1.05;u.volume=.9;if(jv)u.voice=jv;window.speechSynthesis.speak(u);if(isCombo){const enc=COMBO_ENCS[Math.floor(Math.random()*COMBO_ENCS.length)];const u2=new SpeechSynthesisUtterance(enc.jp);u2.lang='ja-JP';u2.rate=1.05;u2.pitch=1.35;u2.volume=.85;if(jv)u2.voice=jv;window.speechSynthesis.speak(u2);showEncToast(true);}}
+let beta0 = null, gamma0 = null;
+const SENSITIVITY = 2.2;
 
-const P_COLORS=['#00c8e8','#5cb85c','#e8833a','#c4a8ff','#72e8b8','#ffaa7a'];
-function spawnParticles(cellEl,count=12){if(!cellEl)return;const rect=cellEl.getBoundingClientRect();const bRect=document.getElementById('board-col').getBoundingClientRect();const cx=rect.left-bRect.left+rect.width/2;const cy=rect.top-bRect.top+rect.height/2;const container=document.getElementById('board-col');for(let i=0;i<count;i++){const p=document.createElement('div');p.className='particle';const sz=Math.random()*7+3;const angle=(Math.PI*2/count)*i+Math.random()*.5;const dist=Math.random()*50+22;const col=P_COLORS[Math.floor(Math.random()*P_COLORS.length)];const dur=(Math.random()*.3+.4).toFixed(2)+'s';p.style.cssText=`width:${sz}px;height:${sz}px;left:${cx-sz/2}px;top:${cy-sz/2}px;background:${col};--tx:${Math.cos(angle)*dist}px;--ty:${Math.sin(angle)*dist-16}px;--dur:${dur};box-shadow:0 0 ${sz}px ${col};`;container.appendChild(p);setTimeout(()=>p.remove(),900);}}
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
-const KANA_COLORS = {
-  'あ':'#FFD6A5','い':'#CAFFBF','う':'#A0C4FF','え':'#FFB3C6','お':'#BDE0FE',
-  'か':'#FDFFB6','き':'#B9FBC0','く':'#A2D2FF','け':'#FFAFCC','こ':'#CDB4DB',
-  'さ':'#FFC8DD','し':'#CBFFA9','す':'#ADE8F4','せ':'#FFE5A0','そ':'#C8E6C9',
-  'た':'#FFD7BA','ち':'#B5EAD7','つ':'#B8D8FF','て':'#FFDDD2','と':'#D4F0C0',
-  'な':'#FFC6FF','に':'#A0FFD6','ぬ':'#BAD7F2','ね':'#FFCFD2','の':'#E2F0CB',
-  'は':'#FFF1A8','ひ':'#B5F5EC','ふ':'#C3DDFD','へ':'#FFD6D6','ほ':'#D5EAFF',
-  'ま':'#FFE2B7','み':'#C3FAC3','む':'#BFDBFE','め':'#FFBBD2','も':'#D8F3DC',
-  'や':'#FFEAA7','ゆ':'#A8F0E8','よ':'#C6E2FF',
-  'ら':'#FFD3B6','り':'#BAFFD8','る':'#B6CCFE','れ':'#FFD6E0','ろ':'#D9F3EE',
-  'わ':'#FFF3CD','ゐ':'#C0F0C0','ゑ':'#C0D8FF','を':'#FFD0D0','ん':'#E8CBFF',
-  'ア':'#FFD6A5','イ':'#CAFFBF','ウ':'#A0C4FF','エ':'#FFB3C6','オ':'#BDE0FE',
-  'ラ':'#FFD3B6','リ':'#BAFFD8','ル':'#B6CCFE','レ':'#FFD6E0','ロ':'#D9F3EE',
-  'ン':'#E8CBFF','ー':'#F0F0F0',
-  'サ':'#FFC8DD','ッ':'#FFF1A8','カ':'#FDFFB6','ビ':'#C3DDFD','コ':'#CDB4DB',
-  'が':'#F0FFB0','ぎ':'#B0FFC0','ぐ':'#B0D8FF','げ':'#FFB0C8','ご':'#C0B0E8',
-  'ざ':'#FFB0D0','じ':'#C0FFA0','ず':'#A0E0F4','ぜ':'#FFD8A0','ぞ':'#B0E0C0',
-  'だ':'#FFD0B0','ぢ':'#A8E8D0','づ':'#B0D0FF','で':'#FFD0C0','ど':'#C8F0B0',
-  'ば':'#FFE8A8','び':'#A8F0E8','ぶ':'#B8D8FF','べ':'#FFB8C8','ぼ':'#C8D8FF',
-  'ぱ':'#FFD0D8','ぴ':'#D0FFD0','ぷ':'#C8ECFF','ぺ':'#FFD0E8','ぽ':'#D8E8FF',
-};
-const DEFAULT_KANA_BG='#F0F0F0';
-function kanaBg(char){return KANA_COLORS[char]||DEFAULT_KANA_BG;}
+function onOrientation(e) {
+  if (e.beta === null) return;
+  gyroAvailable = true;
+  if (beta0 === null) { beta0 = e.beta; gamma0 = e.gamma; }
+  let db = e.beta - beta0;
+  let dg = e.gamma - gamma0;
+  targetX = clamp(0.5 + (dg / 45) * SENSITIVITY * 0.5, 0.02, 0.98);
+  targetY = clamp(0.35 + (db / 45) * SENSITIVITY * 0.5, 0.02, 0.95);
+  status.textContent = `β ${e.beta.toFixed(1)}°  γ ${e.gamma.toFixed(1)}°  — gyroscope actif`;
+}
 
-const COLS=8;let ROWS=12,board=[],active=null,nextChar='';
-let score=0,streak=0,lastWordTime=0;
-let activeWords=[],wordIntroIdx=0,foundRound=new Set(),kanaPool=[];
-let gameRunning=false,dropTimer=null,DROP_SPEED=1400;
-const DROP_MIN=600,DROP_STEP=25;
+window.addEventListener('deviceorientation', onOrientation);
 
-/* ══════════════════════════════════════════════
-   DERNIER CYCLE — variable d'état + mise à jour
-   ══════════════════════════════════════════════ */
-let isLastCycle = false; // true dès que tous les mots ont été introduits
+function lerp(a, b, t) { return a + (b - a) * t; }
 
-/**
- * Met à jour les classes CSS validated / pending sur chaque ligne de mot.
- * N'applique les couleurs QUE pendant le dernier cycle.
- * En dehors du dernier cycle, retire toutes les classes de couleur.
- */
-function updateWordRowColors() {
-  if (!isLastCycle) {
-    // Avant le dernier cycle : retirer toutes les classes de statut, rien d'autre
-    activeWords.forEach(w => {
-      const row = document.getElementById('wr-' + w.kana);
-      if (row) row.classList.remove('validated', 'pending', 'last-one');
-    });
-    return;
-  }
+let lastX = null, lastY = null;
 
-  // Compter combien de mots sont encore en attente
-  const pendingCount = activeWords.filter(w => !foundRound.has(w.kana)).length;
+function loop() {
+  posX = lerp(posX, targetX, 0.18);
+  posY = lerp(posY, targetY, 0.18);
 
-  activeWords.forEach(w => {
-    const row = document.getElementById('wr-' + w.kana);
-    if (!row) return;
+  const px = posX * W;
+  const py = posY * H;
 
-    row.classList.remove('validated', 'pending', 'last-one');
+  dot.style.left = px + 'px';
+  dot.style.top = py + 'px';
 
-    if (foundRound.has(w.kana)) {
-      row.classList.add('validated');
+  if (drawing) {
+    if (lastX !== null) {
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(px, py);
+      ctx.strokeStyle = '#ff3c78';
+      ctx.lineWidth = 3.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.shadowColor = 'rgba(255,60,120,0.6)';
+      ctx.shadowBlur = 8;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      currentStroke.push({ x: px, y: py });
     } else {
-      row.classList.add('pending');
-      // Pulse urgent uniquement quand c'est le DERNIER mot restant
-      if (pendingCount === 1) {
-        row.classList.add('last-one');
-      }
+      currentStroke = [{ x: px, y: py }];
     }
-  });
-}
-
-function increaseSpeed(){DROP_SPEED=Math.max(DROP_MIN,DROP_SPEED-DROP_STEP);if(active&&gameRunning)startTimer();}
-let resolvingWords=false;
-function safeSpawn(){resolvingWords=false;if(!gameRunning)return;spawn();}
-
-function calcRows(){const panH=document.getElementById('word-panel').offsetHeight||0;const avail=(window.innerHeight||document.documentElement.clientHeight)-panH;const screenW=Math.min(window.innerWidth,480);const cellW=Math.floor(screenW*.75/COLS);ROWS=Math.max(8,Math.floor(avail/cellW));}
-function rebuildPool(){const introduced=LEVEL_WORDS.slice(0,wordIntroIdx);kanaPool=introduced.flatMap(w=>[...w.kana]);const unique=[...new Set(kanaPool)];const activeChars=new Set(activeWords.flatMap(w=>[...w.kana]));kanaPool=unique.flatMap(ch=>activeChars.has(ch)?[ch,ch]:[ch]);}
-let lastKana='';
-function rndKana(){if(!kanaPool.length)return'あ';const pool=kanaPool.length>1?kanaPool.filter(k=>k!==lastKana):kanaPool;const k=pool[Math.floor(Math.random()*pool.length)];lastKana=k;return k;}
-function initBoard(){board=Array.from({length:ROWS},()=>Array.from({length:COLS},()=>({filled:false,char:''})));}
-function buildDOM(){const el=document.getElementById('board');el.innerHTML='';el.style.gridTemplateRows=`repeat(${ROWS},1fr)`;for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const d=document.createElement('div');d.className='cell empty';d.dataset.r=r;d.dataset.c=c;el.appendChild(d);}}
-function rebuildDOMKeepContent(){const old=board.length;const ob=board.map(row=>row.map(c=>({...c})));calcRows();const nb=Array.from({length:ROWS},()=>Array.from({length:COLS},()=>({filled:false,char:''})));const copy=Math.min(ROWS,old);for(let r=0;r<copy;r++)nb[ROWS-1-r]=ob[old-1-r].map(c=>({...c}));board=nb;buildDOM();}
-const gc=(r,c)=>document.querySelector(`#board [data-r="${r}"][data-c="${c}"]`);
-
-function spawn(){active={char:nextChar||rndKana(),x:Math.floor(COLS/2),y:0};playKanaSound(active.char);nextChar=rndKana();const nk=document.getElementById('next-kana');nk.textContent=nextChar;nk.className='';void nk.offsetWidth;nk.className='pop';nk.style.background=kanaBg(nextChar);nk.style.color='#1a1040';if(board[0][active.x].filled){endGame();return;}render();startTimer();}
-function ok(x,y){return x>=0&&x<COLS&&y>=0&&y<ROWS&&!board[y][x].filled;}
-function startTimer(){clearInterval(dropTimer);dropTimer=setInterval(tick,DROP_SPEED);}
-function tick(){if(!gameRunning||resolvingWords||!active)return;ok(active.x,active.y+1)?(active.y++,render()):lock();}
-function lock(){if(!active||resolvingWords)return;clearInterval(dropTimer);resolvingWords=true;board[active.y][active.x]={filled:true,char:active.char};if(puzzleMode&&puzzleTriggerCells)puzzleTriggerCells.delete(`${active.y}-${active.x}`);const pr=active.y,pc=active.x;
-const el=gc(pr,pc);if(el){el.className='cell filled land';el.textContent=active.char;el.style.background=kanaBg(active.char);setTimeout(()=>el.classList.remove('land'),380);}active=null;soundDrop();render();checkWords(pr,pc);}
-function hardDrop(){if(!active||!gameRunning||resolvingWords)return;while(ok(active.x,active.y+1))active.y++;screenShake(false);render();lock();}
-
-function checkWords(pr,pc){const found=scanRowCol(pr,pc);if(!found.length){safeSpawn();return;}processCascade(found,false);}
-function scanRowCol(r,c){const found=[];scanLine(Array.from({length:COLS},(_,cc)=>({r,c:cc})),found);scanLine(Array.from({length:ROWS},(_,rr)=>({r:rr,c})),found);return found;}
-function scanFullBoard(){const found=[];for(let r=0;r<ROWS;r++)scanLine(Array.from({length:COLS},(_,c)=>({r,c})),found);for(let c=0;c<COLS;c++)scanLine(Array.from({length:ROWS},(_,r)=>({r,c})),found);return found;}
-function scanLine(cells,found){const line=cells.map(({r,c})=>board[r][c].filled?board[r][c].char:'\x00').join('');activeWords.forEach(w=>{let i=line.indexOf(w.kana);while(i!==-1){const key=cells.slice(i,i+w.kana.length).map(cc=>`${cc.r},${cc.c}`).join('|');if(!found.some(f=>f.key===key)){found.push({word:w,cells:Array.from({length:w.kana.length},(_,j)=>cells[i+j]),key});}i=line.indexOf(w.kana,i+1);}});}
-
-function processCascade(found,isCascade){
-  const isCombo=found.length>=2;
-  const cellSet=new Set();found.forEach(f=>f.cells.forEach(cell=>cellSet.add(`${cell.r},${cell.c}`)));
-  const flashEls=[];cellSet.forEach(key=>{const[r,c]=key.split(',').map(Number);const el=gc(r,c);if(el){el.classList.add(isCombo?'combo-flash':'flash');flashEls.push(el);}});
-  if(flashEls.length)spawnParticles(flashEls[Math.floor(flashEls.length/2)],isCombo?20:12);
-  if(flashEls.length){
-    const el=flashEls[Math.floor(flashEls.length/2)];
-    const rect=el.getBoundingClientRect();
-    const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
-    const isBoss=found.some(f=>f.word.boss);
-    burst(cx,cy,isBoss?32:isCombo?24:16,isBoss?'boss':isCombo?'combo':'normal');
-  }
-  let pts=0;found.forEach(f=>{pts+=f.word.kana.length*100*(f.word.mult||1);f.word.mult=(f.word.mult||1)+1;foundRound.add(f.word.kana);});
-  const now=Date.now();if(now-lastWordTime<4000)streak++;else streak=1;lastWordTime=now;
-  if(streak>1)pts=Math.round(pts*(1+streak*.08));
-  score+=pts;increaseSpeed();
-  if(isCascade){soundCombo();screenShake(true);}else{isCombo?(soundCombo(),screenShake(true)):soundWord();}
-  showPopup(found[0].word,pts,isCombo||isCascade);
-  setTimeout(()=>speakWord(found[0].word.kana,isCombo||isCascade),850);
-  const barDone=new Set();found.forEach(f=>{if(!barDone.has(f.word.kana)){flashBar(f.word.kana,isCombo||isCascade);barDone.add(f.word.kana);}});
-  updateMults();updateScore();updateStreak();
-
-  // ── Mise à jour des couleurs de statut ──
-  updateWordRowColors();
-  // ── Mode puzzle : vérifier si une chaîne est complète ──
-  if(puzzleMode) puzzleCheckChains();
-
-  setTimeout(()=>{
-    cellSet.forEach(key=>{const[r,c]=key.split(',').map(Number);board[r][c]={filled:false,char:''};const el=gc(r,c);if(el){el.className='cell empty';el.textContent='';}});
-    gravity();render();
-    if(puzzleMode) puzzleMarkTriggers();
-    const cf=scanFullBoard();if(cf.length){setTimeout(()=>processCascade(cf,true),300);return;}
-    const allDone=activeWords.every(w=>foundRound.has(w.kana));
-    if(allDone){
-      if(puzzleMode) return; // victoire gérée par puzzleCheckChains
-      if(wordIntroIdx>=LEVEL_WORDS.length)setTimeout(levelDone,400);else introNext();
-    }else safeSpawn();
-  },820);
-}
-
-function gravity(){for(let c=0;c<COLS;c++){const ch=[];for(let r=ROWS-1;r>=0;r--)if(board[r][c].filled)ch.push(board[r][c].char);for(let r=ROWS-1;r>=0;r--)board[r][c]=ch.length?{filled:true,char:ch.shift()}:{filled:false,char:''};}}
-
-function introNext(){
-  if(wordIntroIdx>=LEVEL_WORDS.length)return;
-  const w=LEVEL_WORDS[wordIntroIdx++];
-  w.mult=1;
-  activeWords.push(w);
-  foundRound=new Set();
-
-  // Détecter si on entre dans le dernier cycle
-  // (tous les mots introduits = wordIntroIdx === LEVEL_WORDS.length)
-  if(wordIntroIdx>=LEVEL_WORDS.length){
-    isLastCycle=true;
-  }
-
-  rebuildPool();soundNewWord();renderPanel();
-}
-
-function ghostY(){if(!active)return -1;let g=active.y;while(g+1<ROWS&&!board[g+1][active.x].filled)g++;return g;}
-function render(){const gy=ghostY();for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const el=gc(r,c);if(!el||el.classList.contains('flash')||el.classList.contains('combo-flash')||el.classList.contains('land'))continue;const isTrig=puzzleMode&&puzzleTriggerCells&&puzzleTriggerCells.has(`${r}-${c}`);if(active&&r===active.y&&c===active.x){el.className='cell active';el.textContent=active.char;el.style.background=kanaBg(active.char);}else if(active&&r===gy&&c===active.x&&gy!==active.y){el.className='cell ghost';el.textContent=active.char;el.style.background='';if(isTrig)el.classList.add('puzzle-trigger');}else if(board[r][c].filled){el.className='cell filled';el.textContent=board[r][c].char;el.style.background=kanaBg(board[r][c].char);if(isTrig)el.classList.add('puzzle-trigger');}else{el.className='cell empty';el.textContent='';el.style.background='';if(isTrig)el.classList.add('puzzle-trigger');}}}
-function updateScore(){const el=document.getElementById('score-val');el.textContent=score.toLocaleString();el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');}
-function updateStreak(){const el=document.getElementById('streak');if(streak>=2){el.style.display='block';el.textContent='🔥'.repeat(Math.min(streak,5))+' ×'+streak;}else el.style.display='none';}
-
-function renderPanel(){
-  const p=document.getElementById('word-panel');
-  p.innerHTML='';
-  activeWords.forEach(w=>{
-    const row=document.createElement('div');
-    row.className='word-row'+(w.boss?' boss':'');
-    row.id='wr-'+w.kana;
-    row.innerHTML=`<div class="wr-emoji">${w.emoji}</div><div class="wr-info"><span class="wr-kana">${w.kana}</span><span class="wr-romaji">${w.romaji}</span><span class="wr-meaning">${w.meaning}</span></div><div class="wr-mult" id="wm-${w.kana}">×${w.mult||1}</div>`;
-    p.appendChild(row);
-  });
-  // Appliquer les couleurs de statut après injection dans le DOM
-  updateWordRowColors();
-  if(puzzleMode){
-    // En mode puzzle, ne pas reconstruire le DOM (ça écraserait le plateau)
-    // Juste spawner si le jeu tourne
-    if(gameRunning) setTimeout(()=>safeSpawn(),350);
-    return;
-  }
-  requestAnimationFrame(()=>{rebuildDOMKeepContent();render();setTimeout(()=>safeSpawn(),350);});
-}
-
-function updateMults(){activeWords.forEach(w=>{const el=document.getElementById('wm-'+w.kana);if(!el)return;el.textContent='×'+w.mult;el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');});}
-function flashBar(kana,isCombo){const row=document.getElementById('wr-'+kana);if(!row)return;row.classList.remove('bar-flash','bar-combo');void row.offsetWidth;row.classList.add(isCombo?'bar-combo':'bar-flash');setTimeout(()=>row.classList.remove('bar-flash','bar-combo'),650);}
-
-let popTimer=null;
-function showPopup(word,pts,isCombo){const p=document.getElementById('word-popup');p.querySelector('.wp-emoji').textContent=word.emoji;p.querySelector('.wp-kana').textContent=word.kana;p.querySelector('.wp-romaji').textContent=word.romaji;p.querySelector('.wp-meaning').textContent=word.meaning;p.querySelector('.wp-pts').textContent=(isCombo?'🌸 COMBO ! ':'')+(streak>1?'🔥×'+streak+' ':'')+'+'+pts+' pts';p.className=isCombo?'combo show':'show';void p.offsetWidth;if(isCombo){const b=document.getElementById('combo-banner');const maxM=Math.max(...activeWords.map(w=>w.mult||1));b.textContent='🌸 COMBO ×'+maxM;b.className='show';void b.offsetWidth;setTimeout(()=>b.className='',1700);}clearTimeout(popTimer);popTimer=setTimeout(()=>p.className='',2100);}
-
-function showOverlay({title,sub,words=[],btn1,act1,btn2=null,act2=null}){clearInterval(dropTimer);gameRunning=false;document.getElementById('ov-title').innerHTML=title;document.getElementById('ov-sub').innerHTML=sub;const ow=document.getElementById('ov-words');ow.innerHTML='';words.forEach(w=>{const d=document.createElement('div');d.className='ov-word';d.innerHTML=`<span class="ow-emoji">${w.emoji}</span><span class="ow-kana">${w.kana}</span><div class="ow-sub">${w.romaji} · ${w.meaning}</div>`;ow.appendChild(d);});const b1=document.getElementById('ov-btn');b1.textContent=btn1;b1.onclick=act1;const b2=document.getElementById('ov-btn2');if(btn2){b2.textContent=btn2;b2.onclick=act2;b2.style.display='';}else b2.style.display='none';document.getElementById('ov-lvlsel').onclick=showMenu;document.getElementById('board-overlay').classList.remove('hidden');}
-function hideOverlay(){document.getElementById('board-overlay').classList.add('hidden');}
-function showMenu(){clearInterval(dropTimer);gameRunning=false;resolvingWords=false;hideOverlay();document.getElementById('tuto-overlay').classList.add('hidden');document.getElementById('menu-overlay').classList.remove('hidden');}
-
-// ═══════════════════════════════════════════════════════
-//  ⚡ MOTEUR PUZZLE
-// ═══════════════════════════════════════════════════════
-
-const PUZZLE_SN_DEFS=[
-  {num:1,stars:'⭐',    label:'Initiation',   desc:'1 chaîne de 2 mots · Plateau vide',
-   chains:[{chainLen:2,triggerRow:1}], fillRatio:0.0},
-
-  {num:2,stars:'⭐⭐',   label:'Apprentissage',desc:'1 chaîne de 3 mots · Quelques neutres',
-   chains:[{chainLen:3,triggerRow:1}], fillRatio:0.10},
-
-  {num:3,stars:'⭐⭐⭐',  label:'Intermédiaire',desc:'2 chaînes de 2 mots · Profondeur variable',
-   chains:[{chainLen:2,triggerRow:1},{chainLen:2,triggerRow:2}], fillRatio:0.20},
-
-  {num:4,stars:'⭐⭐⭐⭐', label:'Avancé',       desc:'2 chaînes de 2 mots · Plateau plus rempli',
-   chains:[{chainLen:2,triggerRow:2},{chainLen:2,triggerRow:3}], fillRatio:0.30},
-
-  {num:5,stars:'⭐⭐⭐⭐⭐',label:'Maîtrise',    desc:'3 chaînes (2+2+3) · Seule 1 en surface !',
-   chains:[{chainLen:2,triggerRow:1},{chainLen:2,triggerRow:3},{chainLen:3,triggerRow:4}], fillRatio:0.40},
-];
-
-let puzzleMode=false;
-let puzzleBoard=null; // plateau initial précalculé
-let puzzleChains=[]; // [{chain, triggerCol}] pour le suivi
-let puzzleChainsResolved=new Set(); // index des chaînes résolues
-let puzzleSNDef=null;
-let puzzleTriggerCells=new Set(); // cases trigger à signaler visuellement
-
-function shuffle(a){return [...a].sort(()=>Math.random()-.5);}
-
-function puzzleLevelKanas(levelWords){
-  return [...new Set(levelWords.flatMap(w=>[...w.kana]))];
-}
-
-// ── Remplir les cases vides sous un kana avec des neutres valides ──
-function puzzleFillColumnBelow(board,bRows,bCols,allWords,col,fromRowIdx,reservedCells){
-  const allKanas=puzzleLevelKanas(allWords);
-  const maxRowIdx=Math.floor(bRows/2); // limite : moitié basse seulement (lignes jeu 1..ROWS/2)
-  for(let rowIdx=fromRowIdx+1;rowIdx<bRows;rowIdx++){
-    if(rowIdx<maxRowIdx) continue; // ne pas dépasser la moitié haute
-    if(board[rowIdx][col].filled) continue;
-    if(reservedCells&&reservedCells.has(`${rowIdx}-${col}`)) continue;
-    const kana=shuffle(allKanas).find(k=>{
-      const tb=board.map(r=>r.map(c=>({...c})));
-      tb[rowIdx][col]={filled:true,char:k};
-      return new SimState(tb,bRows,bCols,allWords).scanAll().length===0;
-    });
-    if(kana) board[rowIdx][col]={filled:true,char:kana};
-  }
-}
-
-// ── Placement d'une chaîne sur le board ──
-// triggerRow : ligne jeu (1=fond) où le joueur doit poser kana(0)
-// reservedCells : Set de "rowIdx-col" déjà occupées par d'autres chaînes
-function puzzlePlaceChain(board,bRows,bCols,allWords,availWords,chainLen,triggerRow,reservedCells){
-  const needed=chainLen+1;
-  const triggerRowIdx=bRows-triggerRow;
-
-  if(triggerRowIdx<1||triggerRowIdx>=bRows) return{ok:false,reason:'triggerRow hors grille'};
-  if(chainLen>1&&triggerRowIdx-1<0) return{ok:false,reason:'Pas de place pour les mobiles'};
-
-  // Trouver les positions de départ possibles
-  // Une position est valide si aucune des cases requises n'est dans reservedCells
-  const possibleStarts=[];
-  for(let t=0;t<=bCols-needed;t++){
-    let conflict=false;
-    // Cases k1 (triggerRowIdx, t+1..t+chainLen)
-    for(let i=0;i<chainLen;i++){
-      if(reservedCells.has(`${triggerRowIdx}-${t+1+i}`)){conflict=true;break;}
-    }
-    // Cases k0 mobiles (triggerRowIdx-1, t+1..t+chainLen-1)
-    if(!conflict&&chainLen>1){
-      for(let i=1;i<chainLen;i++){
-        if(reservedCells.has(`${triggerRowIdx-1}-${t+i}`)){conflict=true;break;}
-      }
-    }
-    // Case trigger (triggerRowIdx, t) - doit aussi être libre
-    if(!conflict&&reservedCells.has(`${triggerRowIdx}-${t}`)) conflict=true;
-    if(!conflict) possibleStarts.push(t);
-  }
-  if(!possibleStarts.length) return{ok:false,reason:'Pas de position libre'};
-  const triggerCol=possibleStarts[Math.floor(Math.random()*possibleStarts.length)];
-
-  const words=shuffle(availWords).slice(0,chainLen);
-  if(words.length<chainLen) return{ok:false,reason:'Pas assez de mots'};
-
-  // Placer k1 de chaque mot sur triggerRowIdx
-  for(let i=0;i<chainLen;i++){
-    const w=words[i];
-    const kanas=[...w.kana];
-    const anchorCol=triggerCol+1+i;
-    if(board[triggerRowIdx][anchorCol].filled) return{ok:false,reason:`Ancre occupée col ${anchorCol}`};
-    board[triggerRowIdx][anchorCol]={filled:true,char:kanas[1]};
-    // k0 des mots 2+ (mobiles) une ligne au-dessus
-    if(i>0){
-      const mobileRowIdx=triggerRowIdx-1;
-      if(mobileRowIdx<0||board[mobileRowIdx][triggerCol+i].filled) return{ok:false,reason:'Mobile impossible'};
-      board[mobileRowIdx][triggerCol+i]={filled:true,char:kanas[0]};
-    }
-  }
-
-  // Validation : aucun mot prématuré
-  if(new SimState(board,bRows,bCols,allWords).scanAll().length>0) return{ok:false,reason:'Mot prématuré'};
-
-  // Collecter les cases occupées par cette chaîne pour les transmettre
-  const myCells=new Set();
-  myCells.add(`${triggerRowIdx}-${triggerCol}`); // case trigger
-  for(let i=0;i<chainLen;i++){
-    myCells.add(`${triggerRowIdx}-${triggerCol+1+i}`); // k1
-    if(i>0) myCells.add(`${triggerRowIdx-1}-${triggerCol+i}`); // k0 mobiles
-  }
-
-  // Remplir les cases vides sous chaque kana (sans écraser les cases réservées)
-  puzzleFillColumnBelow(board,bRows,bCols,allWords,triggerCol,triggerRowIdx,reservedCells);
-  for(let i=0;i<chainLen;i++){
-    puzzleFillColumnBelow(board,bRows,bCols,allWords,triggerCol+1+i,triggerRowIdx,reservedCells);
-  }
-  for(let i=1;i<chainLen;i++){
-    puzzleFillColumnBelow(board,bRows,bCols,allWords,triggerCol+i,triggerRowIdx-1,reservedCells);
-  }
-
-  return{ok:true,chain:words,triggerCol,triggerRow,triggerRowIdx,myCells};
-}
-// ── Placement d'un neutre (sans former de mot) ──
-function puzzlePlaceOneNeutral(board,ROWS,COLS,allWords,levelKanas,preferCols){
-  const cols=preferCols&&preferCols.length?preferCols:shuffle(Array.from({length:COLS},(_,i)=>i));
-  for(const col of cols){
-    for(const kana of shuffle(levelKanas)){
-      const testBoard=board.map(r=>r.map(c=>({...c})));
-      const tmp=new SimState(testBoard,ROWS,COLS,[]);
-      const row=tmp.drop(kana,col);
-      if(row===false) continue;
-      testBoard[row][col]={filled:true,char:kana};
-      if(new SimState(testBoard,ROWS,COLS,allWords).scanAll().length===0){
-        const real=new SimState(board,ROWS,COLS,[]);
-        const realRow=real.drop(kana,col);
-        if(realRow!==false){board[realRow][col]={filled:true,char:kana};return true;}
-      }
-    }
-  }
-  return false;
-}
-
-// ── Remplissage neutres quota ──
-function puzzleFillNeutrals(board,bRows,bCols,allWords,fillRatio,excludeCols=new Set()){
-  const levelKanas=puzzleLevelKanas(allWords);
-  const maxRow=Math.floor(bRows/2); // neutres limités à la moitié haute
-  let occupied=0;
-  for(let r=0;r<bRows;r++)for(let c=0;c<bCols;c++)if(board[r][c].filled)occupied++;
-  const totalCells=bRows*bCols;
-  const target=Math.floor(totalCells*fillRatio);
-  const toAdd=Math.max(0,target-occupied);
-  let placed=0,attempts=0;
-  while(placed<toAdd&&attempts<toAdd*20){
-    attempts++;
-    const col=Math.floor(Math.random()*bCols);
-    if(excludeCols.has(col)) continue;
-    const kana=levelKanas[Math.floor(Math.random()*levelKanas.length)];
-    const tmp=new SimState(board,bRows,bCols,[]);
-    const row=tmp.drop(kana,col);
-    // Refuser si le neutre atterrit dans la moitié basse (là où sont les chaînes)
-    if(row===false||row<=maxRow) continue;
-    const testBoard=board.map(r=>r.map(c=>({...c})));
-    testBoard[row][col]={filled:true,char:kana};
-    if(new SimState(testBoard,bRows,bCols,allWords).scanAll().length===0){
-      board[row][col]={filled:true,char:kana};placed++;
-    }
-  }
-}
-
-// ── Générer un sous-niveau complet ──
-function puzzleGenerate(levelIdx,snDef){
-  const allWords=ALL_LEVELS[levelIdx].words;
-  const eligible=allWords.filter(w=>[...w.kana].length===2);
-  const boardRows=ROWS;
-  const boardCols=COLS;
-
-  const chainDefs=snDef.chains.filter(({chainLen})=>eligible.length>=chainLen);
-
-  const board=Array.from({length:boardRows},()=>Array.from({length:boardCols},()=>({filled:false,char:''})));
-  const reservedCells=new Set();
-  const chains=[];
-
-  for(let ci=0;ci<chainDefs.length;ci++){
-    const{chainLen,triggerRow}=chainDefs[ci];
-    const avail=shuffle(eligible);
-    let res=null;
-    for(let attempt=0;attempt<30;attempt++){
-      const bTry=board.map(r=>r.map(c=>({...c})));
-      const resTry=puzzlePlaceChain(bTry,boardRows,boardCols,allWords,avail,chainLen,triggerRow,new Set(reservedCells));
-      if(resTry.ok){
-        for(let r=0;r<boardRows;r++)for(let c=0;c<boardCols;c++)board[r][c]=bTry[r][c];
-        // Ajouter les cases de cette chaîne aux réservations
-        resTry.myCells.forEach(cell=>reservedCells.add(cell));
-        res=resTry;break;
-      }
-    }
-    if(res) chains.push({chain:res.chain,triggerCol:res.triggerCol,triggerRow:res.triggerRow,triggerRowIdx:res.triggerRowIdx});
-  }
-
-  // Neutres de remplissage (hors colonnes trigger, moitié haute seulement)
-  const triggerCols=new Set(chains.map(ch=>ch.triggerCol));
-  puzzleFillNeutrals(board,boardRows,boardCols,allWords,snDef.fillRatio,triggerCols);
-
-  // ── Pass final : combler les cases trigger enfouies (kana au-dessus = gravité violée) ──
-  // On fait ce check APRÈS puzzleFillNeutrals pour voir le plateau complet
-  const triggerKanaPool=[...new Set(allWords.map(w=>[...w.kana][1]).filter(Boolean))];
-  chains.forEach(ch=>{
-    const{triggerRowIdx,triggerCol}=ch;
-    if(board[triggerRowIdx][triggerCol].filled) return; // déjà remplie, rien à faire
-    // Y a-t-il un kana quelque part au-dessus dans cette colonne ?
-    const buried=Array.from({length:triggerRowIdx},(_,r)=>r).some(r=>board[r][triggerCol].filled);
-    if(!buried) return; // en surface, on laisse vide
-    // Trouver un k1 neutre valide (sans former de mot)
-    const neutral=shuffle(triggerKanaPool).find(k=>{
-      const tb=board.map(r=>r.map(c=>({...c})));
-      tb[triggerRowIdx][triggerCol]={filled:true,char:k};
-      return new SimState(tb,boardRows,boardCols,allWords).scanAll().length===0;
-    });
-    if(neutral) board[triggerRowIdx][triggerCol]={filled:true,char:neutral};
-  });
-
-  // ── Collecter les cases trigger pour le rendu ──
-  const triggerCells=new Set(chains.map(ch=>`${ch.triggerRowIdx}-${ch.triggerCol}`));
-  return{board,chains,triggerCells};
-}
-
-// ── Afficher l'écran de sélection de sous-niveau ──
-function showPuzzleSelect(levelIdx){
-  document.getElementById('menu-overlay').classList.add('hidden');
-  const lvl=ALL_LEVELS[levelIdx];
-  document.getElementById('puzzle-level-name').textContent=`Lv.${lvl.id} ${lvl.emoji} ${lvl.theme}`;
-
-  const cards=document.getElementById('sn-cards');
-  cards.innerHTML='';
-  PUZZLE_SN_DEFS.forEach((sn,si)=>{
-    const card=document.createElement('div');
-    card.style.cssText='background:#fff;border:2px solid #b8e0f8;border-radius:14px;padding:12px 16px;cursor:pointer;transition:all .2s;';
-    card.innerHTML=`
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
-        <span style="font-family:\'Fredoka One\',cursive;font-size:17px;color:#00aaee">SN-${sn.num}</span>
-        <span style="font-size:16px">${sn.stars}</span>
-        <span style="font-family:\'Fredoka One\',cursive;font-size:15px;color:#1a3050">${sn.label}</span>
-      </div>
-      <div style="font-size:12px;color:#5090a8">${sn.desc}</div>`;
-    card.addEventListener('mouseenter',()=>card.style.borderColor='#00aaee');
-    card.addEventListener('mouseleave',()=>card.style.borderColor='#b8e0f8');
-    card.addEventListener('click',()=>startPuzzle(levelIdx,si));
-    cards.appendChild(card);
-  });
-
-  document.getElementById('puzzle-overlay').classList.remove('hidden');
-}
-
-// ── Démarrer une partie puzzle ──
-function startPuzzle(levelIdx,snIdx){
-  document.getElementById('puzzle-overlay').classList.add('hidden');
-  puzzleSNDef=PUZZLE_SN_DEFS[snIdx];
-  puzzleBoard=null; // sera généré dans startGame après calcRows correct
-  puzzleChains=[];
-  puzzleChainsResolved=new Set();
-  puzzleWordsFound=new Set();
-  puzzleTriggerCells=new Set();
-  puzzleMode=true;
-  startGame(levelIdx,true);
-}
-
-// ── Vérifier la victoire puzzle : tous les mots trouvés au moins une fois ──
-let puzzleWordsFound=new Set();
-
-function puzzleCheckChains(){
-  // Accumuler tous les mots trouvés
-  activeWords.forEach(w=>{if(foundRound.has(w.kana))puzzleWordsFound.add(w.kana);});
-
-  // Victoire = tous les mots du niveau trouvés au moins une fois
-  const allDone=LEVEL_WORDS.every(w=>puzzleWordsFound.has(w.kana));
-  if(allDone){
-    setTimeout(()=>puzzleVictory(),600);
-  }
-}
-
-function showPuzzleChainToast(ci,len){
-  const t=document.getElementById('enc-toast');
-  t.querySelector('.enc-jp').textContent=`⚡ チェーン${ci+1}！`;
-  t.querySelector('.enc-fr').textContent=`Chaîne ${ci+1} résolue ! (${len} mots)`;
-  t.className='';void t.offsetWidth;t.className='show';
-  setTimeout(()=>t.className='',2300);
-}
-
-function puzzleVictory(){
-  clearInterval(dropTimer);gameRunning=false;resolvingWords=false;
-  soundLevelUp();
-  const lvlData=ALL_LEVELS[currentLevelIdx];
-  const snDef=puzzleSNDef;
-  showOverlay({
-    title:`⚡ Puzzle réussi !`,
-    sub:`<span style="font-size:26px">${lvlData.emoji}</span><br><strong style="color:var(--neon-violet)">${lvlData.theme} · SN-${snDef.num} ${snDef.stars}</strong><br>${snDef.label} maîtrisé !<br>Score : <strong style="color:var(--neon-violet)">${score.toLocaleString()}</strong>`,
-    words:[],
-    btn1:'⚡ Rejouer ce puzzle',
-    act1:()=>startPuzzle(currentLevelIdx,PUZZLE_SN_DEFS.indexOf(snDef)),
-    btn2:`SN-${Math.min(snDef.num+1,5)} suivant →`,
-    act2:()=>startPuzzle(currentLevelIdx,Math.min(snDef.num,4)),
-  });
-}
-
-// ── Marquer visuellement les triggers ──
-function puzzleMarkTriggers(){
-  document.querySelectorAll('.cell.puzzle-trigger').forEach(el=>el.classList.remove('puzzle-trigger'));
-  puzzleTriggerCells.forEach(key=>{
-    const[r,c]=key.split('-').map(Number);
-    const el=gc(r,c);
-    if(el) el.classList.add('puzzle-trigger');
-  });
-}
-
-function startGame(levelIdx,isPuzzle=false){
-  currentLevelIdx=(levelIdx!==undefined)?levelIdx:0;
-  LEVEL_WORDS=ALL_LEVELS[currentLevelIdx].words.map(w=>({...w}));
-  const lvlData=ALL_LEVELS[currentLevelIdx];
-  score=0;streak=0;DROP_SPEED=1400;
-  document.getElementById('streak').style.display='none';updateScore();
-
-  if(!isPuzzle) puzzleMode=false;
-
-  // En mode puzzle : tous les mots du niveau sont actifs dès le début
-  if(puzzleMode){
-    activeWords=LEVEL_WORDS.map(w=>({...w,mult:1}));
-    wordIntroIdx=LEVEL_WORDS.length;
-    foundRound=new Set();
-    isLastCycle=true;
+    lastX = px; lastY = py;
   } else {
-    activeWords=[];wordIntroIdx=0;foundRound=new Set();LEVEL_WORDS.forEach(w=>w.mult=1);
-    isLastCycle=false;
+    lastX = null; lastY = null;
   }
 
-  document.getElementById('word-panel').innerHTML='';resolvingWords=false;
-  // En mode puzzle : calcRows/buildDOM/plateau gérés plus bas après renderPanel
-  if(!puzzleMode){ calcRows();buildDOM();initBoard(); }
-  document.getElementById('menu-overlay').classList.add('hidden');
-  document.getElementById('tuto-overlay').classList.add('hidden');
-  document.getElementById('puzzle-overlay').classList.add('hidden');
-  hideOverlay();gameRunning=true;
-  const lv=currentLevelIdx+1;
-  const root=document.documentElement.style;
-  root.setProperty('--bg-top',`var(--lv${lv}-top,var(--lv1-top))`);
-  root.setProperty('--bg-mid',`var(--lv${lv}-mid,var(--lv1-mid))`);
-  root.setProperty('--bg-bot',`var(--lv${lv}-bot,var(--lv1-bot))`);
-  const badge=document.getElementById('level-badge');
-  if(badge){
-    badge.innerHTML=puzzleMode
-      ? `<span class="badge-emoji">${lvlData.emoji}</span><span class="badge-num" style="color:${lvlData.color}">Lv.${lvlData.id}</span><span style="font-size:10px;color:var(--neon-gold);display:block">⚡ SN-${puzzleSNDef.num} ${puzzleSNDef.stars}</span>`
-      : `<span class="badge-emoji">${lvlData.emoji}</span><span class="badge-num" style="color:${lvlData.color}">Lv.${lvlData.id}</span>`;
-  }
+  requestAnimationFrame(loop);
+}
 
-  if(puzzleMode){
-    // Afficher d'abord le panel (tous les mots) pour que calcRows tienne compte de sa hauteur
-    rebuildPool();
-    // Injecter le panel dans le DOM sans spawner
-    const p=document.getElementById('word-panel');
-    p.innerHTML='';
-    activeWords.forEach(w=>{
-      const row=document.createElement('div');
-      row.className='word-row'+(w.boss?' boss':'');
-      row.id='wr-'+w.kana;
-      row.innerHTML=`<div class="wr-emoji">${w.emoji}</div><div class="wr-info"><span class="wr-kana">${w.kana}</span><span class="wr-romaji">${w.romaji}</span><span class="wr-meaning">${w.meaning}</span></div><div class="wr-mult" id="wm-${w.kana}">×${w.mult||1}</div>`;
-      p.appendChild(row);
-    });
-    updateWordRowColors();
-    // Maintenant recalculer ROWS avec le vrai panel affiché
-    calcRows();buildDOM();
-    // Générer le plateau ICI avec les bonnes ROWS
-    const gen=puzzleGenerate(currentLevelIdx,puzzleSNDef);
-    puzzleBoard=gen.board;
-    puzzleChains=gen.chains;
-    puzzleTriggerCells=gen.triggerCells;
-    // Charger le plateau généré
-    if(puzzleBoard){
-      const pbRows=puzzleBoard.length;
-      board=Array.from({length:ROWS},()=>Array.from({length:COLS},()=>({filled:false,char:''})));
-      const offset=ROWS-pbRows;
-      for(let r=0;r<pbRows;r++)
-        for(let c=0;c<COLS;c++)
-          if(r+offset>=0) board[r+offset][c]={...puzzleBoard[r][c]};
-      for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
-        if(board[r][c].filled){
-          const el=gc(r,c);
-          if(el){el.className='cell filled';el.textContent=board[r][c].char;el.style.background=kanaBg(board[r][c].char);}
-        }
-      }
-      // Fix 3 : marquer les triggers et leur appliquer la classe pulse
-      puzzleMarkTriggers();
-    }
-    nextChar=rndKana();document.getElementById('next-kana').textContent=nextChar;
-    setTimeout(()=>safeSpawn(),350);
+function redrawStrokes() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = '#ff3c78';
+  ctx.lineWidth = 3.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const stroke of strokes) {
+    if (stroke.length < 2) continue;
+    ctx.beginPath();
+    ctx.moveTo(stroke[0].x, stroke[0].y);
+    for (let i = 1; i < stroke.length; i++) ctx.lineTo(stroke[i].x, stroke[i].y);
+    ctx.stroke();
+  }
+}
+
+function startDraw() {
+  drawing = true;
+  dot.classList.add('drawing');
+  btnDraw.classList.add('active');
+  btnDraw.textContent = '✦ Tracé actif';
+  currentStroke = [];
+}
+
+function stopDraw() {
+  drawing = false;
+  dot.classList.remove('drawing');
+  btnDraw.classList.remove('active');
+  btnDraw.textContent = '☞ Maintenir pour tracer';
+  if (currentStroke.length > 1) strokes.push([...currentStroke]);
+  currentStroke = [];
+}
+
+btnDraw.addEventListener('pointerdown', startDraw);
+btnDraw.addEventListener('pointerup', stopDraw);
+btnDraw.addEventListener('pointerleave', stopDraw);
+
+btnClear.addEventListener('click', () => {
+  strokes = [];
+  currentStroke = [];
+  ctx.clearRect(0, 0, W, H);
+});
+
+modeToggle.addEventListener('click', () => {
+  mouseMode = !mouseMode;
+  modeToggle.textContent = mouseMode ? 'Mode gyroscope' : 'Mode souris';
+  if (mouseMode) {
+    status.textContent = 'Mode souris actif — bouge ta souris sur le canvas';
+    beta0 = null; gamma0 = null;
   } else {
-    const w=LEVEL_WORDS[wordIntroIdx++];w.mult=1;activeWords.push(w);
-    rebuildPool();renderPanel();nextChar=rndKana();document.getElementById('next-kana').textContent=nextChar;
+    beta0 = null; gamma0 = null;
+    status.textContent = 'Gyroscope — bouge ton téléphone';
   }
+});
+
+canvas.addEventListener('pointermove', (e) => {
+  if (!mouseMode) return;
+  const rect = canvas.getBoundingClientRect();
+  targetX = clamp((e.clientX - rect.left) / W, 0.02, 0.98);
+  targetY = clamp((e.clientY - rect.top) / H, 0.02, 0.95);
+});
+
+canvas.addEventListener('pointerdown', (e) => {
+  if (!mouseMode) return;
+  const rect = canvas.getBoundingClientRect();
+  targetX = clamp((e.clientX - rect.left) / W, 0.02, 0.98);
+  targetY = clamp((e.clientY - rect.top) / H, 0.02, 0.95);
+  startDraw();
+});
+canvas.addEventListener('pointerup', () => { if (mouseMode) stopDraw(); });
+canvas.addEventListener('pointerleave', () => { if (mouseMode) stopDraw(); });
+
+async function requestGyro() {
+  if (typeof DeviceOrientationEvent !== 'undefined' &&
+      typeof DeviceOrientationEvent.requestPermission === 'function') {
+    try {
+      const perm = await DeviceOrientationEvent.requestPermission();
+      if (perm !== 'granted') {
+        status.textContent = 'Permission gyroscope refusée — utilise le mode souris';
+        mouseMode = true;
+        modeToggle.textContent = 'Mode gyroscope';
+        return;
+      }
+    } catch(e) {
+      status.textContent = 'Erreur permission — mode souris activé';
+      mouseMode = true;
+    }
+  }
+  status.textContent = 'En attente du gyroscope…';
+  setTimeout(() => {
+    if (!gyroAvailable) {
+      status.textContent = 'Gyroscope non détecté — mode souris activé';
+      mouseMode = true;
+      modeToggle.textContent = 'Mode gyroscope';
+    }
+  }, 1500);
 }
 
-function endGame(){clearInterval(dropTimer);gameRunning=false;resolvingWords=false;soundGameOver();const lvlData=ALL_LEVELS[currentLevelIdx];showOverlay({title:'💔 Partie terminée !',sub:`${lvlData.emoji} ${lvlData.theme}<br>Score : <strong style="color:var(--neon-violet)">${score.toLocaleString()}</strong>`,btn1:'Réessayer 🔄',act1:()=>startGame(currentLevelIdx),btn2:currentLevelIdx>0?'← Niveau précédent':null,act2:currentLevelIdx>0?()=>startGame(currentLevelIdx-1):null});}
-function levelDone(){clearInterval(dropTimer);gameRunning=false;resolvingWords=false;soundLevelUp();const lvlData=ALL_LEVELS[currentLevelIdx];const isLast=currentLevelIdx>=ALL_LEVELS.length-1;const nextLvl=ALL_LEVELS[currentLevelIdx+1];showOverlay({title:`🎉 クリア！ Niveau ${lvlData.id}`,sub:`<span style="font-size:26px">${lvlData.emoji}</span><br><strong style="color:var(--neon-violet)">${lvlData.theme}</strong> maîtrisé !<br>Score : <strong style="color:var(--neon-violet)">${score.toLocaleString()}</strong>`,words:LEVEL_WORDS,btn1:isLast?'🏆 Rejouer depuis le début':`Niveau ${lvlData.id+1} → ${nextLvl.theme}`,act1:isLast?()=>startGame(0):()=>startGame(currentLevelIdx+1),btn2:'Rejouer ce niveau 🔄',act2:()=>startGame(currentLevelIdx)});}
+btnStart.addEventListener('click', async () => {
+  overlay.style.display = 'none';
+  await requestGyro();
+  beta0 = null; gamma0 = null;
+});
 
-let txStart=0,tyStart=0,ttStart=0,lpTimer=null;
-const LP_MS=380;
-document.addEventListener('touchstart',e=>{getCtx();const t=e.touches[0];txStart=t.clientX;tyStart=t.clientY;ttStart=Date.now();clearTimeout(lpTimer);lpTimer=setTimeout(()=>{if(gameRunning&&!resolvingWords&&active){navigator.vibrate&&navigator.vibrate(25);hardDrop();lpTimer=null;}},LP_MS);},{passive:true});
-document.addEventListener('touchend',e=>{clearTimeout(lpTimer);lpTimer=null;if(!gameRunning||resolvingWords||!active)return;const t=e.changedTouches[0];const dx=t.clientX-txStart,dy=t.clientY-tyStart,dt=Date.now()-ttStart;const adx=Math.abs(dx),ady=Math.abs(dy);if(dt<LP_MS&&adx<12&&ady<12)return;if(ady>adx&&dy>50){hardDrop();return;}if(adx>ady&&adx>10){const screenW=Math.min(window.innerWidth,480);const cellW=Math.floor(screenW*.75/COLS);const steps=Math.max(1,Math.round(adx/cellW));const dir=dx>0?1:-1;for(let i=0;i<steps;i++){if(ok(active.x+dir,active.y))active.x+=dir;else break;}render();}},{passive:true});
-document.addEventListener('touchmove',e=>{const t=e.touches[0];if(Math.abs(t.clientX-txStart)>10||Math.abs(t.clientY-tyStart)>10){clearTimeout(lpTimer);lpTimer=null;}},{passive:true});
-document.addEventListener('keydown',e=>{if(!gameRunning||resolvingWords||!active)return;if(e.key==='ArrowLeft'&&ok(active.x-1,active.y)){e.preventDefault();active.x--;render();}if(e.key==='ArrowRight'&&ok(active.x+1,active.y)){e.preventDefault();active.x++;render();}if(e.key==='ArrowDown'){e.preventDefault();ok(active.x,active.y+1)?(active.y++,render()):lock();}if(e.key===' '){e.preventDefault();hardDrop();}});
-window.addEventListener('resize',()=>{if(!gameRunning)return;rebuildDOMKeepContent();if(active)render();});
-
-calcRows();buildDOM();
-
-/* ═══ BURST ═══ */
-const BURST_CANVAS=document.createElement('canvas');
-BURST_CANVAS.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:999;';
-document.body.appendChild(BURST_CANVAS);
-const BURST_CTX=BURST_CANVAS.getContext('2d');
-function resizeBurst(){BURST_CANVAS.width=window.innerWidth;BURST_CANVAS.height=window.innerHeight;}
-resizeBurst();
-window.addEventListener('resize',resizeBurst);
-const BURST_COLORS={normal:['#ff6b6b','#ffbe0b','#6bcb77','#4d96ff','#c77dff','#ff3fab','#00cfff','#ffffff'],combo:['#ff0066','#ff6b35','#ffbe0b','#ffffff','#ff3fab','#fff700'],boss:['#ff0066','#c77dff','#4d96ff','#ffffff','#ffbe0b','#ff6b6b'],logo:['#ff6b6b','#ffbe0b','#6bcb77','#4d96ff','#c77dff','#ff3fab','#00cfff','#ffffff']};
-let burstParticles=[];
-function burst(x,y,count=18,mode='normal'){const cols=BURST_COLORS[mode]||BURST_COLORS.normal;const isCombo=mode==='combo'||mode==='boss';for(let i=0;i<count;i++){const angle=(Math.PI*2/count)*i+(Math.random()-.5)*.5;const speed=(isCombo?5:3.5)+Math.random()*(isCombo?5:3);const size=(isCombo?4:2.5)+Math.random()*(isCombo?5:4);const isStar=Math.random()>(isCombo?.4:.65);burstParticles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed-(isCombo?2:1),size,color:cols[Math.floor(Math.random()*cols.length)],alpha:1,life:0,maxLife:45+Math.random()*(isCombo?40:25),isStar,rot:Math.random()*Math.PI*2,rotSpeed:(Math.random()-.5)*.2});}if(!burstAnimRunning)burstLoop();}
-let burstAnimRunning=false;
-function burstLoop(){burstAnimRunning=true;BURST_CTX.clearRect(0,0,BURST_CANVAS.width,BURST_CANVAS.height);burstParticles=burstParticles.filter(p=>p.alpha>.01);for(const p of burstParticles){p.life++;p.x+=p.vx;p.y+=p.vy;p.vy+=.18;p.alpha=Math.max(0,1-p.life/p.maxLife);p.rot+=p.rotSpeed;BURST_CTX.save();BURST_CTX.globalAlpha=p.alpha;BURST_CTX.translate(p.x,p.y);BURST_CTX.rotate(p.rot);BURST_CTX.fillStyle=p.color;BURST_CTX.shadowColor=p.color;BURST_CTX.shadowBlur=6;if(p.isStar){const r1=p.size,r2=p.size*.4;BURST_CTX.beginPath();for(let i=0;i<8;i++){const a=(i/8)*Math.PI*2;const r=i%2===0?r1:r2;i===0?BURST_CTX.moveTo(Math.cos(a)*r,Math.sin(a)*r):BURST_CTX.lineTo(Math.cos(a)*r,Math.sin(a)*r);}BURST_CTX.closePath();BURST_CTX.fill();}else{BURST_CTX.beginPath();BURST_CTX.arc(0,0,p.size,0,Math.PI*2);BURST_CTX.fill();}BURST_CTX.restore();}if(burstParticles.length>0){requestAnimationFrame(burstLoop);}else{burstAnimRunning=false;BURST_CTX.clearRect(0,0,BURST_CANVAS.width,BURST_CANVAS.height);}}
-
-document.addEventListener('click',e=>{const logo=e.target.closest('.logo-wrap');if(logo)burst(e.clientX,e.clientY,28,'logo');});
-
-/* ═══ BOT IA ═══ */
-(()=>{
-  const ui=document.createElement('div');
-  ui.id='bot-ui';
-  ui.style.cssText='position:fixed;bottom:80px;right:12px;z-index:500;display:flex;flex-direction:column;align-items:flex-end;gap:6px;';
-  ui.innerHTML=`
-    <div id="bot-panel" style="background:rgba(20,10,50,.93);border:2px solid #a855f7;border-radius:18px;padding:12px 14px;color:#fff;font-family:'Nunito',sans-serif;font-size:13px;min-width:170px;display:none;flex-direction:column;gap:5px;box-shadow:0 4px 24px rgba(168,85,247,.4);">
-      <div style="font-weight:900;color:#c77dff;font-size:15px;">🤖 Bot IA</div>
-      <div id="bot-status" style="color:#a0d8ff;">En attente…</div>
-      <div id="bot-stats" style="color:#72e8b8;font-size:11px;min-height:14px;"></div>
-      <div id="bot-summary" style="color:#ffbe0b;font-size:10px;min-height:12px;line-height:1.4;"></div>
-      <div style="display:flex;gap:6px;margin-top:2px;">
-        <button id="bot-start-btn" style="background:linear-gradient(135deg,#a855f7,#6366f1);border:none;border-radius:10px;color:#fff;padding:6px 10px;font-size:12px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;flex:1;">▶ Start</button>
-        <button id="bot-stop-btn" style="background:rgba(255,255,255,.1);border:1px solid #a855f7;border-radius:10px;color:#c77dff;padding:6px 10px;font-size:12px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;flex:1;">■ Stop</button>
-      </div>
-      <button id="bot-csv-btn" style="background:rgba(255,190,11,.15);border:1px solid #ffbe0b;border-radius:10px;color:#ffbe0b;padding:5px 10px;font-size:11px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;width:100%;margin-top:2px;">📥 Exporter CSV</button>
-      <div style="margin-top:4px;">
-        <div style="display:flex;justify-content:space-between;"><label style="color:#a0d8ff;font-size:11px;">Vitesse</label><span id="bot-speed-lbl" style="color:#c77dff;font-size:11px;">350ms</span></div>
-        <input id="bot-speed" type="range" min="80" max="1200" value="350" style="width:100%;accent-color:#a855f7;">
-      </div>
-      <div>
-        <div style="display:flex;justify-content:space-between;"><label style="color:#a0d8ff;font-size:11px;">Profondeur</label><span id="bot-depth-lbl" style="color:#c77dff;font-size:11px;">2 niveaux</span></div>
-        <input id="bot-depth" type="range" min="1" max="3" value="2" style="width:100%;accent-color:#a855f7;">
-      </div>
-    </div>
-    <button id="bot-toggle" style="background:linear-gradient(135deg,#a855f7,#4d96ff);border:none;border-radius:50%;width:46px;height:46px;font-size:22px;cursor:pointer;box-shadow:0 3px 14px rgba(168,85,247,.5);display:flex;align-items:center;justify-content:center;" title="Bot IA">🤖</button>
-  `;
-  document.body.appendChild(ui);
-  document.getElementById('bot-toggle').addEventListener('click',()=>{const p=document.getElementById('bot-panel');p.style.display=p.style.display==='none'?'flex':'none';});
-  document.getElementById('bot-speed').addEventListener('input',e=>{document.getElementById('bot-speed-lbl').textContent=e.target.value+'ms';BOT.speed=+e.target.value;});
-  document.getElementById('bot-depth').addEventListener('input',e=>{const v=+e.target.value;document.getElementById('bot-depth-lbl').textContent=v+' niveau'+(v>1?'x':'');BOT.maxDepth=v;});
-  document.getElementById('bot-start-btn').addEventListener('click',()=>BOT.start());
-  document.getElementById('bot-stop-btn').addEventListener('click',()=>BOT.stop());
-  document.getElementById('bot-csv-btn').addEventListener('click',()=>{if(!BOT_LOG.entries.length){alert('Aucune donnée à exporter — laisse le bot jouer d\'abord !');return;}BOT_LOG.exportCSV();});
-})();
-
-class SimState{
-  constructor(boardSnap,rows,cols,words){this.board=boardSnap.map(row=>row.map(c=>({...c})));this.rows=rows;this.cols=cols;this.words=words;}
-  clone(){return new SimState(this.board,this.rows,this.cols,this.words);}
-  drop(kana,col){let landRow=-1;for(let r=this.rows-1;r>=0;r--){if(!this.board[r][col].filled){landRow=r;break;}}if(landRow===-1)return false;this.board[landRow][col]={filled:true,char:kana};return landRow;}
-  applyGravity(){for(let c=0;c<this.cols;c++){const chars=[];for(let r=this.rows-1;r>=0;r--)if(this.board[r][c].filled)chars.push(this.board[r][c].char);for(let r=this.rows-1;r>=0;r--)this.board[r][c]=chars.length?{filled:true,char:chars.shift()}:{filled:false,char:''};}}
-  _scanLine(cells,found){const line=cells.map(({r,c})=>this.board[r][c].filled?this.board[r][c].char:'\x00').join('');this.words.forEach(w=>{let i=line.indexOf(w.kana);while(i!==-1){const key=cells.slice(i,i+w.kana.length).map(cc=>`${cc.r},${cc.c}`).join('|');if(!found.some(f=>f.key===key))found.push({word:w,cells:cells.slice(i,i+w.kana.length),key});i=line.indexOf(w.kana,i+1);}});}
-  scanAll(){const found=[];for(let r=0;r<this.rows;r++)this._scanLine(Array.from({length:this.cols},(_,c)=>({r,c})),found);for(let c=0;c<this.cols;c++)this._scanLine(Array.from({length:this.rows},(_,r)=>({r,c})),found);return found;}
-  explode(found){const cellSet=new Set();found.forEach(f=>f.cells.forEach(cell=>cellSet.add(`${cell.r},${cell.c}`)));cellSet.forEach(key=>{const[r,c]=key.split(',').map(Number);this.board[r][c]={filled:false,char:''};});return cellSet.size;}
-  freeCols(){const free=[];for(let c=0;c<this.cols;c++)if(!this.board[0][c].filled)free.push(c);return free;}
-}
-
-function simEval(state,kana,col,maxDepth){
-  const sim=state.clone();const landRow=sim.drop(kana,col);
-  if(landRow===false||landRow<=1)return{score:-999999,cascades:0,endState:sim};
-  let score=0,cascades=0;let found=sim.scanAll(),depth=0;
-  let filledCount=0;for(let r=0;r<sim.rows;r++)for(let c=0;c<sim.cols;c++)if(sim.board[r][c].char)filledCount++;
-  const fillRatio=filledCount/(sim.rows*sim.cols);
-  const height=sim.rows-landRow;let heightPenalty=Math.pow(height,2)*.5;
-  if(fillRatio>.7)heightPenalty*=10;score-=heightPenalty;
-  while(found.length>0&&depth<=maxDepth){let pts=found.reduce((s,f)=>{let basePts=f.word.kana.length*100;if(typeof foundRound!=='undefined'&&!foundRound.has(f.word.kana))basePts*=5;return s+basePts;},0);if(depth>0){pts*=Math.pow(3.0,depth);cascades++;score+=1000;}score+=pts;sim.explode(found);sim.applyGravity();depth++;found=sim.scanAll();}
-  score+=_proximityBonus(sim)*.5;return{score,cascades,endState:sim};
-}
-function _proximityBonus(sim){let bonus=0;sim.words.forEach(w=>{const kanas=[...w.kana];for(let i=0;i<kanas.length-1;i++){const a=kanas[i],b=kanas[i+1];const posA=[],posB=[];for(let r=0;r<sim.rows;r++)for(let c=0;c<sim.cols;c++){if(sim.board[r][c].char===a)posA.push({r,c});if(sim.board[r][c].char===b)posB.push({r,c});}posA.forEach(pa=>posB.forEach(pb=>{const dr=Math.abs(pa.r-pb.r),dc=Math.abs(pa.c-pb.c);if(dr===0&&dc===1)bonus+=120;if(dc===0&&dr===1)bonus+=120;if(dr===0&&dc<=3)bonus+=40;if(dc===0&&dr<=3)bonus+=40;}));}});return bonus;}
-function botChooseBestCol(kana){const simWords=activeWords.map(w=>({...w}));const baseState=new SimState(board,ROWS,COLS,simWords);const freeCols=baseState.freeCols();if(!freeCols.length)return Math.floor(COLS/2);let best={score:-Infinity,col:freeCols[0],cascades:0};freeCols.forEach(col=>{const r1=simEval(baseState,kana,col,BOT.maxDepth);if(r1.score===-999999)return;let bestNextScore=0,bestNextCascades=0;const nextK=(typeof nextChar!=='undefined'&&nextChar)?nextChar:null;if(nextK&&r1.endState){const nextFreeCols=r1.endState.freeCols();if(nextFreeCols.length>0){let maxN=-Infinity;nextFreeCols.forEach(ncol=>{const r2=simEval(r1.endState,nextK,ncol,BOT.maxDepth);if(r2.score>maxN){maxN=r2.score;bestNextCascades=r2.cascades;}});if(maxN!==-Infinity)bestNextScore=maxN;}}const totalScore=r1.score+(bestNextScore*.85);const totalCascades=r1.cascades+bestNextCascades;if(totalScore>best.score||(totalScore===best.score&&totalCascades>best.cascades)){best={score:totalScore,col:col,cascades:totalCascades};}});return best.col!==undefined?best.col:freeCols[0];}
-
-const BOT_LOG={
-  entries:[],_current:null,
-  startLevel(levelIdx){this._current={ts:new Date().toISOString(),level:ALL_LEVELS[levelIdx].id,theme:ALL_LEVELS[levelIdx].theme,depth:0,speed:0,moves:0,words:0,combos:0,cascades:0,maxCascade:0,score:0,duration_s:0,_t0:Date.now(),_cascadeRun:0};},
-  onWord(isCombo,isCascade){if(!this._current)return;this._current.words++;if(isCombo)this._current.combos++;if(isCascade){this._current._cascadeRun++;this._current.cascades++;this._current.maxCascade=Math.max(this._current.maxCascade,this._current._cascadeRun);}else{this._current._cascadeRun=0;}},
-  endLevel(finalScore){if(!this._current)return;this._current.score=finalScore;this._current.duration_s=((Date.now()-this._current._t0)/1000).toFixed(1);this._current.depth=BOT.maxDepth;this._current.speed=BOT.speed;this._current.moves=BOT.totalMoves;const{_t0,_cascadeRun,...entry}=this._current;this.entries.push(entry);this._current=null;},
-  exportCSV(){if(!this.entries.length)return;const cols=['ts','level','theme','depth','speed','moves','words','combos','cascades','maxCascade','score','duration_s'];const header=cols.join(',');const rows=this.entries.map(e=>cols.map(k=>JSON.stringify(e[k]??'')).join(','));const csv=[header,...rows].join('\n');const blob=new Blob([csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`kanadrop_bot_${new Date().toISOString().slice(0,10)}.csv`;a.click();},
-  summary(){if(!this.entries.length)return'—';const n=this.entries.length;const avgS=(this.entries.reduce((s,e)=>s+(+e.score),0)/n).toFixed(0);const totC=this.entries.reduce((s,e)=>s+e.cascades,0);const totX=this.entries.reduce((s,e)=>s+e.combos,0);const best=Math.max(...this.entries.map(e=>+e.score));return`${n} niveaux · moy. ${(+avgS).toLocaleString()} pts · ${totX} combos · ${totC} cascades · best ${best.toLocaleString()}`;}
-};
-
-const _origProcessCascade=processCascade;
-window.processCascade=function(found,isCascade){if(BOT.running){const isCombo=found.length>=2;BOT_LOG.onWord(isCombo,isCascade);if(isCascade)BOT.sessionCascades++;if(isCombo)BOT.sessionCombos++;BOT._updateStats();}return _origProcessCascade(found,isCascade);};
-const _origLevelDone=levelDone;
-window.levelDone=function(){if(BOT.running){BOT_LOG.endLevel(score);BOT._updateStats();BOT._updateSummary();const isLast=currentLevelIdx>=ALL_LEVELS.length-1;setTimeout(()=>{if(!BOT.running)return;if(isLast){BOT._status('🏆 Tous les niveaux finis !','#ffbe0b');BOT.running=false;}else{BOT._status(`▶ Niveau ${ALL_LEVELS[currentLevelIdx+1].id}…`,'#72e8b8');startGame(currentLevelIdx+1);BOT_LOG.startLevel(currentLevelIdx);setTimeout(()=>BOT._loop(),600);}},1200);return;}return _origLevelDone();};
-
-const BOT={
-  running:false,speed:350,maxDepth:2,timer:null,totalMoves:0,sessionCascades:0,sessionCombos:0,
-  start(){if(this.running)return;if(!gameRunning){this._status('⚠️ Lance une partie !','#ffaa7a');return;}this.running=true;this.totalMoves=0;this.sessionCascades=0;this.sessionCombos=0;BOT_LOG.startLevel(currentLevelIdx);this._status('🤖 En jeu…','#72e8b8');this._loop();},
-  stop(){this.running=false;clearTimeout(this.timer);this._status('⏹ Arrêté','#c77dff');this._updateSummary();},
-  _loop(){if(!this.running||!gameRunning){this.stop();return;}if(resolvingWords||!active){this.timer=setTimeout(()=>this._loop(),120);return;}const kana=active.char;const bestCol=botChooseBestCol(kana);this._highlightCol(bestCol);this.timer=setTimeout(()=>{if(!this.running||!gameRunning||!active)return;active.x=bestCol;render();setTimeout(()=>{if(!this.running||!gameRunning||!active)return;this.totalMoves++;hardDrop();this._updateStats();this.timer=setTimeout(()=>this._loop(),Math.max(80,this.speed*.6));},80);},Math.max(60,this.speed*.4));},
-  _highlightCol(col){for(let r=0;r<ROWS;r++){const el=gc(r,col);if(el&&!board[r][col].filled){el.style.background='rgba(168,85,247,.22)';setTimeout(()=>{if(el)el.style.background='';},250);}}},
-  _status(msg,color='#a0d8ff'){const el=document.getElementById('bot-status');if(el){el.textContent=msg;el.style.color=color;}},
-  _updateStats(){const el=document.getElementById('bot-stats');if(!el)return;el.innerHTML=`🎮 <b>${this.totalMoves}</b> coups &nbsp;🌸 <b>${this.sessionCombos}</b> combos &nbsp;⚡ <b>${this.sessionCascades}</b> cascades`;},
-  _updateSummary(){const el=document.getElementById('bot-summary');if(el)el.textContent=BOT_LOG.summary();}
-};
+window.addEventListener('resize', resize);
+resize();
+loop();
 </script>
-</body>
-</html>
