@@ -1,145 +1,78 @@
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: transparent; }
 #app {
-  width: 100%;
-  min-height: 520px;
-  background: #0a0a1a;
+  width: 100%; min-height: 520px;
+  background: #080818;
   border-radius: var(--border-radius-lg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  overflow: hidden;
-  position: relative;
-}
-canvas {
-  display: block;
-  width: 100%;
-  touch-action: none;
-}
-#status {
-  position: absolute;
-  top: 14px;
-  left: 0; right: 0;
-  text-align: center;
-  font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
   font-family: var(--font-sans);
-  pointer-events: none;
 }
-#controls {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  display: flex;
-  gap: 10px;
-  padding: 12px 16px;
-  background: rgba(0,0,0,0.5);
-  align-items: center;
-  justify-content: space-between;
-}
-#btn-draw {
-  flex: 1;
-  height: 48px;
-  border-radius: var(--border-radius-md);
-  border: 1.5px solid rgba(255, 60, 120, 0.6);
-  background: rgba(255, 60, 120, 0.12);
-  color: #ff6ba8;
-  font-size: 14px;
-  font-family: var(--font-sans);
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.1s;
-}
-#btn-draw.active {
-  background: rgba(255, 60, 120, 0.35);
-  border-color: #ff3c78;
-  color: #fff;
-}
-#btn-clear {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--border-radius-md);
-  border: 1.5px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.05);
-  color: rgba(255,255,255,0.5);
-  font-size: 20px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
+canvas { display: block; width: 100%; touch-action: none; }
 #dot {
-  position: absolute;
-  width: 14px; height: 14px;
+  position: absolute; width: 16px; height: 16px;
   border-radius: 50%;
   background: #ff3c78;
-  box-shadow: 0 0 8px 3px rgba(255,60,120,0.7);
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: background 0.1s;
+  z-index: 5;
 }
-#dot.drawing {
-  background: #fff;
-  box-shadow: 0 0 12px 5px rgba(255,60,120,1);
+#dot.on { background: #fff; }
+#status {
+  position: absolute; top: 12px; left: 0; right: 0;
+  text-align: center; font-size: 12px;
+  color: rgba(255,255,255,0.4); pointer-events: none; z-index: 4;
 }
-#info-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgba(10,10,26,0.92);
-  color: #fff;
-  font-family: var(--font-sans);
-  text-align: center;
-  padding: 24px;
-  gap: 16px;
-  z-index: 10;
+#hud {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 10px 14px; background: rgba(0,0,0,0.55);
+  display: flex; gap: 10px; align-items: center; z-index: 4;
 }
-#info-overlay p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
-#info-overlay h3 { font-size: 18px; font-weight: 500; }
+#hud-info { flex: 1; font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+#btn-clear {
+  width: 42px; height: 42px; border-radius: var(--border-radius-md);
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.5); font-size: 18px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+#overlay {
+  position: absolute; inset: 0; z-index: 10;
+  background: rgba(8,8,24,0.95);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 14px; padding: 28px; text-align: center; color: #fff;
+}
+#overlay h3 { font-size: 20px; font-weight: 500; }
+#overlay p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 320px; }
 #btn-start {
-  padding: 12px 28px;
+  margin-top: 6px; padding: 13px 32px;
   border-radius: var(--border-radius-md);
   border: 1.5px solid #ff3c78;
   background: rgba(255,60,120,0.15);
-  color: #ff6ba8;
-  font-size: 15px;
-  font-family: var(--font-sans);
-  cursor: pointer;
-  margin-top: 8px;
+  color: #ff6ba8; font-size: 15px;
+  font-family: var(--font-sans); cursor: pointer;
 }
-#mode-toggle {
-  position: absolute;
-  top: 12px; right: 12px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: var(--border-radius-md);
-  padding: 4px 10px;
-  cursor: pointer;
-  z-index: 5;
-  font-family: var(--font-sans);
+#debug {
+  position: absolute; top: 32px; left: 8px;
+  font-size: 11px; color: rgba(255,255,255,0.3);
+  pointer-events: none; z-index: 6; line-height: 1.6;
 }
 </style>
 
 <div id="app">
   <canvas id="c"></canvas>
   <div id="dot"></div>
-  <div id="status">En attente du gyroscope…</div>
-  <button id="mode-toggle">Mode souris</button>
-
-  <div id="controls">
-    <button id="btn-draw">☞ Maintenir pour tracer</button>
+  <div id="status">initialisation…</div>
+  <div id="debug"></div>
+  <div id="hud">
+    <div id="hud-info">Touche l'écran n'importe où pour tracer<br>Lève le doigt = crayon levé</div>
     <button id="btn-clear"><i class="ti ti-trash" aria-hidden="true"></i></button>
   </div>
-
-  <div id="info-overlay">
-    <h3>✦ Laser Kana POC</h3>
-    <p>Oriente ton téléphone comme un sabre laser.<br>Le point rouge suit l'inclinaison du téléphone.<br>Maintiens le bouton pour tracer.</p>
-    <p style="font-size:12px; color:rgba(255,255,255,0.35)">Sur mobile, l'accès au gyroscope peut nécessiter une autorisation.</p>
+  <div id="overlay">
+    <h3>✦ Laser Kana</h3>
+    <p>Tiens ton téléphone comme un sabre laser.<br>Le point suit l'inclinaison.<br><br><strong style="color:#ff6ba8">Touche l'écran</strong> pour tracer, lève le doigt pour lever le crayon.</p>
     <button id="btn-start">Démarrer</button>
   </div>
 </div>
@@ -148,194 +81,165 @@ canvas {
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
 const dot = document.getElementById('dot');
-const status = document.getElementById('status');
-const btnDraw = document.getElementById('btn-draw');
-const btnClear = document.getElementById('btn-clear');
-const overlay = document.getElementById('info-overlay');
+const statusEl = document.getElementById('status');
+const debugEl = document.getElementById('debug');
+const overlay = document.getElementById('overlay');
 const btnStart = document.getElementById('btn-start');
-const modeToggle = document.getElementById('mode-toggle');
+const btnClear = document.getElementById('btn-clear');
 const appEl = document.getElementById('app');
+const hudInfo = document.getElementById('hud-info');
 
 let W, H;
 function resize() {
   W = appEl.clientWidth;
-  H = Math.max(420, appEl.clientHeight - 72);
+  H = Math.max(400, window.innerHeight > 600 ? 440 : 380);
   canvas.width = W;
   canvas.height = H;
   canvas.style.height = H + 'px';
-  redrawStrokes();
+  redrawAll();
 }
 
-let drawing = false;
 let strokes = [];
-let currentStroke = [];
-
-let posX = 0.5, posY = 0.35;
-let targetX = 0.5, targetY = 0.35;
-
-let mouseMode = false;
-let gyroAvailable = false;
-
+let current = [];
+let drawing = false;
+let posX = 0.5, posY = 0.4;
+let targetX = 0.5, targetY = 0.4;
 let beta0 = null, gamma0 = null;
-const SENSITIVITY = 2.2;
+let gyroOk = false;
+let lastRawB = 0, lastRawG = 0;
+let lastPx = null, lastPy = null;
 
-function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+const SENS = 0.65;
+
+function setStatus(t) { statusEl.textContent = t; }
 
 function onOrientation(e) {
-  if (e.beta === null) return;
-  gyroAvailable = true;
-  if (beta0 === null) { beta0 = e.beta; gamma0 = e.gamma; }
-  let db = e.beta - beta0;
-  let dg = e.gamma - gamma0;
-  targetX = clamp(0.5 + (dg / 45) * SENSITIVITY * 0.5, 0.02, 0.98);
-  targetY = clamp(0.35 + (db / 45) * SENSITIVITY * 0.5, 0.02, 0.95);
-  status.textContent = `β ${e.beta.toFixed(1)}°  γ ${e.gamma.toFixed(1)}°  — gyroscope actif`;
+  const b = e.beta, g = e.gamma;
+  if (b === null || g === null) return;
+  gyroOk = true;
+  lastRawB = b; lastRawG = g;
+  debugEl.textContent = `β=${b.toFixed(1)}° γ=${g.toFixed(1)}°`;
+  if (beta0 === null) { beta0 = b; gamma0 = g; return; }
+  const db = b - beta0;
+  const dg = g - gamma0;
+  targetX = Math.max(0.02, Math.min(0.98, 0.5 + dg * SENS / 45));
+  targetY = Math.max(0.02, Math.min(0.96, 0.4 + db * SENS / 45));
 }
-
-window.addEventListener('deviceorientation', onOrientation);
 
 function lerp(a, b, t) { return a + (b - a) * t; }
 
-let lastX = null, lastY = null;
-
 function loop() {
-  posX = lerp(posX, targetX, 0.18);
-  posY = lerp(posY, targetY, 0.18);
-
+  posX = lerp(posX, targetX, 0.15);
+  posY = lerp(posY, targetY, 0.15);
   const px = posX * W;
   const py = posY * H;
-
   dot.style.left = px + 'px';
   dot.style.top = py + 'px';
-
   if (drawing) {
-    if (lastX !== null) {
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(px, py);
-      ctx.strokeStyle = '#ff3c78';
-      ctx.lineWidth = 3.5;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.shadowColor = 'rgba(255,60,120,0.6)';
-      ctx.shadowBlur = 8;
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-      currentStroke.push({ x: px, y: py });
+    if (lastPx !== null) {
+      const dist = Math.hypot(px - lastPx, py - lastPy);
+      if (dist > 0.5) {
+        ctx.beginPath();
+        ctx.moveTo(lastPx, lastPy);
+        ctx.lineTo(px, py);
+        ctx.strokeStyle = '#ff3c78';
+        ctx.lineWidth = 3.5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        current.push({ x: px, y: py });
+      }
     } else {
-      currentStroke = [{ x: px, y: py }];
+      current = [{ x: px, y: py }];
     }
-    lastX = px; lastY = py;
+    lastPx = px; lastPy = py;
   } else {
-    lastX = null; lastY = null;
+    lastPx = null; lastPy = null;
   }
-
   requestAnimationFrame(loop);
 }
 
-function redrawStrokes() {
+function redrawAll() {
   ctx.clearRect(0, 0, W, H);
   ctx.strokeStyle = '#ff3c78';
   ctx.lineWidth = 3.5;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
-  for (const stroke of strokes) {
-    if (stroke.length < 2) continue;
+  for (const s of strokes) {
+    if (s.length < 2) continue;
     ctx.beginPath();
-    ctx.moveTo(stroke[0].x, stroke[0].y);
-    for (let i = 1; i < stroke.length; i++) ctx.lineTo(stroke[i].x, stroke[i].y);
+    ctx.moveTo(s[0].x, s[0].y);
+    for (let i = 1; i < s.length; i++) ctx.lineTo(s[i].x, s[i].y);
     ctx.stroke();
   }
 }
 
-function startDraw() {
+function startStroke() {
+  if (drawing) return;
   drawing = true;
-  dot.classList.add('drawing');
-  btnDraw.classList.add('active');
-  btnDraw.textContent = '✦ Tracé actif';
-  currentStroke = [];
+  dot.classList.add('on');
+  current = [];
+  lastPx = null; lastPy = null;
 }
 
-function stopDraw() {
+function endStroke() {
+  if (!drawing) return;
   drawing = false;
-  dot.classList.remove('drawing');
-  btnDraw.classList.remove('active');
-  btnDraw.textContent = '☞ Maintenir pour tracer';
-  if (currentStroke.length > 1) strokes.push([...currentStroke]);
-  currentStroke = [];
+  dot.classList.remove('on');
+  if (current.length > 1) strokes.push([...current]);
+  current = [];
+  lastPx = null; lastPy = null;
 }
 
-btnDraw.addEventListener('pointerdown', startDraw);
-btnDraw.addEventListener('pointerup', stopDraw);
-btnDraw.addEventListener('pointerleave', stopDraw);
+canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startStroke(); }, { passive: false });
+canvas.addEventListener('touchend', (e) => { e.preventDefault(); endStroke(); }, { passive: false });
+canvas.addEventListener('touchcancel', (e) => { e.preventDefault(); endStroke(); }, { passive: false });
+canvas.addEventListener('mousedown', startStroke);
+canvas.addEventListener('mouseup', endStroke);
+canvas.addEventListener('mouseleave', endStroke);
+
+canvas.addEventListener('mousemove', (e) => {
+  if (!gyroOk) {
+    const rect = canvas.getBoundingClientRect();
+    targetX = Math.max(0.02, Math.min(0.98, (e.clientX - rect.left) / W));
+    targetY = Math.max(0.02, Math.min(0.96, (e.clientY - rect.top) / H));
+  }
+});
 
 btnClear.addEventListener('click', () => {
-  strokes = [];
-  currentStroke = [];
+  strokes = []; current = [];
   ctx.clearRect(0, 0, W, H);
 });
 
-modeToggle.addEventListener('click', () => {
-  mouseMode = !mouseMode;
-  modeToggle.textContent = mouseMode ? 'Mode gyroscope' : 'Mode souris';
-  if (mouseMode) {
-    status.textContent = 'Mode souris actif — bouge ta souris sur le canvas';
-    beta0 = null; gamma0 = null;
-  } else {
-    beta0 = null; gamma0 = null;
-    status.textContent = 'Gyroscope — bouge ton téléphone';
-  }
-});
-
-canvas.addEventListener('pointermove', (e) => {
-  if (!mouseMode) return;
-  const rect = canvas.getBoundingClientRect();
-  targetX = clamp((e.clientX - rect.left) / W, 0.02, 0.98);
-  targetY = clamp((e.clientY - rect.top) / H, 0.02, 0.95);
-});
-
-canvas.addEventListener('pointerdown', (e) => {
-  if (!mouseMode) return;
-  const rect = canvas.getBoundingClientRect();
-  targetX = clamp((e.clientX - rect.left) / W, 0.02, 0.98);
-  targetY = clamp((e.clientY - rect.top) / H, 0.02, 0.95);
-  startDraw();
-});
-canvas.addEventListener('pointerup', () => { if (mouseMode) stopDraw(); });
-canvas.addEventListener('pointerleave', () => { if (mouseMode) stopDraw(); });
-
-async function requestGyro() {
+async function start() {
+  overlay.style.display = 'none';
+  window.addEventListener('deviceorientation', onOrientation, true);
   if (typeof DeviceOrientationEvent !== 'undefined' &&
       typeof DeviceOrientationEvent.requestPermission === 'function') {
     try {
-      const perm = await DeviceOrientationEvent.requestPermission();
-      if (perm !== 'granted') {
-        status.textContent = 'Permission gyroscope refusée — utilise le mode souris';
-        mouseMode = true;
-        modeToggle.textContent = 'Mode gyroscope';
+      const r = await DeviceOrientationEvent.requestPermission();
+      if (r !== 'granted') {
+        setStatus('Permission refusée — mode souris actif');
+        hudInfo.textContent = 'Mode souris : bouge la souris, clique pour tracer';
         return;
       }
-    } catch(e) {
-      status.textContent = 'Erreur permission — mode souris activé';
-      mouseMode = true;
+    } catch(err) {
+      setStatus('Erreur permission gyroscope');
     }
   }
-  status.textContent = 'En attente du gyroscope…';
+  setStatus('En attente du gyroscope…');
   setTimeout(() => {
-    if (!gyroAvailable) {
-      status.textContent = 'Gyroscope non détecté — mode souris activé';
-      mouseMode = true;
-      modeToggle.textContent = 'Mode gyroscope';
+    if (!gyroOk) {
+      setStatus('Gyroscope non détecté — mode souris actif');
+      hudInfo.textContent = 'Mode souris : bouge la souris, clique pour tracer';
+    } else {
+      setStatus('Gyroscope actif ✓');
+      hudInfo.textContent = 'Incline le téléphone • Touche = tracer • Lève = lever le crayon';
     }
-  }, 1500);
+  }, 2000);
 }
 
-btnStart.addEventListener('click', async () => {
-  overlay.style.display = 'none';
-  await requestGyro();
-  beta0 = null; gamma0 = null;
-});
-
+btnStart.addEventListener('click', start);
 window.addEventListener('resize', resize);
 resize();
 loop();
